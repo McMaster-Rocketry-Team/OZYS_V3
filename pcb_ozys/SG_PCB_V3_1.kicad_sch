@@ -6,44 +6,6 @@
 	(paper "A4")
 	(lib_symbols)
 	(sheet
-		(at 135.89 50.8)
-		(size 63.5 25.4)
-		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(fill
-			(color 0 0 0 0.0000)
-		)
-		(uuid "8826451e-d3d9-47a9-b80a-f2b40a64b19a")
-		(property "Sheetname" "Epsilon"
-			(at 135.89 50.0884 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Sheetfile" "Epsilon.kicad_sch"
-			(at 135.89 76.7846 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-			)
-		)
-		(instances
-			(project "SG_PCB_V3_1"
-				(path "/c13c867e-6e7c-48dd-82ed-469b98ba6beb"
-					(page "3")
-				)
-			)
-		)
-	)
-	(sheet
 		(at 49.53 50.8)
 		(size 60.96 81.28)
 		(fields_autoplaced yes)

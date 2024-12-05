@@ -239,7 +239,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "SG_PCB_V3_1.kicad_pro",
+    "filename": "Epsilon.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -384,32 +384,8 @@
   },
   "sheets": [
     [
-      "c13c867e-6e7c-48dd-82ed-469b98ba6beb",
+      "e7af6eb2-e5e5-4edc-94d8-c607ae777c70",
       "Root"
-    ],
-    [
-      "f6677e1d-2e58-46fd-b64d-3824f7e6308f",
-      "Ozys"
-    ],
-    [
-      "3ee0415b-0594-46e5-9d72-ed6e84b019c6",
-      "Power"
-    ],
-    [
-      "31107796-920b-445f-8033-e50e53242870",
-      "Receiver_1"
-    ],
-    [
-      "ad9bd89a-adc1-45c3-a19f-81c486df3c95",
-      "Receiver_2"
-    ],
-    [
-      "e8f4f1ef-1970-4699-a072-d30de2a28a6e",
-      "Receiver_3"
-    ],
-    [
-      "b5fe9d36-d04a-486d-bddc-f284c0d76464",
-      "Receiver_4"
     ]
   ],
   "text_variables": {}
