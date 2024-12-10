@@ -4619,7 +4619,7 @@
 			(uuid "bd33fae7-3415-4fb0-8e7a-46d2667437ae")
 		)
 		(instances
-			(project ""
+			(project "SG_PCB_V3_1"
 				(path "/c13c867e-6e7c-48dd-82ed-469b98ba6beb/f6677e1d-2e58-46fd-b64d-3824f7e6308f/31107796-920b-445f-8033-e50e53242870"
 					(reference "C32")
 					(unit 1)
