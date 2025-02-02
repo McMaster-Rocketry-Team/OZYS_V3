@@ -3463,7 +3463,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "03b3953e-2fb3-4720-a4b0-49449f4fafcf")
+			(uuid "0badae4d-d620-4653-8757-666e18413ac4")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -3529,7 +3529,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "6d1291f2-eca8-43dc-acac-810188e1c04d")
+			(uuid "4c662858-cea8-4cad-a862-3c14ed6d8540")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -3596,7 +3596,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "b257c519-fc05-49ff-a9a1-a63f4a9ce49a")
+			(uuid "80571f14-ef98-4cd3-9364-dd696a452f34")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -3664,13 +3664,13 @@
 			)
 		)
 		(pin "3"
-			(uuid "7f2cb13e-9b67-45a4-9cd8-8afb9e289d9f")
+			(uuid "ad54bf17-393e-49e1-87ce-45b6edaaa1b7")
 		)
 		(pin "1"
-			(uuid "b39d25bf-e648-49dd-90b1-c24106ffad84")
+			(uuid "daa5c7ff-5d69-484a-878f-63d8558f929d")
 		)
 		(pin "2"
-			(uuid "68b30636-3078-4770-af4b-b923c2c10418")
+			(uuid "1decb0ca-69dc-4a83-a182-60bedf333c01")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -3736,7 +3736,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "1c6cc946-6213-46d5-995d-15fbd7541dac")
+			(uuid "08adbef6-b99f-47b2-95a7-159deca87378")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -3803,10 +3803,10 @@
 			)
 		)
 		(pin "2"
-			(uuid "6cea782b-a1eb-40e5-855f-2265f653c524")
+			(uuid "c022ff4b-fa67-4713-a35d-0bf793746f02")
 		)
 		(pin "1"
-			(uuid "92ba2393-6c98-49f7-98e8-9fa34ed08652")
+			(uuid "0d21a99b-d5bb-44a0-ade8-4156c7dfa738")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -3873,7 +3873,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "3d9c2ef7-bc8d-4e1e-ae9f-98a3381ef6e0")
+			(uuid "e02dabc6-62d4-4186-a53d-4e9fa3ed1beb")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -3940,10 +3940,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "25bea89d-c4f6-4249-b940-4eb5885fc69a")
+			(uuid "c36210e9-24bc-414a-9010-e6ec4d9edcab")
 		)
 		(pin "2"
-			(uuid "35779538-f6f8-4d0a-bd5b-b956d3a088a6")
+			(uuid "adef9c8d-24f8-4b25-b6e2-70bac50b240b")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -4010,10 +4010,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "f8b538f5-456b-46ba-8b01-a6b243ef3586")
+			(uuid "62bde177-9418-4bf7-ab70-c803c66ed16d")
 		)
 		(pin "2"
-			(uuid "b1ddde11-3831-4588-a87f-de6520aef356")
+			(uuid "6f105bf2-3be5-423e-9945-f446b8188c6d")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -4080,10 +4080,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "d19dc2d1-be3f-48a0-9c80-1a96660e10c1")
+			(uuid "ab2df880-bffd-4a7d-8439-df1f76856949")
 		)
 		(pin "2"
-			(uuid "ada5a49d-d5e5-4d25-9f0f-e22e132b7b6f")
+			(uuid "3e0c9440-f7c3-47df-9894-5348e1474c23")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -4150,10 +4150,10 @@
 			)
 		)
 		(pin "2"
-			(uuid "75f74d6b-a554-4906-ae1f-e56e381ebd6e")
+			(uuid "ce72a2a0-40da-4204-bc19-b1818900908a")
 		)
 		(pin "1"
-			(uuid "86886a1e-ee9b-402c-9fa9-97b8ead44f3f")
+			(uuid "8f8c7344-6377-4559-bc74-6fd07931b956")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -4220,7 +4220,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "788fcdaa-470f-4150-b4f2-a0168214056f")
+			(uuid "790363d0-75e3-4619-b3eb-c3f1d1b4dd3f")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -4286,7 +4286,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "0d9a2087-46db-40fc-8879-001a4b895bc0")
+			(uuid "a4c29cbf-b1b3-4f3d-afb4-4f7675fcdb66")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -4352,7 +4352,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "f92a222d-cba1-4975-a564-ac41cea8ce0b")
+			(uuid "ecfb66a0-2316-4183-8b0b-1e22fc6faf86")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -4418,7 +4418,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "9ca3a6a5-c402-4e85-8f0e-e44301c9f310")
+			(uuid "37a2271a-9868-4cd8-a5ad-77b5d92e5a14")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -4485,10 +4485,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "895195ef-504c-479b-a621-a2e1c68dc2df")
+			(uuid "bea50f5a-f6bb-4580-8a50-21cecab2632c")
 		)
 		(pin "2"
-			(uuid "1115f4fb-8b87-4940-a10d-4fab0b9be9f8")
+			(uuid "278a3617-3b68-4292-8ffd-6e15e982d37c")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -4554,7 +4554,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "93ad3526-a151-4b6d-b616-e31baae72065")
+			(uuid "f4daf918-77ba-4626-b155-ac852a82dffc")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -4621,10 +4621,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "56911177-30e5-4599-8de6-bf3e881d27cc")
+			(uuid "e03d9f6a-061a-4a27-81e6-368afa872f56")
 		)
 		(pin "2"
-			(uuid "ce526233-6e14-4a1b-bb85-fd5f67d27a5d")
+			(uuid "1a47ac67-0d4e-48ea-9f2e-a18e4b979a99")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -4698,10 +4698,10 @@
 			)
 		)
 		(pin "2"
-			(uuid "c343a4cf-795c-412b-8391-c306bc02549d")
+			(uuid "44e59c98-747d-4ae0-bdc8-9921beed6083")
 		)
 		(pin "1"
-			(uuid "9c1c0e9a-9e9d-4859-b5d5-b5789c67e522")
+			(uuid "34953422-9402-4aa3-8056-a42d43c4d46b")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -4768,7 +4768,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "ec9ad18e-afdd-40ed-ae00-0bca55b83e4a")
+			(uuid "3853f8c0-07f1-4522-9cad-6c118e1deb0c")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -4834,7 +4834,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "c5b40c62-5d24-43f1-9efe-d98b9767264d")
+			(uuid "42c3e1c0-cf64-40b2-8f20-0d5aa64f13fb")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -4900,7 +4900,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "11cfdacc-92d5-49f8-9358-39de92553d3f")
+			(uuid "94266c4d-b98c-4be4-8b43-3513aec23ec8")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -4967,10 +4967,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "38073813-dac1-4f34-a853-3bfa589ec415")
+			(uuid "ca81cc4c-de98-47bf-b956-ab1e82ae1e0b")
 		)
 		(pin "2"
-			(uuid "2a35f33d-f90a-4afb-bc25-1153d61ccd6b")
+			(uuid "74748b50-a32f-4049-a1de-bcfd59e82b2b")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -5036,7 +5036,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "1e3cae76-70d3-41c8-ab03-e6dc24154556")
+			(uuid "9cb628a2-ec61-48e2-8b57-e86f10279981")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -5103,10 +5103,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "e9315f6c-51f9-4886-907e-18e4849c7f18")
+			(uuid "6b4fd35d-8aa9-4b49-84b5-c5c5321aa80b")
 		)
 		(pin "2"
-			(uuid "a2aaa793-cd22-48c8-b7f1-9cf579f0e46d")
+			(uuid "4afdc6c2-c2b0-4cd5-b8e5-577e9e0dfe4a")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -5173,10 +5173,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "66bf49cf-cd2e-4adc-8c33-28faafaf6075")
+			(uuid "96dcfa07-a041-4eb6-8236-2736b753ce55")
 		)
 		(pin "2"
-			(uuid "e86bb86e-a054-4b11-b139-6cf02d925465")
+			(uuid "8a305411-fa1d-436d-8d91-d65a44b49bc2")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -5243,10 +5243,10 @@
 			)
 		)
 		(pin "2"
-			(uuid "933ce091-5ab8-4d38-9917-162d9f9091ec")
+			(uuid "d7c3d36c-8de4-43fa-b629-52260b1c6579")
 		)
 		(pin "1"
-			(uuid "8ff8dce6-f5b4-415d-8820-fbb9dd5c34fe")
+			(uuid "ceaf74ed-6d30-430b-b68f-7d062375ad92")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -5313,10 +5313,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "af0af7ee-d486-49b3-9ba8-b0a54ff1e3b7")
+			(uuid "d814b55f-2446-448b-abfc-c4370f414c51")
 		)
 		(pin "2"
-			(uuid "a3f97393-9b4b-4507-aaba-c9ac9a42a182")
+			(uuid "5be9ae6a-fa65-4ff3-90fb-9bf1a4bb6074")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -5384,13 +5384,13 @@
 			)
 		)
 		(pin "3"
-			(uuid "1cf005ab-d832-41d7-8ba7-d717ac0880c2")
+			(uuid "92bf4d5f-798e-434d-91a3-d2afa59c29c2")
 		)
 		(pin "1"
-			(uuid "a1fe265c-4eb5-4886-96fc-596233354684")
+			(uuid "9444c53b-3065-4341-a193-5b0e6d462313")
 		)
 		(pin "2"
-			(uuid "73a65d50-98c9-465f-99e7-d91770a5264b")
+			(uuid "e203d054-ef73-40c2-b174-f86878a8a9b6")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -5456,7 +5456,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "ef6dabb6-e553-4bb1-a12c-2d8e4fe355ce")
+			(uuid "6a65a739-1cbe-4acd-ae61-7e84cae3cfa9")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -5523,7 +5523,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "e2364555-1ff7-4b2e-8df2-285b25b63d43")
+			(uuid "cf6679cb-e968-48a0-9270-cb0e023fa477")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -5590,10 +5590,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "0fee0dd3-3d83-4057-b533-99f20a8f3b02")
+			(uuid "9816818d-5706-4a08-809b-631d54dae82a")
 		)
 		(pin "2"
-			(uuid "3d65e11e-c9c6-4021-b6dd-9801aa735033")
+			(uuid "22d6a1b2-9d3d-4496-9363-9f8d48757756")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -5660,7 +5660,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "e7d15556-f810-4dad-9df3-e41091aaa88b")
+			(uuid "6b5027ff-2e06-427f-b666-8aa368b15dce")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -5727,10 +5727,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "4bfe0131-389f-46f9-bb0d-fe0ef3570fed")
+			(uuid "6dee7a6b-e507-4cfb-b024-63af02a690fb")
 		)
 		(pin "2"
-			(uuid "dbbc565c-784c-4cfe-a314-399786cd3ee7")
+			(uuid "bad94b90-6416-40f4-83b9-8701106e8432")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -5797,10 +5797,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "b1c25e52-8428-4b19-84e1-12395d818482")
+			(uuid "b2f92447-74f6-423f-aed6-4e532ed84db2")
 		)
 		(pin "2"
-			(uuid "3df8d04e-f9ec-4635-81ab-7843e4183cb6")
+			(uuid "fe396162-8b80-421d-84a7-b7bd492db035")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -5866,7 +5866,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "39f7b9fd-993a-42e9-afe6-cde2844eb723")
+			(uuid "55076129-39ba-43fe-8c77-dcd131e9d427")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -5931,10 +5931,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "fab676f7-c2b2-4afa-bcd9-b1200d931351")
+			(uuid "3d4b90ac-82ae-40b7-ab52-03b6b777d914")
 		)
 		(pin "2"
-			(uuid "953de1c9-7aaf-427a-bd24-12a934bea65f")
+			(uuid "7ec2d763-5332-42cd-b461-bc90a6ab3684")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -6001,10 +6001,10 @@
 			)
 		)
 		(pin "2"
-			(uuid "4282bb54-a46d-4d8e-ad76-c60b479ec47d")
+			(uuid "34764de3-5010-4b47-86b4-402b8da83309")
 		)
 		(pin "1"
-			(uuid "0972b2e3-5d24-41a8-84d3-04c311883ad6")
+			(uuid "6d7c253d-a400-439e-a723-1bd7697eb2a3")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -6078,49 +6078,49 @@
 			)
 		)
 		(pin "13"
-			(uuid "604a1469-84b8-4730-b781-bf74f2a94c17")
+			(uuid "fe5998de-aada-4c74-a599-82413be8c6ed")
 		)
 		(pin "10"
-			(uuid "8e3bbd89-17cd-4310-9021-3ff912f725b6")
+			(uuid "9c595f47-31e9-41ee-aed3-1fb87ca3e02c")
 		)
 		(pin "14"
-			(uuid "61fd54ba-fd09-41bb-ba3c-3cb5ffceccaa")
+			(uuid "913334f6-41df-432b-80e8-6d6ff0ed4987")
 		)
 		(pin "2"
-			(uuid "87e16035-290e-4afa-8174-b4b118c49a24")
+			(uuid "fea36fef-6ad3-4740-b438-eea551782ce4")
 		)
 		(pin "1"
-			(uuid "6b67ee72-8f23-4b2c-ac62-64071ae9758b")
+			(uuid "f38c20a6-106e-40ca-8eff-58617b909089")
 		)
 		(pin "6"
-			(uuid "9b5f7ed7-9233-464e-9c22-ff1c6d7b290c")
+			(uuid "c7dcc666-248e-4f13-8aa0-f03cc0e73244")
 		)
 		(pin "15"
-			(uuid "0ecb2045-c595-4ec1-b994-f6c534024692")
+			(uuid "3760ce75-773b-450e-9aea-a90dbe801f1b")
 		)
 		(pin "4"
-			(uuid "f427d9aa-55cc-44bf-867f-440608ffa4c0")
+			(uuid "b7cd37e6-f177-4321-a259-a5f3a9308ca5")
 		)
 		(pin "7"
-			(uuid "f3eabe7d-09a6-481d-bd59-70f8b2c86af3")
+			(uuid "177d0c73-37a6-41c5-99d2-f05fbd9f6f91")
 		)
 		(pin "12"
-			(uuid "0e6dba16-f18e-47dc-b0c6-102c6638a22a")
+			(uuid "4d1af3f6-f02b-4a74-af83-252de68dddce")
 		)
 		(pin "9"
-			(uuid "6c4863fe-1538-4a59-a57e-8547e4c00f74")
+			(uuid "ad7ea40b-74d2-4718-9b49-cfe128c5b11f")
 		)
 		(pin "5"
-			(uuid "702bbe07-713a-4739-a62e-c2d175c3b661")
+			(uuid "a6e95c40-f380-422f-9805-7c3c65666351")
 		)
 		(pin "3"
-			(uuid "3d07f68c-4467-4951-b44d-d0c9a1f018d4")
+			(uuid "53160234-6dee-4c59-9d90-c104334bd175")
 		)
 		(pin "8"
-			(uuid "10a7fa63-6458-4e62-a272-ea331c7d5984")
+			(uuid "2ac2664f-74bd-4016-a0bc-876eb0fcfe9f")
 		)
 		(pin "11"
-			(uuid "a6cedc5a-f77c-4c67-abc3-b7bcb34948a9")
+			(uuid "60787def-3993-4ad4-b340-8b8fb55147fb")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -6187,7 +6187,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "05deb79b-d358-48cc-9047-afc8f5c80e41")
+			(uuid "6c2ca5dc-4454-4d0c-980c-c2094871cfce")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -6254,10 +6254,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "7fe28106-870a-4c6b-8052-5a94a1b69358")
+			(uuid "1bf2d701-7ace-45bc-95bb-c10b03741b01")
 		)
 		(pin "2"
-			(uuid "6b3bdb99-f654-4508-bdc3-a5ee617dd6b7")
+			(uuid "d39ceb7e-1964-463e-bd85-290e51aadbd5")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -6324,7 +6324,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "3fdfcbe8-0053-4340-bb17-08a8366e3006")
+			(uuid "1dc9d4b2-27d2-492b-8e57-b552663ab297")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -6391,10 +6391,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "30f8e28a-8ee9-486a-bed3-4495a9fb86ad")
+			(uuid "c7bd9ba6-ae1a-45b0-a4b0-b155e5f62644")
 		)
 		(pin "2"
-			(uuid "81163934-1a69-416f-90b5-ea609d3671d4")
+			(uuid "8934576a-1b3a-4348-b3ca-04c7a1e18445")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -6461,10 +6461,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "ea4772a0-aa72-442d-b308-39ca73f33ebb")
+			(uuid "44875920-1f4e-4027-bd6a-921f276b9a1f")
 		)
 		(pin "2"
-			(uuid "4363a2d4-9229-4222-a773-a58e8612a906")
+			(uuid "449e7839-381d-438a-905d-211f62b117f9")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -6539,46 +6539,46 @@
 			)
 		)
 		(pin "7"
-			(uuid "456044ca-fee4-480f-9dca-0d7b30367f65")
+			(uuid "6730789a-c7a2-43c9-a910-5a74f2199234")
 		)
 		(pin "8"
-			(uuid "0ab23ba0-854f-467f-8b42-2a64d8bcedc8")
+			(uuid "1c78bceb-c3c8-47f8-9cf8-aa2ad8e39cf6")
 		)
 		(pin "3"
-			(uuid "3cde58ac-ed0f-470f-a11e-25625f019ae6")
+			(uuid "24a87442-eebd-4bd7-92e1-40397a2667c1")
 		)
 		(pin "4"
-			(uuid "fb53728d-0f78-4383-b46b-b0357f3ff813")
+			(uuid "cd0b5ede-da69-436f-9223-d19d7e16e2b8")
 		)
 		(pin "13"
-			(uuid "44b4d8cd-3cb6-4acf-8199-cc25a7c48150")
+			(uuid "8b88da8d-2fc0-49c0-957d-947ec9c221a2")
 		)
 		(pin "12"
-			(uuid "d04a0ec0-737d-4779-ba37-dd47c080060b")
+			(uuid "aa12fca4-917f-4e74-a687-788a4886564b")
 		)
 		(pin "11"
-			(uuid "7510e0d7-0904-4588-93d1-08c29779eee3")
+			(uuid "00af32eb-21af-4f82-930a-e0314c25c9b1")
 		)
 		(pin "2"
-			(uuid "c0710eef-3106-4182-9970-7487cb1138b8")
+			(uuid "52d50100-b7ab-47c3-8735-3ba1ecb33752")
 		)
 		(pin "14"
-			(uuid "48f32cf0-0f6b-4eb1-be3b-5947e6dcc3af")
+			(uuid "4468b8d0-a168-4e0a-bee1-df96993e1d11")
 		)
 		(pin "10"
-			(uuid "687739a8-829d-464c-9fd3-d5df7947f920")
+			(uuid "b7d8d830-6054-4f0f-9637-1f42674a5bc9")
 		)
 		(pin "9"
-			(uuid "25c2bc6e-b6c6-45ad-b48f-972d9dc7b79a")
+			(uuid "c506a51f-f4b7-4fef-bcaa-da1605c441ca")
 		)
 		(pin "6"
-			(uuid "b844f4f4-d349-43e3-bee3-356acb94145b")
+			(uuid "e1987503-874b-4553-b9b4-804ab7189d19")
 		)
 		(pin "1"
-			(uuid "f5dbd8cc-f871-4519-a8fa-9336bac4a9e7")
+			(uuid "78cdd2f2-3ec2-42b3-9121-eba70542371e")
 		)
 		(pin "5"
-			(uuid "38eb79e2-096b-4f86-bd20-ab17ad3113a4")
+			(uuid "04fd0f6b-5b5e-4a8e-a8bb-04c8b9873578")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -6644,7 +6644,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "561298b6-8bf4-4d37-8d96-2520834d8f05")
+			(uuid "13459bb2-54aa-44da-949e-c83ae1fc7f87")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -6711,7 +6711,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "ce0aa331-51b5-49bf-95c9-7289f42e0491")
+			(uuid "604ebba6-b197-4aa9-8ba7-ab3c344c7e5c")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -6777,7 +6777,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "0f314d4a-aafd-4140-88db-2609c5218d23")
+			(uuid "b921cacb-54de-458f-8b6b-a832c2d92ee9")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -6843,7 +6843,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "fc5baf5d-2e46-4b8f-be73-b56d080b50e6")
+			(uuid "a067ced2-6522-4a8d-8814-e6fed5f330d5")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -6865,7 +6865,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d0206fc5-5b84-4392-82fa-a66650110850")
-		(property "Reference" "L4"
+		(property "Reference" "L3"
 			(at 95.25 46.9899 90)
 			(effects
 				(font
@@ -6920,19 +6920,12 @@
 			)
 		)
 		(pin "2"
-			(uuid "17f847c4-c3c6-4c97-9985-19360542c239")
+			(uuid "d5c01d85-6a11-4879-9ea2-5fbb5c456170")
 		)
 		(pin "1"
-			(uuid "a6cf4add-d97c-443d-b565-00644b393a50")
+			(uuid "226c80a6-5d81-41ad-9f10-9bd73921e420")
 		)
-		(instances
-			(project ""
-				(path "/c13c867e-6e7c-48dd-82ed-469b98ba6beb/f6677e1d-2e58-46fd-b64d-3824f7e6308f/3ee0415b-0594-46e5-9d72-ed6e84b019c6"
-					(reference "L4")
-					(unit 1)
-				)
-			)
-		)
+		(instances)
 	)
 	(symbol
 		(lib_id "power:+3.3VA")
@@ -6990,7 +6983,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "ac5c99a0-ef29-43b2-a795-cc116e3b4c2c")
+			(uuid "74af784f-8cc2-455b-bea2-ce4215f98f29")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -7057,10 +7050,10 @@
 			)
 		)
 		(pin "2"
-			(uuid "4268ba63-e40d-454d-a376-8b138d3b65ac")
+			(uuid "70fe66ee-d0b0-48dd-9950-5e9624a4ad9f")
 		)
 		(pin "1"
-			(uuid "7e636fa2-0eba-49c7-a020-33c8568b8ec9")
+			(uuid "231f7574-8499-43e2-be82-10bcbc1dd166")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -7126,7 +7119,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "a4fcc2ca-021a-45ae-b06b-ae6b694fd784")
+			(uuid "9c7b4749-37e4-40aa-b573-8e74d19f8df5")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -7192,7 +7185,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "b03ad38f-6234-4aec-bd5d-d693d698bed5")
+			(uuid "0be40321-0038-42ca-a6d1-18cff23545bb")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -7258,7 +7251,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "b73a4876-23fc-4a79-a159-5d5427a4103e")
+			(uuid "63aeb497-062a-4662-9df7-3abe8b4aee4e")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -7325,7 +7318,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "ca52816d-e5f1-4696-9352-6d8427277028")
+			(uuid "05cc3d20-b83b-40f2-807b-995eaf04b4b7")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -7392,10 +7385,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "c12c1799-8274-46f1-bd51-fce7d2eb401d")
+			(uuid "25beacdb-ee59-4bd8-ac02-fb16bf00fc4d")
 		)
 		(pin "2"
-			(uuid "3d9cc15e-e225-4779-9970-5e21042394a9")
+			(uuid "b731b81f-6510-41bd-ae8e-91fde9e4d34f")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -7461,7 +7454,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "f3efbb9f-6175-43b6-9989-f8037a1113c2")
+			(uuid "f832d54d-45d3-41e3-aee2-695f98edbbf8")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -7535,10 +7528,10 @@
 			)
 		)
 		(pin "2"
-			(uuid "346786e8-2268-4c57-87c9-ed19ae25bdfc")
+			(uuid "19e1aa33-1f92-4f5d-9855-b8939d585063")
 		)
 		(pin "1"
-			(uuid "556b24b7-df4c-4ff3-a5ff-4faeb907d281")
+			(uuid "d59fb9bf-48fe-41fa-9cdb-5b202802a026")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -7603,13 +7596,13 @@
 			)
 		)
 		(pin "1"
-			(uuid "f4f26b1f-4523-48db-a195-5ce3a33ea18c")
+			(uuid "2ba7e882-ab92-47c6-8c4c-0ea48d210812")
 		)
 		(pin "3"
-			(uuid "7c8758f5-7be4-4670-98d2-8382dcb2ccbc")
+			(uuid "35b7221d-f6ee-4ed0-95e4-7e66f2374d86")
 		)
 		(pin "2"
-			(uuid "189c2d8d-02bf-48f0-a1b1-e4b087ae7c2d")
+			(uuid "e5f7ff61-03b3-4df8-aa02-039928f8e5b5")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -7676,7 +7669,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "36dddfcf-fedb-4281-b410-21ddb94fb46b")
+			(uuid "63cb04fd-7809-4b5b-8fc7-35280d2036f2")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -7743,10 +7736,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "ef6aa5cd-c67e-42ee-ab6b-28d5319dbbdf")
+			(uuid "b8027188-02c2-41da-8f06-b817466cdc54")
 		)
 		(pin "2"
-			(uuid "ccca4013-3d38-4f77-8d50-46f49881cf0e")
+			(uuid "416c8c97-6f8a-4ec0-ac54-940fe153cc3b")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
@@ -7813,7 +7806,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "f7a99307-e318-47dd-b0ee-6d7b772b6176")
+			(uuid "9759c817-e649-41ab-b07c-1eef3137d1ea")
 		)
 		(instances
 			(project "SG_PCB_V3_1"
