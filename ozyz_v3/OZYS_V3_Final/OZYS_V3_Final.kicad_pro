@@ -239,7 +239,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "SG_PCB_V3_1.kicad_pro",
+    "filename": "OZYS_V3_Final.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -384,32 +384,28 @@
   },
   "sheets": [
     [
-      "c13c867e-6e7c-48dd-82ed-469b98ba6beb",
+      "2ecddb92-e766-42eb-adbc-b6d17a65e8ea",
       "Root"
     ],
     [
-      "f6677e1d-2e58-46fd-b64d-3824f7e6308f",
-      "Ozys"
-    ],
-    [
-      "72196ee5-07d7-421a-a5bb-8a1697d20982",
-      "Receiver_3"
-    ],
-    [
-      "3ee0415b-0594-46e5-9d72-ed6e84b019c6",
+      "5d1e2ce2-fe31-4661-9347-4416b8ba6f26",
       "Power"
     ],
     [
-      "31107796-920b-445f-8033-e50e53242870",
-      "Receiver_Main"
+      "92ea14e4-7796-41b2-9af7-4cb5ffd88b52",
+      "Receiver1"
     ],
     [
-      "08cec499-c733-4195-825b-d24f1f60d227",
-      "Receiver_2"
+      "6e4545c6-9e5c-4e6b-94f2-451b2f16f4ae",
+      "Receiver2"
     ],
     [
-      "0b8b50c3-283f-4a3a-aea0-81d2e840e507",
-      "Receiver_4"
+      "55853f5b-0992-495b-b96a-8743589b5403",
+      "Receiver3"
+    ],
+    [
+      "d66c3d32-3008-485f-b8d3-7e1a6a0b22a4",
+      "Receiver4"
     ]
   ],
   "text_variables": {}
