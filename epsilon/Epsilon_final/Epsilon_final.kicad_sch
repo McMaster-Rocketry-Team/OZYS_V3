@@ -124,6 +124,218 @@
 				)
 			)
 		)
+		(symbol "Connector_Audio:AudioJack4"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "J"
+				(at 0 8.89 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "AudioJack4"
+				(at 0 6.35 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Audio Jack, 4 Poles (TRRS)"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "audio jack receptacle stereo headphones TRRS connector"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "Jack*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "AudioJack4_0_1"
+				(rectangle
+					(start -6.35 -5.08)
+					(end -7.62 -7.62)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 -5.08) (xy 0.635 -5.715) (xy 1.27 -5.08) (xy 2.54 -5.08)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -5.715 -5.08) (xy -5.08 -5.715) (xy -4.445 -5.08) (xy -4.445 2.54) (xy 2.54 2.54)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.905 -5.08) (xy -1.27 -5.715) (xy -0.635 -5.08) (xy -0.635 -2.54) (xy 2.54 -2.54)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 0) (xy -2.54 0) (xy -2.54 -5.08) (xy -3.175 -5.715) (xy -3.81 -5.08)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 2.54 3.81)
+					(end -6.35 -7.62)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "AudioJack4_1_1"
+				(pin passive line
+					(at 5.08 -2.54 180)
+					(length 2.54)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "R1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 2.54)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "R2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 2.54 180)
+					(length 2.54)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "S"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -5.08 180)
+					(length 2.54)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "T"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
 		(symbol "Device:C"
 			(pin_numbers hide)
 			(pin_names
@@ -795,185 +1007,6 @@
 				)
 			)
 		)
-		(symbol "Rocketry_Easyeda:PJ-3200B-4A"
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "Audio"
-				(at 0 7.62 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "PJ-3200B-4A"
-				(at 0 -10.16 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" "Rocketry_Easyeda:AUDIO-TH_PJ-3200B-4A"
-				(at 0 -12.7 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "https://lcsc.com/product-detail/Audio-Connectors_PJ-3200B-4A_C136687.html"
-				(at 0 -15.24 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "LCSC Part" "C136687"
-				(at 0 -17.78 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "PJ-3200B-4A_0_1"
-				(polyline
-					(pts
-						(xy 3.81 -5.08) (xy -2.03 -5.08) (xy -2.54 -4.06) (xy -3.05 -5.08)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 3.81 -2.54) (xy -0.76 -2.54) (xy -1.27 -1.52) (xy -1.78 -2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 3.81 0) (xy -3.56 0) (xy -4.06 -1.02) (xy -4.57 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 3.81 2.54) (xy -7.87 2.54) (xy -7.87 -1.02) (xy -8.64 -2.03) (xy -9.14 -1.02)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(pin unspecified line
-					(at 8.89 2.54 180)
-					(length 5.08)
-					(name "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin unspecified line
-					(at 8.89 -2.54 180)
-					(length 5.08)
-					(name "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin unspecified line
-					(at 8.89 0 180)
-					(length 5.08)
-					(name "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin unspecified line
-					(at 8.89 -5.08 180)
-					(length 5.08)
-					(name "4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-		)
 		(symbol "Transistor_FET:AO3401A"
 			(pin_names hide)
 			(exclude_from_sim no)
@@ -1590,16 +1623,6 @@
 	)
 	(wire
 		(pts
-			(xy 82.55 97.79) (xy 78.74 97.79)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "21db2a8b-5fd5-4e57-94db-d6ad7e0bc8b3")
-	)
-	(wire
-		(pts
 			(xy 186.69 41.91) (xy 194.31 41.91)
 		)
 		(stroke
@@ -1630,6 +1653,16 @@
 	)
 	(wire
 		(pts
+			(xy 73.66 102.87) (xy 115.57 102.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "418a2f76-45a6-4f57-933d-5d54f5ff2488")
+	)
+	(wire
+		(pts
 			(xy 201.93 114.3) (xy 179.07 114.3)
 		)
 		(stroke
@@ -1647,6 +1680,16 @@
 			(type default)
 		)
 		(uuid "4dba02b9-55ef-40f5-ae50-327341cdae98")
+	)
+	(wire
+		(pts
+			(xy 115.57 102.87) (xy 115.57 114.3)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4f48bca5-32b5-4abe-867e-8167c92bbadd")
 	)
 	(wire
 		(pts
@@ -1680,16 +1723,6 @@
 	)
 	(wire
 		(pts
-			(xy 109.22 95.25) (xy 78.74 95.25)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5b083465-0db9-4077-9f33-b8738e3da393")
-	)
-	(wire
-		(pts
 			(xy 217.17 113.03) (xy 217.17 124.46)
 		)
 		(stroke
@@ -1697,26 +1730,6 @@
 			(type default)
 		)
 		(uuid "61aef08c-085e-456c-b462-17da0792b7b4")
-	)
-	(wire
-		(pts
-			(xy 109.22 114.3) (xy 115.57 114.3)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "636ce8be-735e-48d0-886e-04f599466492")
-	)
-	(wire
-		(pts
-			(xy 87.63 105.41) (xy 87.63 102.87)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "699e865a-9f58-443c-980c-5af289b640b5")
 	)
 	(wire
 		(pts
@@ -1740,7 +1753,7 @@
 	)
 	(wire
 		(pts
-			(xy 82.55 86.36) (xy 132.08 86.36)
+			(xy 115.57 86.36) (xy 132.08 86.36)
 		)
 		(stroke
 			(width 0)
@@ -1790,6 +1803,16 @@
 	)
 	(wire
 		(pts
+			(xy 115.57 100.33) (xy 73.66 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8f8573a9-09ec-44d6-8d9a-d6fb50bf6926")
+	)
+	(wire
+		(pts
 			(xy 158.75 114.3) (xy 158.75 139.7)
 		)
 		(stroke
@@ -1800,16 +1823,6 @@
 	)
 	(wire
 		(pts
-			(xy 109.22 95.25) (xy 109.22 114.3)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "93b67982-4a34-43c3-8dcc-a9625979318f")
-	)
-	(wire
-		(pts
 			(xy 130.81 120.65) (xy 143.51 120.65)
 		)
 		(stroke
@@ -1817,6 +1830,16 @@
 			(type default)
 		)
 		(uuid "95dece15-3e45-4c35-8b8c-90a74e462c97")
+	)
+	(wire
+		(pts
+			(xy 73.66 95.25) (xy 80.01 95.25)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9673b242-7658-4ba5-9754-401bd3ab83d8")
 	)
 	(wire
 		(pts
@@ -1850,13 +1873,13 @@
 	)
 	(wire
 		(pts
-			(xy 78.74 102.87) (xy 87.63 102.87)
+			(xy 73.66 97.79) (xy 78.74 97.79)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "a01123fd-5158-495b-99be-7d569f891877")
+		(uuid "9eb9afd7-d131-486d-881d-84da4b15221d")
 	)
 	(wire
 		(pts
@@ -1867,16 +1890,6 @@
 			(type default)
 		)
 		(uuid "a0b27b9b-a256-4820-9c7c-ba7797532947")
-	)
-	(wire
-		(pts
-			(xy 82.55 86.36) (xy 82.55 97.79)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a191db45-f0e6-4711-83c2-5ba33d1991b0")
 	)
 	(wire
 		(pts
@@ -1960,13 +1973,13 @@
 	)
 	(wire
 		(pts
-			(xy 92.71 105.41) (xy 87.63 105.41)
+			(xy 115.57 86.36) (xy 115.57 100.33)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "d414cfe1-8e5b-47a7-8b2b-90ec07ab3f32")
+		(uuid "d7e614c7-4a46-481c-b3b9-ce2ff08c9071")
 	)
 	(wire
 		(pts
@@ -2027,16 +2040,6 @@
 			(type default)
 		)
 		(uuid "efc5c0d1-47d8-48a2-8500-425ae9b2b08d")
-	)
-	(wire
-		(pts
-			(xy 78.74 100.33) (xy 92.71 100.33)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f3d0211c-a91a-45ab-b68a-850237db4ec9")
 	)
 	(wire
 		(pts
@@ -2583,6 +2586,80 @@
 			(project "Epsilon_final"
 				(path "/b0321cc8-d802-43c8-a38f-bba100abf2a4"
 					(reference "R2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector_Audio:AudioJack4")
+		(at 68.58 97.79 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "425bc866-47f2-416b-8f1e-41728fc21bf5")
+		(property "Reference" "J5"
+			(at 66.04 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "AudioJack4"
+			(at 66.04 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Rocketry_Easyeda:AUDIO-TH_PJ-320A-4P-DIP"
+			(at 68.58 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 68.58 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Audio Jack, 4 Poles (TRRS)"
+			(at 68.58 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "S"
+			(uuid "6b0f9d12-ea45-46a4-ae51-e760411d6b29")
+		)
+		(pin "R2"
+			(uuid "818df175-2100-4509-b395-44b567d4204f")
+		)
+		(pin "R1"
+			(uuid "a9a37a9b-2948-4d84-aad9-e14e23df1f73")
+		)
+		(pin "T"
+			(uuid "200416d7-7d9a-409d-801d-96ba21affb4a")
+		)
+		(instances
+			(project ""
+				(path "/b0321cc8-d802-43c8-a38f-bba100abf2a4"
+					(reference "J5")
 					(unit 1)
 				)
 			)
@@ -3413,7 +3490,7 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 92.71 100.33 270)
+		(at 78.74 97.79 270)
 		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
@@ -3423,7 +3500,7 @@
 		(fields_autoplaced yes)
 		(uuid "bd1ddb5d-ab1f-495f-95b0-1110bd8d3cc5")
 		(property "Reference" "#PWR01"
-			(at 88.9 100.33 0)
+			(at 74.93 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3432,7 +3509,7 @@
 			)
 		)
 		(property "Value" "3V3A_SW"
-			(at 96.52 100.3299 90)
+			(at 82.55 97.7899 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3441,7 +3518,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 92.71 100.33 0)
+			(at 78.74 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3450,7 +3527,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 92.71 100.33 0)
+			(at 78.74 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3459,7 +3536,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 92.71 100.33 0)
+			(at 78.74 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3609,91 +3686,6 @@
 			(project "Epsilon_final"
 				(path "/b0321cc8-d802-43c8-a38f-bba100abf2a4"
 					(reference "C2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Rocketry_Easyeda:PJ-3200B-4A")
-		(at 69.85 100.33 0)
-		(mirror x)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "d25dc727-0d7a-450d-a9f8-9c4e9bb6d12c")
-		(property "Reference" "Audio1"
-			(at 59.69 100.3301 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "PJ-3200B-4A"
-			(at 59.69 97.7901 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Rocketry_Easyeda:AUDIO-TH_PJ-3200B-4A"
-			(at 69.85 87.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://lcsc.com/product-detail/Audio-Connectors_PJ-3200B-4A_C136687.html"
-			(at 69.85 85.09 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 69.85 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC Part" "C136687"
-			(at 69.85 82.55 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "3"
-			(uuid "d0fd7dfb-5a4a-47f6-b2a2-53b98fe89799")
-		)
-		(pin "4"
-			(uuid "e3715c63-668c-4f6b-8f04-e5e0fa79b966")
-		)
-		(pin "1"
-			(uuid "69892245-c00b-4594-93ca-68911d97167f")
-		)
-		(pin "2"
-			(uuid "22b02412-e6a0-4c0d-a9c8-2282fbc3f404")
-		)
-		(instances
-			(project "Epsilon_final"
-				(path "/b0321cc8-d802-43c8-a38f-bba100abf2a4"
-					(reference "Audio1")
 					(unit 1)
 				)
 			)
@@ -3861,7 +3853,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 92.71 105.41 90)
+		(at 80.01 95.25 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3869,7 +3861,7 @@
 		(dnp no)
 		(uuid "e672862f-7906-499e-a8c2-b4b33572f576")
 		(property "Reference" "#PWR02"
-			(at 99.06 105.41 0)
+			(at 86.36 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3878,7 +3870,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 97.79 105.41 90)
+			(at 85.09 95.25 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3886,7 +3878,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 92.71 105.41 0)
+			(at 80.01 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3895,7 +3887,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 92.71 105.41 0)
+			(at 80.01 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3904,7 +3896,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 92.71 105.41 0)
+			(at 80.01 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
