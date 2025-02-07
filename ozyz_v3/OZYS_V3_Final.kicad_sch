@@ -4210,6 +4210,12 @@
 		(uuid "59665725-2335-4dd7-960b-b4926f82a8ef")
 	)
 	(junction
+		(at 33.02 168.91)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "68c8c248-802d-428f-9054-15dbc55d4e56")
+	)
+	(junction
 		(at 116.84 130.81)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4258,6 +4264,12 @@
 		(uuid "8ee529e7-cc74-4f5f-878b-8b47aab4949d")
 	)
 	(junction
+		(at 31.75 166.37)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "9110fb6f-d249-4271-887c-c8217a638857")
+	)
+	(junction
 		(at 140.97 35.56)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -4270,10 +4282,22 @@
 		(uuid "99169bfb-213e-4f3a-a536-ba827c636ec4")
 	)
 	(junction
+		(at 35.56 173.99)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a3a055d8-3d59-4306-99ba-288ea762ff1f")
+	)
+	(junction
 		(at 229.87 127)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "a5f0cc15-6e99-437b-bada-cff5ae4ea426")
+	)
+	(junction
+		(at 34.29 171.45)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a667e9a1-e0f0-4f2d-b3c4-6a8d9a416b7b")
 	)
 	(junction
 		(at 118.11 44.45)
@@ -4353,6 +4377,16 @@
 	)
 	(wire
 		(pts
+			(xy 33.02 185.42) (xy 33.02 168.91)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0273e1da-952f-4011-99bb-658299108830")
+	)
+	(wire
+		(pts
 			(xy 233.68 142.24) (xy 233.68 144.78)
 		)
 		(stroke
@@ -4390,6 +4424,16 @@
 			(type default)
 		)
 		(uuid "0720d23a-74d3-43c1-a80a-bb9762ce2664")
+	)
+	(wire
+		(pts
+			(xy 31.75 182.88) (xy 31.75 166.37)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "09e15f70-f7fb-4c07-99c4-f0cbb5b4af7a")
 	)
 	(wire
 		(pts
@@ -4450,6 +4494,16 @@
 			(type default)
 		)
 		(uuid "1888deff-fec0-42c0-9b6f-93de2aa2bddd")
+	)
+	(wire
+		(pts
+			(xy 35.56 173.99) (xy 29.21 173.99)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1a4d3985-dde0-42c8-8d25-7e6f70e8c87d")
 	)
 	(wire
 		(pts
@@ -4633,6 +4687,26 @@
 	)
 	(wire
 		(pts
+			(xy 31.75 166.37) (xy 54.61 166.37)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4619fdd3-92e5-4dc0-a368-3c1bcaafa2b2")
+	)
+	(wire
+		(pts
+			(xy 29.21 187.96) (xy 34.29 187.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "49149869-1e24-4dd5-88de-19d13cbbd6ae")
+	)
+	(wire
+		(pts
 			(xy 234.95 134.62) (xy 233.68 134.62)
 		)
 		(stroke
@@ -4723,7 +4797,7 @@
 	)
 	(wire
 		(pts
-			(xy 35.56 171.45) (xy 44.45 171.45)
+			(xy 29.21 171.45) (xy 34.29 171.45)
 		)
 		(stroke
 			(width 0)
@@ -4833,6 +4907,16 @@
 	)
 	(wire
 		(pts
+			(xy 33.02 168.91) (xy 54.61 168.91)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "72f52c6a-bda5-43d5-9fa7-7970ecabf7c1")
+	)
+	(wire
+		(pts
 			(xy 66.04 34.29) (xy 74.93 34.29)
 		)
 		(stroke
@@ -4843,6 +4927,16 @@
 	)
 	(wire
 		(pts
+			(xy 29.21 185.42) (xy 33.02 185.42)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "745b6f48-45db-4108-b7e2-7ebd2a2140c1")
+	)
+	(wire
+		(pts
 			(xy 118.11 22.86) (xy 118.11 44.45)
 		)
 		(stroke
@@ -4850,6 +4944,16 @@
 			(type default)
 		)
 		(uuid "76370914-719c-4167-9cae-51ac5f0ddce2")
+	)
+	(wire
+		(pts
+			(xy 29.21 182.88) (xy 31.75 182.88)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7b3fd897-609e-4a14-8dad-c6e868c948af")
 	)
 	(wire
 		(pts
@@ -4940,6 +5044,16 @@
 			(type default)
 		)
 		(uuid "95413ffe-abbb-4893-93c6-ce6c5e5b7b80")
+	)
+	(wire
+		(pts
+			(xy 29.21 190.5) (xy 35.56 190.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "96e3caa9-3cac-4223-bf05-dd17074a825d")
 	)
 	(wire
 		(pts
@@ -5073,6 +5187,16 @@
 	)
 	(wire
 		(pts
+			(xy 34.29 171.45) (xy 44.45 171.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b8de1e48-aa97-469c-9911-02e241659e00")
+	)
+	(wire
+		(pts
 			(xy 100.33 22.86) (xy 102.87 22.86)
 		)
 		(stroke
@@ -5113,7 +5237,7 @@
 	)
 	(wire
 		(pts
-			(xy 35.56 168.91) (xy 54.61 168.91)
+			(xy 29.21 168.91) (xy 33.02 168.91)
 		)
 		(stroke
 			(width 0)
@@ -5143,7 +5267,7 @@
 	)
 	(wire
 		(pts
-			(xy 35.56 166.37) (xy 54.61 166.37)
+			(xy 29.21 166.37) (xy 31.75 166.37)
 		)
 		(stroke
 			(width 0)
@@ -5160,6 +5284,16 @@
 			(type default)
 		)
 		(uuid "d897e15c-a0ac-4621-8d9f-d5e2cba51201")
+	)
+	(wire
+		(pts
+			(xy 34.29 187.96) (xy 34.29 171.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d9fc3afc-625c-4ae4-a993-1facc4ee0193")
 	)
 	(wire
 		(pts
@@ -5190,6 +5324,16 @@
 			(type default)
 		)
 		(uuid "dd550aef-4ee5-4c4d-81a2-c36fc49bbe21")
+	)
+	(wire
+		(pts
+			(xy 35.56 190.5) (xy 35.56 173.99)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "de9417b0-cc9a-49fa-81b8-091ee3603aa8")
 	)
 	(wire
 		(pts
@@ -9060,7 +9204,7 @@
 	)
 	(symbol
 		(lib_id "Connector:Conn_01x04_Pin")
-		(at 30.48 171.45 0)
+		(at 24.13 171.45 0)
 		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
@@ -9069,7 +9213,7 @@
 		(dnp no)
 		(uuid "a73420a1-1b91-4a49-8451-90c95be633b3")
 		(property "Reference" "J_CAN1"
-			(at 31.115 179.07 0)
+			(at 24.765 179.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9077,7 +9221,7 @@
 			)
 		)
 		(property "Value" "2053380004"
-			(at 31.115 176.53 0)
+			(at 24.765 176.53 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9085,7 +9229,7 @@
 			)
 		)
 		(property "Footprint" "Rocketry_Manual:CONN_2053380000-SD_04_MOL"
-			(at 30.48 171.45 0)
+			(at 24.13 171.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9094,7 +9238,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 30.48 171.45 0)
+			(at 24.13 171.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9103,7 +9247,7 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x04, script generated"
-			(at 30.48 171.45 0)
+			(at 24.13 171.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9127,6 +9271,80 @@
 			(project "OZYS_V3_Final"
 				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea"
 					(reference "J_CAN1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:Conn_01x04_Pin")
+		(at 24.13 187.96 0)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a7b32e77-4fdb-49ff-a6dd-b0fde5496298")
+		(property "Reference" "J_CAN2"
+			(at 24.765 195.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "2053380004"
+			(at 24.765 193.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Rocketry_Manual:CONN_2053380000-SD_04_MOL"
+			(at 24.13 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 24.13 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x04, script generated"
+			(at 24.13 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "3c312e00-c419-4598-a560-8af893f5574d")
+		)
+		(pin "3"
+			(uuid "cc5b6642-220f-4884-b5b4-30af5c24befa")
+		)
+		(pin "4"
+			(uuid "abe011d6-71c8-4864-8b82-2ab4fd63561c")
+		)
+		(pin "1"
+			(uuid "76c0fb32-e170-494f-bd13-53f32d1d921d")
+		)
+		(instances
+			(project "OZYS_V3_Final"
+				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea"
+					(reference "J_CAN2")
 					(unit 1)
 				)
 			)
