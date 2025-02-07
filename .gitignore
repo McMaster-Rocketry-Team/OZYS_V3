@@ -49,6 +49,7 @@
 # Simulink code generation folders
 **/slprj/
 **/sccprj/
+**/*grt_rtw/
 
 # Matlab code generation folders
 **/codegen/
