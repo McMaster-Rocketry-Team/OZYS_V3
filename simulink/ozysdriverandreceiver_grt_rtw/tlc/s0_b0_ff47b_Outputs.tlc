@@ -1,0 +1,341 @@
+%implements s0_b0_ff47b_Outputs "C"
+
+%function Outputs(block, system) Output
+%assign cfgTxt = ""
+%openfile cfgTxt
+%assign localVarDecl = ""
+%openfile localVarDecl
+
+NeslSimulationData *simulationData;
+NeuDiagnosticManager *diagnosticManager;
+NeuDiagnosticTree *diagnosticTree;
+NeuDiagnosticTree *diagnosticTree_0;
+NeuDiagnosticTree *diagnosticTree_1;
+char *msg;
+char *msg_0;
+char *msg_1;
+real_T tmp_8[57];
+real_T tmp_1[16];
+real_T tmp_6[16];
+real_T GaugeFactor_tmp;
+real_T time;
+real_T time_0;
+real_T time_1;
+real_T time_2;
+real_T time_3;
+real_T time_4;
+real_T time_tmp;
+int32_T isHit;
+int32_T isHit_0;
+int32_T tmp_3;
+int_T tmp_9[6];
+int_T tmp_2[5];
+int_T tmp_7[5];
+boolean_T tmp;
+boolean_T tmp_0;
+boolean_T tmp_4;
+boolean_T tmp_5;
+%closefile localVarDecl
+%assign tlcOutputsFcnOfS0B1 = OpaqueTLCBlockFcn("Outputs", 0, 1, 0, 2, 0)
+%assign tlcOutputsFcnOfS0B25 = OpaqueTLCBlockFcn("Outputs", 0, 25, 0, 2, 1)
+%assign tlcOutputsFcnOfS0B26 = OpaqueTLCBlockFcn("Outputs", 0, 26, 0, 2, 2)
+%assign tlcOutputsFcnOfS0B27 = OpaqueTLCBlockFcn("Outputs", 0, 27, 0, 2, 3)
+/* {S!d20}Sin: '<S9>/Strain' incorporates:
+ *  SimscapeExecutionBlock: '<S29>/OUTPUT_1_0'
+ *  SimscapeExecutionBlock: '<S29>/STATE_1'
+ */
+GaugeFactor_tmp = %<(SLibCG_SE(LibGetTaskTime(0)))>;
+/* {S!d22}Gain: '<S9>/Gauge Factor' incorporates:
+ *  Sin: '<S9>/Strain'
+ */
+ozysdriverandreceiver_B.GaugeFactor = (sin(ozysdriverandreceiver_P.Strain_Freq * GaugeFactor_tmp + ozysdriverandreceiver_P.Strain_Phase) * ozysdriverandreceiver_P.Strain_Amp + ozysdriverandreceiver_P.Strain_Bias) * ozysdriverandreceiver_P.GaugeFactor_Gain;
+/* {S!d24}Bias: '<S9>/Bias' */
+ozysdriverandreceiver_B.Bias = ozysdriverandreceiver_B.GaugeFactor + ozysdriverandreceiver_P.Bias_Bias;
+/* {S!d26}Product: '<S9>/Product' incorporates:
+ *  Constant: '<S9>/Resistance'
+ */
+ozysdriverandreceiver_B.samedirectionresistance = ozysdriverandreceiver_P.Resistance_Value * ozysdriverandreceiver_B.Bias;
+/* {S!d28}SimscapeInputBlock: '<S29>/INPUT_2_1_1' */
+ozysdriverandreceiver_B.INPUT_2_1_1[0] = ozysdriverandreceiver_B.samedirectionresistance;
+ozysdriverandreceiver_B.INPUT_2_1_1[1] = 0.0;
+ozysdriverandreceiver_B.INPUT_2_1_1[2] = 0.0;
+ozysdriverandreceiver_B.INPUT_2_1_1[3] = 0.0;
+/* {S!d30}Gain: '<S9>/Gauge Factor1' */
+ozysdriverandreceiver_B.GaugeFactor1 = ozysdriverandreceiver_P.GaugeFactor1_Gain * ozysdriverandreceiver_B.GaugeFactor;
+/* {S!d32}Bias: '<S9>/Bias1' */
+ozysdriverandreceiver_B.Bias1 = ozysdriverandreceiver_B.GaugeFactor1 + ozysdriverandreceiver_P.Bias1_Bias;
+/* {S!d34}Product: '<S9>/Product1' incorporates:
+ *  Constant: '<S9>/Resistance'
+ */
+ozysdriverandreceiver_B.crossdirectionresistance = ozysdriverandreceiver_P.Resistance_Value * ozysdriverandreceiver_B.Bias1;
+/* {S!d36}SimscapeInputBlock: '<S29>/INPUT_3_1_1' */
+ozysdriverandreceiver_B.INPUT_3_1_1[0] = ozysdriverandreceiver_B.crossdirectionresistance;
+ozysdriverandreceiver_B.INPUT_3_1_1[1] = 0.0;
+ozysdriverandreceiver_B.INPUT_3_1_1[2] = 0.0;
+ozysdriverandreceiver_B.INPUT_3_1_1[3] = 0.0;
+/* {S!d38}SimscapeInputBlock: '<S29>/INPUT_4_1_1' */
+ozysdriverandreceiver_B.INPUT_4_1_1[0] = ozysdriverandreceiver_B.samedirectionresistance;
+ozysdriverandreceiver_B.INPUT_4_1_1[1] = 0.0;
+ozysdriverandreceiver_B.INPUT_4_1_1[2] = 0.0;
+ozysdriverandreceiver_B.INPUT_4_1_1[3] = 0.0;
+/* {S!d40}SimscapeInputBlock: '<S29>/INPUT_1_1_1' */
+ozysdriverandreceiver_B.INPUT_1_1_1[0] = ozysdriverandreceiver_B.crossdirectionresistance;
+ozysdriverandreceiver_B.INPUT_1_1_1[1] = 0.0;
+ozysdriverandreceiver_B.INPUT_1_1_1[2] = 0.0;
+ozysdriverandreceiver_B.INPUT_1_1_1[3] = 0.0;
+/* {S!d42}SimscapeExecutionBlock: '<S29>/STATE_1' incorporates:
+ *  SimscapeExecutionBlock: '<S29>/OUTPUT_1_0'
+ */
+simulationData = (NeslSimulationData *)ozysdriverandreceiver_DW.STATE_1_SimData;
+time_tmp = %<(SLibCG_SE(LibGetT()))>;
+time = time_tmp;
+simulationData->mData->mTime.mN = 1;
+simulationData->mData->mTime.mX = &time;
+simulationData->mData->mContStates.mN = 24;
+simulationData->mData->mContStates.mX = &ozysdriverandreceiver_X.ozysdriverandreceiverSubsystem1[0];
+simulationData->mData->mDiscStates.mN = 4;
+simulationData->mData->mDiscStates.mX = &ozysdriverandreceiver_DW.STATE_1_Discrete[0];
+simulationData->mData->mModeVector.mN = 13;
+simulationData->mData->mModeVector.mX = &ozysdriverandreceiver_DW.STATE_1_Modes[0];
+tmp = %<(SLibCG_SE(SLibCGIRGetSolverFoundZcEvents()))>;
+simulationData->mData->mFoundZcEvents = tmp;
+simulationData->mData->mHadEvents = false;
+tmp = %<(SLibCG_SE(LibIsMajorTimeStep()))>;
+simulationData->mData->mIsMajorTimeStep = tmp;
+tmp_0 = %<(SLibCG_SE(SLibCGIRGetSolverAssertCheck()))>;
+simulationData->mData->mIsSolverAssertCheck = tmp_0;
+simulationData->mData->mIsSolverCheckingCIC = false;
+tmp_0 = %<(SLibCG_SE(RTMIsSolverComputingJacobian()))>;
+simulationData->mData->mIsComputingJacobian = tmp_0;
+simulationData->mData->mIsEvaluatingF0 = false;
+simulationData->mData->mIsSolverRequestingReset = false;
+tmp_0 = %<(SLibCG_SE(RTMGetIsModeUpdateTimeStep()))>;
+simulationData->mData->mIsModeUpdateTimeStep = tmp_0;
+tmp_2[0] = 0;
+tmp_1[0] = ozysdriverandreceiver_B.INPUT_2_1_1[0];
+tmp_1[1] = ozysdriverandreceiver_B.INPUT_2_1_1[1];
+tmp_1[2] = ozysdriverandreceiver_B.INPUT_2_1_1[2];
+tmp_1[3] = ozysdriverandreceiver_B.INPUT_2_1_1[3];
+tmp_2[1] = 4;
+tmp_1[4] = ozysdriverandreceiver_B.INPUT_3_1_1[0];
+tmp_1[5] = ozysdriverandreceiver_B.INPUT_3_1_1[1];
+tmp_1[6] = ozysdriverandreceiver_B.INPUT_3_1_1[2];
+tmp_1[7] = ozysdriverandreceiver_B.INPUT_3_1_1[3];
+tmp_2[2] = 8;
+tmp_1[8] = ozysdriverandreceiver_B.INPUT_4_1_1[0];
+tmp_1[9] = ozysdriverandreceiver_B.INPUT_4_1_1[1];
+tmp_1[10] = ozysdriverandreceiver_B.INPUT_4_1_1[2];
+tmp_1[11] = ozysdriverandreceiver_B.INPUT_4_1_1[3];
+tmp_2[3] = 12;
+tmp_1[12] = ozysdriverandreceiver_B.INPUT_1_1_1[0];
+tmp_1[13] = ozysdriverandreceiver_B.INPUT_1_1_1[1];
+tmp_1[14] = ozysdriverandreceiver_B.INPUT_1_1_1[2];
+tmp_1[15] = ozysdriverandreceiver_B.INPUT_1_1_1[3];
+tmp_2[4] = 16;
+simulationData->mData->mInputValues.mN = 16;
+simulationData->mData->mInputValues.mX = &tmp_1[0];
+simulationData->mData->mInputOffsets.mN = 5;
+simulationData->mData->mInputOffsets.mX = &tmp_2[0];
+simulationData->mData->mOutputs.mN = 41;
+simulationData->mData->mOutputs.mX = &ozysdriverandreceiver_B.STATE_1[0];
+simulationData->mData->mTolerances.mN = 0;
+simulationData->mData->mTolerances.mX = NULL;
+simulationData->mData->mCstateHasChanged = false;
+simulationData->mData->mDstateHasChanged = false;
+time_0 = GaugeFactor_tmp;
+simulationData->mData->mTime.mN = 1;
+simulationData->mData->mTime.mX = &time_0;
+isHit = 0;
+simulationData->mData->mSampleHits.mN = 1;
+simulationData->mData->mSampleHits.mX = &isHit;
+simulationData->mData->mIsFundamentalSampleHit = false;
+simulationData->mData->mHadEvents = false;
+diagnosticManager = (NeuDiagnosticManager *)ozysdriverandreceiver_DW.STATE_1_DiagMgr;
+diagnosticTree = neu_diagnostic_manager_get_initial_tree(diagnosticManager);
+tmp_3 = ne_simulator_method((NeslSimulator *)ozysdriverandreceiver_DW.STATE_1_Simulator, NESL_SIM_OUTPUTS, simulationData, diagnosticManager);
+if (tmp_3 != 0) {
+    tmp_4 = error_buffer_is_empty(%<(LibGetRTModelErrorStatus())>);
+    if (tmp_4) {
+        msg = rtw_diagnostics_msg(diagnosticTree);
+        %<(LibSetRTModelErrorStatus("msg"))>;
+    }
+}
+tmp_4 = %<(SLibCG_SE(SLibCGIRIsSampleHit(1, 0)))>;
+if (tmp_4) {
+    simulationData = (NeslSimulationData *)ozysdriverandreceiver_DW.STATE_1_SimData;
+    time_1 = time_tmp;
+    simulationData->mData->mTime.mN = 1;
+    simulationData->mData->mTime.mX = &time_1;
+    simulationData->mData->mContStates.mN = 24;
+    simulationData->mData->mContStates.mX = &ozysdriverandreceiver_X.ozysdriverandreceiverSubsystem1[0];
+    simulationData->mData->mDiscStates.mN = 4;
+    simulationData->mData->mDiscStates.mX = &ozysdriverandreceiver_DW.STATE_1_Discrete[0];
+    simulationData->mData->mModeVector.mN = 13;
+    simulationData->mData->mModeVector.mX = &ozysdriverandreceiver_DW.STATE_1_Modes[0];
+    tmp_5 = %<(SLibCG_SE(SLibCGIRGetSolverFoundZcEvents()))>;
+    simulationData->mData->mFoundZcEvents = tmp_5;
+    simulationData->mData->mHadEvents = false;
+    simulationData->mData->mIsMajorTimeStep = tmp;
+    tmp_5 = %<(SLibCG_SE(SLibCGIRGetSolverAssertCheck()))>;
+    simulationData->mData->mIsSolverAssertCheck = tmp_5;
+    simulationData->mData->mIsSolverCheckingCIC = false;
+    tmp_5 = %<(SLibCG_SE(RTMIsSolverComputingJacobian()))>;
+    simulationData->mData->mIsComputingJacobian = tmp_5;
+    simulationData->mData->mIsEvaluatingF0 = false;
+    simulationData->mData->mIsSolverRequestingReset = false;
+    simulationData->mData->mIsModeUpdateTimeStep = tmp_0;
+    tmp_7[0] = 0;
+    tmp_6[0] = ozysdriverandreceiver_B.INPUT_2_1_1[0];
+    tmp_6[1] = ozysdriverandreceiver_B.INPUT_2_1_1[1];
+    tmp_6[2] = ozysdriverandreceiver_B.INPUT_2_1_1[2];
+    tmp_6[3] = ozysdriverandreceiver_B.INPUT_2_1_1[3];
+    tmp_7[1] = 4;
+    tmp_6[4] = ozysdriverandreceiver_B.INPUT_3_1_1[0];
+    tmp_6[5] = ozysdriverandreceiver_B.INPUT_3_1_1[1];
+    tmp_6[6] = ozysdriverandreceiver_B.INPUT_3_1_1[2];
+    tmp_6[7] = ozysdriverandreceiver_B.INPUT_3_1_1[3];
+    tmp_7[2] = 8;
+    tmp_6[8] = ozysdriverandreceiver_B.INPUT_4_1_1[0];
+    tmp_6[9] = ozysdriverandreceiver_B.INPUT_4_1_1[1];
+    tmp_6[10] = ozysdriverandreceiver_B.INPUT_4_1_1[2];
+    tmp_6[11] = ozysdriverandreceiver_B.INPUT_4_1_1[3];
+    tmp_7[3] = 12;
+    tmp_6[12] = ozysdriverandreceiver_B.INPUT_1_1_1[0];
+    tmp_6[13] = ozysdriverandreceiver_B.INPUT_1_1_1[1];
+    tmp_6[14] = ozysdriverandreceiver_B.INPUT_1_1_1[2];
+    tmp_6[15] = ozysdriverandreceiver_B.INPUT_1_1_1[3];
+    tmp_7[4] = 16;
+    simulationData->mData->mInputValues.mN = 16;
+    simulationData->mData->mInputValues.mX = &tmp_6[0];
+    simulationData->mData->mInputOffsets.mN = 5;
+    simulationData->mData->mInputOffsets.mX = &tmp_7[0];
+    simulationData->mData->mOutputs.mN = 41;
+    simulationData->mData->mOutputs.mX = &ozysdriverandreceiver_B.STATE_1[0];
+    simulationData->mData->mTolerances.mN = 0;
+    simulationData->mData->mTolerances.mX = NULL;
+    simulationData->mData->mCstateHasChanged = false;
+    simulationData->mData->mDstateHasChanged = false;
+    time_2 = %<(SLibCG_SE(LibGetTaskTime(1)))>;
+    simulationData->mData->mTime.mN = 1;
+    simulationData->mData->mTime.mX = &time_2;
+    isHit_0 = 1;
+    simulationData->mData->mSampleHits.mN = 1;
+    simulationData->mData->mSampleHits.mX = &isHit_0;
+    simulationData->mData->mIsFundamentalSampleHit = false;
+    simulationData->mData->mIsSolverRequestingReset = true;
+    %<(RTMSetBlockStateForSolverChangedAtMajorStep())>;
+    simulationData->mData->mHadEvents = false;
+    diagnosticManager = (NeuDiagnosticManager *)ozysdriverandreceiver_DW.STATE_1_DiagMgr;
+    diagnosticTree_0 = neu_diagnostic_manager_get_initial_tree(diagnosticManager);
+    tmp_3 = ne_simulator_method((NeslSimulator *)ozysdriverandreceiver_DW.STATE_1_Simulator, NESL_SIM_OUTPUTS, simulationData, diagnosticManager);
+    if (tmp_3 != 0) {
+        tmp_5 = error_buffer_is_empty(%<(LibGetRTModelErrorStatus())>);
+        if (tmp_5) {
+            msg_0 = rtw_diagnostics_msg(diagnosticTree_0);
+            %<(LibSetRTModelErrorStatus("msg_0"))>;
+        }
+    }
+}
+/* {S!d44}SimscapeExecutionBlock: '<S29>/OUTPUT_1_0' */
+simulationData = (NeslSimulationData *)ozysdriverandreceiver_DW.OUTPUT_1_0_SimData;
+time_3 = time_tmp;
+simulationData->mData->mTime.mN = 1;
+simulationData->mData->mTime.mX = &time_3;
+simulationData->mData->mContStates.mN = 0;
+simulationData->mData->mContStates.mX = NULL;
+simulationData->mData->mDiscStates.mN = 0;
+simulationData->mData->mDiscStates.mX = &ozysdriverandreceiver_DW.OUTPUT_1_0_Discrete;
+simulationData->mData->mModeVector.mN = 0;
+simulationData->mData->mModeVector.mX = &ozysdriverandreceiver_DW.OUTPUT_1_0_Modes;
+tmp_5 = %<(SLibCG_SE(SLibCGIRGetSolverFoundZcEvents()))>;
+simulationData->mData->mFoundZcEvents = tmp_5;
+simulationData->mData->mHadEvents = false;
+simulationData->mData->mIsMajorTimeStep = tmp;
+tmp = %<(SLibCG_SE(SLibCGIRGetSolverAssertCheck()))>;
+simulationData->mData->mIsSolverAssertCheck = tmp;
+simulationData->mData->mIsSolverCheckingCIC = false;
+simulationData->mData->mIsComputingJacobian = false;
+simulationData->mData->mIsEvaluatingF0 = false;
+simulationData->mData->mIsSolverRequestingReset = false;
+simulationData->mData->mIsModeUpdateTimeStep = tmp_0;
+tmp_9[0] = 0;
+tmp_8[0] = ozysdriverandreceiver_B.INPUT_2_1_1[0];
+tmp_8[1] = ozysdriverandreceiver_B.INPUT_2_1_1[1];
+tmp_8[2] = ozysdriverandreceiver_B.INPUT_2_1_1[2];
+tmp_8[3] = ozysdriverandreceiver_B.INPUT_2_1_1[3];
+tmp_9[1] = 4;
+tmp_8[4] = ozysdriverandreceiver_B.INPUT_3_1_1[0];
+tmp_8[5] = ozysdriverandreceiver_B.INPUT_3_1_1[1];
+tmp_8[6] = ozysdriverandreceiver_B.INPUT_3_1_1[2];
+tmp_8[7] = ozysdriverandreceiver_B.INPUT_3_1_1[3];
+tmp_9[2] = 8;
+tmp_8[8] = ozysdriverandreceiver_B.INPUT_4_1_1[0];
+tmp_8[9] = ozysdriverandreceiver_B.INPUT_4_1_1[1];
+tmp_8[10] = ozysdriverandreceiver_B.INPUT_4_1_1[2];
+tmp_8[11] = ozysdriverandreceiver_B.INPUT_4_1_1[3];
+tmp_9[3] = 12;
+tmp_8[12] = ozysdriverandreceiver_B.INPUT_1_1_1[0];
+tmp_8[13] = ozysdriverandreceiver_B.INPUT_1_1_1[1];
+tmp_8[14] = ozysdriverandreceiver_B.INPUT_1_1_1[2];
+tmp_8[15] = ozysdriverandreceiver_B.INPUT_1_1_1[3];
+tmp_9[4] = 16;
+memcpy(&tmp_8[16], &ozysdriverandreceiver_B.STATE_1[0], 41U * sizeof(real_T));
+tmp_9[5] = 57;
+simulationData->mData->mInputValues.mN = 57;
+simulationData->mData->mInputValues.mX = &tmp_8[0];
+simulationData->mData->mInputOffsets.mN = 6;
+simulationData->mData->mInputOffsets.mX = &tmp_9[0];
+simulationData->mData->mOutputs.mN = 7;
+simulationData->mData->mOutputs.mX = &ozysdriverandreceiver_B.OUTPUT_1_0[0];
+simulationData->mData->mTolerances.mN = 0;
+simulationData->mData->mTolerances.mX = NULL;
+simulationData->mData->mCstateHasChanged = false;
+simulationData->mData->mDstateHasChanged = false;
+time_4 = GaugeFactor_tmp;
+simulationData->mData->mTime.mN = 1;
+simulationData->mData->mTime.mX = &time_4;
+simulationData->mData->mSampleHits.mN = 0;
+simulationData->mData->mSampleHits.mX = NULL;
+simulationData->mData->mIsFundamentalSampleHit = false;
+simulationData->mData->mHadEvents = false;
+diagnosticManager = (NeuDiagnosticManager *)ozysdriverandreceiver_DW.OUTPUT_1_0_DiagMgr;
+diagnosticTree_1 = neu_diagnostic_manager_get_initial_tree(diagnosticManager);
+tmp_3 = ne_simulator_method((NeslSimulator *)ozysdriverandreceiver_DW.OUTPUT_1_0_Simulator, NESL_SIM_OUTPUTS, simulationData, diagnosticManager);
+if (tmp_3 != 0) {
+    tmp = error_buffer_is_empty(%<(LibGetRTModelErrorStatus())>);
+    if (tmp) {
+        msg_1 = rtw_diagnostics_msg(diagnosticTree_1);
+        %<(LibSetRTModelErrorStatus("msg_1"))>;
+    }
+}
+if (tmp_4) {
+%if !WHITE_SPACE(tlcOutputsFcnOfS0B1)
+    /* {S!d46}Scope: '<Root>/Scope' */
+%<tlcOutputsFcnOfS0B1>\
+%endif
+}
+%if !WHITE_SPACE(tlcOutputsFcnOfS0B25)
+/* {S!d48}Scope: '<Root>/Scope1' */
+%<tlcOutputsFcnOfS0B25>\
+%endif
+%if !WHITE_SPACE(tlcOutputsFcnOfS0B26)
+/* {S!d50}Scope: '<Root>/Scope3' */
+%<tlcOutputsFcnOfS0B26>\
+%endif
+%if !WHITE_SPACE(tlcOutputsFcnOfS0B27)
+/* {S!d52}Scope: '<Root>/Scope4' */
+%<tlcOutputsFcnOfS0B27>\
+%endif
+%<SLibInsertSolverResetCode()>\
+%closefile cfgTxt
+%<cfgTxt>
+%<LibSetSystemField(system, "CachedOutputLocalVars", localVarDecl)>
+%endfunction
+%function OutputsFcnProtoType(block, system) Output
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void Outputs(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 2, fcnProtoType)>
+%endfunction

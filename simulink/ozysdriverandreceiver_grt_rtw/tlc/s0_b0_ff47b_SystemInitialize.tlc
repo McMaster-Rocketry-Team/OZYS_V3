@@ -1,0 +1,54 @@
+%implements s0_b0_ff47b_SystemInitialize "C"
+
+%function SystemInitialize(block, system) Output
+%assign cfgTxt = ""
+%openfile cfgTxt
+%assign localVarDecl = ""
+%openfile localVarDecl
+
+int_T tmp_1;
+int_T tmp_2;
+int_T tmp_3;
+int_T tmp_4;
+int_T tmp_5;
+int_T tmp_6;
+boolean_T tmp;
+boolean_T tmp_0;
+%closefile localVarDecl
+%assign tlcOutputsFcnOfS0B28 = OpaqueTLCBlockFcn("Outputs", 0, 28, 0, 1, 0)
+%<SLibInsertAsyncTaskInitializeCode(system)>
+%<SLibWriteMachineInitialize()>
+/* {S!d16}InitializeConditions for SimscapeExecutionBlock: '<S29>/STATE_1' */
+tmp = %<(SLibCG_SE(SLibCGIRHasCompiledModelPropertyValue("ModelReferenceTargetType", "RTW")))>;
+tmp_0 = %<(SLibCG_SE(SLibCGIRHasCompiledModelPropertyValue("ModelReferenceTargetType", "SIM")))>;
+if (tmp_0 || tmp) {
+    tmp_1 = strcmp(%<(RTMSolverGet("SolverName"))>, "daessc");
+    tmp_2 = strcmp(%<(RTMSolverGet("SolverName"))>, "ode14x");
+    tmp_3 = strcmp(%<(RTMSolverGet("SolverName"))>, "ode15s");
+    tmp_4 = strcmp(%<(RTMSolverGet("SolverName"))>, "ode1be");
+    tmp_5 = strcmp(%<(RTMSolverGet("SolverName"))>, "ode23t");
+    tmp_6 = strcmp(%<(RTMSolverGet("SolverName"))>, "odeN");
+    if ((boolean_T)((tmp_1 != 0) & (tmp_2 != 0) & (tmp_3 != 0) & (tmp_4 != 0) & (tmp_5 != 0) & (tmp_6 != 0))) {
+        %<(LibSetRTModelErrorStatus("\"Detected inconsistent solvers in the model reference hierarchy. Model built with ode14x requires one of {daessc, ode14x, ode15s, ode1be, ode23t, odeN} solvers to run. Use one of the required solvers in the top model.\""))>;
+    }
+}
+/* {E!d16}End of InitializeConditions for SimscapeExecutionBlock: '<S29>/STATE_1' */
+%if !WHITE_SPACE(tlcOutputsFcnOfS0B28)
+
+/* {S!d18}ConstCode for Scope: '<Root>/Scope2' */
+%<tlcOutputsFcnOfS0B28>\
+%endif
+%<SLibInsertInitPeriodicCStatesFcn(system)>
+%<SLibInsertInitSystemMatricesFcn(system)>
+%closefile cfgTxt
+%<cfgTxt>
+%<LibSetSystemField(system, "CachedSystemInitializeLocalVars", localVarDecl)>
+%endfunction
+%function SystemInitializeFcnProtoType(block, system) Output
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void SystemInitialize(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 1, fcnProtoType)>
+%endfunction
