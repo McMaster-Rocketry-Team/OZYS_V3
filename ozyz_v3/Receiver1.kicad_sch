@@ -886,301 +886,6 @@
 				)
 			)
 		)
-		(symbol "Transistor_FET:AO3401A"
-			(pin_names hide)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "Q"
-				(at 5.08 1.905 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
-			)
-			(property "Value" "AO3401A"
-				(at 5.08 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
-			)
-			(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-				(at 5.08 -1.905 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-						(italic yes)
-					)
-					(justify left)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "http://www.aosmd.com/pdfs/datasheet/AO3401A.pdf"
-				(at 5.08 -3.81 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-					(hide yes)
-				)
-			)
-			(property "Description" "-4.0A Id, -30V Vds, P-Channel MOSFET, SOT-23"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "P-Channel MOSFET"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "SOT?23*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "AO3401A_0_1"
-				(polyline
-					(pts
-						(xy 0.254 0) (xy -2.54 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0.254 1.905) (xy 0.254 -1.905)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0.762 -1.27) (xy 0.762 -2.286)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0.762 0.508) (xy 0.762 -0.508)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0.762 2.286) (xy 0.762 1.27)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.54 2.54) (xy 2.54 1.778)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.54 -2.54) (xy 2.54 0) (xy 0.762 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0.762 1.778) (xy 3.302 1.778) (xy 3.302 -1.778) (xy 0.762 -1.778)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.286 0) (xy 1.27 0.381) (xy 1.27 -0.381) (xy 2.286 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.794 -0.508) (xy 2.921 -0.381) (xy 3.683 -0.381) (xy 3.81 -0.254)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 3.302 -0.381) (xy 2.921 0.254) (xy 3.683 0.254) (xy 3.302 -0.381)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(circle
-					(center 1.651 0)
-					(radius 2.794)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(circle
-					(center 2.54 -1.778)
-					(radius 0.254)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(circle
-					(center 2.54 1.778)
-					(radius 0.254)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-			)
-			(symbol "AO3401A_1_1"
-				(pin input line
-					(at -5.08 0 0)
-					(length 2.54)
-					(name "G"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 2.54 -5.08 90)
-					(length 2.54)
-					(name "S"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 2.54 5.08 270)
-					(length 2.54)
-					(name "D"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-		)
 		(symbol "power:+3.3V"
 			(power)
 			(pin_numbers hide)
@@ -1531,22 +1236,10 @@
 		(uuid "34254285-7289-417c-abb9-9b4ecd73d00a")
 	)
 	(junction
-		(at 140.97 68.58)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "4640b186-d364-4e83-bb77-22fd088a77dd")
-	)
-	(junction
 		(at 152.4 88.9)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "50368086-ad46-4dcf-9678-f048b4ee5184")
-	)
-	(junction
-		(at 99.06 63.5)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "5f75463a-78e3-4a4e-a27a-276ed537e160")
 	)
 	(junction
 		(at 157.48 139.7)
@@ -1559,12 +1252,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "67cab241-ef16-48f8-a423-d99e6ad9478c")
-	)
-	(junction
-		(at 120.65 68.58)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "6c4b0d00-5271-4c7c-989c-e9a31e67d5c0")
 	)
 	(junction
 		(at 158.75 111.76)
@@ -1609,16 +1296,6 @@
 			(type default)
 		)
 		(uuid "0b24c7a3-8544-4fb9-9bbe-233da7896c4f")
-	)
-	(wire
-		(pts
-			(xy 110.49 68.58) (xy 120.65 68.58)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "113aa239-9459-4c9a-8184-599091827940")
 	)
 	(wire
 		(pts
@@ -1692,16 +1369,6 @@
 	)
 	(wire
 		(pts
-			(xy 106.68 63.5) (xy 99.06 63.5)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2ba320c8-1ff7-4828-b265-4b0e7ce8a8e8")
-	)
-	(wire
-		(pts
 			(xy 139.7 100.33) (xy 143.51 100.33)
 		)
 		(stroke
@@ -1729,16 +1396,6 @@
 			(type default)
 		)
 		(uuid "34afb8d6-660c-419e-92f7-84d3f40f64ff")
-	)
-	(wire
-		(pts
-			(xy 102.87 73.66) (xy 99.06 73.66)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "388b386a-c61e-4e3e-9115-c065180aedb0")
 	)
 	(wire
 		(pts
@@ -1789,16 +1446,6 @@
 			(type default)
 		)
 		(uuid "46105a78-43e6-4c22-b3f0-220ea69938a3")
-	)
-	(wire
-		(pts
-			(xy 120.65 63.5) (xy 114.3 63.5)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "465d45ad-f3cb-40a5-87a3-ac4e45345084")
 	)
 	(wire
 		(pts
@@ -1872,26 +1519,6 @@
 	)
 	(wire
 		(pts
-			(xy 99.06 63.5) (xy 99.06 73.66)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7730d2ad-41f3-4a89-8f87-be34af741813")
-	)
-	(wire
-		(pts
-			(xy 110.49 78.74) (xy 110.49 81.28)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7ab69e7c-ae7e-4528-b2e9-6893f8741a75")
-	)
-	(wire
-		(pts
 			(xy 143.51 88.9) (xy 143.51 91.44)
 		)
 		(stroke
@@ -1939,36 +1566,6 @@
 			(type default)
 		)
 		(uuid "86d01a97-ca1a-4881-ac4f-6d7fdda81c2f")
-	)
-	(wire
-		(pts
-			(xy 120.65 63.5) (xy 120.65 68.58)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a255d222-25f0-4d86-b819-83d85c6b7869")
-	)
-	(wire
-		(pts
-			(xy 77.47 63.5) (xy 99.06 63.5)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a41b7588-8de9-4586-9142-a35ff42a6d45")
-	)
-	(wire
-		(pts
-			(xy 120.65 68.58) (xy 140.97 68.58)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a5686e88-260a-44e9-97a2-cbc8157bbd21")
 	)
 	(wire
 		(pts
@@ -2060,17 +1657,6 @@
 			(justify right)
 		)
 		(uuid "4cdb7864-c4b5-4461-8dca-3929682de22e")
-	)
-	(hierarchical_label "EEPROM_MCU"
-		(shape input)
-		(at 77.47 63.5 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "57421abb-e0fd-471e-b7c7-521ace21e587")
 	)
 	(hierarchical_label "DIFFERENTIAL_M"
 		(shape input)
@@ -2170,165 +1756,6 @@
 				)
 				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/d66c3d32-3008-485f-b8d3-7e1a6a0b22a4"
 					(reference "R23")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 110.49 81.28 0)
-		(mirror y)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "2ac8823d-25cc-4f09-82ed-6ddf25c33bd9")
-		(property "Reference" "#PWR051"
-			(at 110.49 87.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 110.49 86.36 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 110.49 81.28 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 110.49 81.28 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 110.49 81.28 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "7835c5ec-5d6b-4a1b-9581-bbf48671e8e1")
-		)
-		(instances
-			(project "OZYS_V3_Final"
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/55853f5b-0992-495b-b96a-8743589b5403"
-					(reference "#PWR051")
-					(unit 1)
-				)
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/6e4545c6-9e5c-4e6b-94f2-451b2f16f4ae"
-					(reference "#PWR049")
-					(unit 1)
-				)
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/92ea14e4-7796-41b2-9af7-4cb5ffd88b52"
-					(reference "#PWR045")
-					(unit 1)
-				)
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/d66c3d32-3008-485f-b8d3-7e1a6a0b22a4"
-					(reference "#PWR054")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 110.49 63.5 270)
-		(mirror x)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "2b685b62-e02b-47df-921c-81d4ac8ca592")
-		(property "Reference" "R25"
-			(at 110.49 57.15 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "10K"
-			(at 110.49 59.69 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 110.49 65.278 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 110.49 63.5 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 110.49 63.5 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "b2934de9-bc71-47a5-9408-a651b7264b73")
-		)
-		(pin "2"
-			(uuid "21854d8a-cc57-49a3-b895-d5a305f949f7")
-		)
-		(instances
-			(project "OZYS_V3_Final"
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/55853f5b-0992-495b-b96a-8743589b5403"
-					(reference "R25")
-					(unit 1)
-				)
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/6e4545c6-9e5c-4e6b-94f2-451b2f16f4ae"
-					(reference "R14")
-					(unit 1)
-				)
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/92ea14e4-7796-41b2-9af7-4cb5ffd88b52"
-					(reference "R1")
-					(unit 1)
-				)
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/d66c3d32-3008-485f-b8d3-7e1a6a0b22a4"
-					(reference "R31")
 					(unit 1)
 				)
 			)
@@ -2582,92 +2009,6 @@
 				)
 				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/d66c3d32-3008-485f-b8d3-7e1a6a0b22a4"
 					(reference "Q10")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Transistor_FET:AO3401A")
-		(at 107.95 73.66 0)
-		(mirror x)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "5193866d-5615-4d99-b34e-88a1e4faae1c")
-		(property "Reference" "Q7"
-			(at 116.84 73.66 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "AO3401A"
-			(at 114.3 73.66 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 113.03 71.755 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://www.aosmd.com/pdfs/datasheet/AO3401A.pdf"
-			(at 113.03 69.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Description" "-4.0A Id, -30V Vds, P-Channel MOSFET, SOT-23"
-			(at 107.95 73.66 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "3"
-			(uuid "582308d9-99ff-4239-b9cc-c1acd23ca772")
-		)
-		(pin "1"
-			(uuid "7ab0ddff-0083-4474-8d8d-a928e8484ccf")
-		)
-		(pin "2"
-			(uuid "2cb9e95f-f1ef-4eb2-b3b1-4344409db0a8")
-		)
-		(instances
-			(project "OZYS_V3_Final"
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/55853f5b-0992-495b-b96a-8743589b5403"
-					(reference "Q7")
-					(unit 1)
-				)
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/6e4545c6-9e5c-4e6b-94f2-451b2f16f4ae"
-					(reference "Q3")
-					(unit 1)
-				)
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/92ea14e4-7796-41b2-9af7-4cb5ffd88b52"
-					(reference "Q5")
-					(unit 1)
-				)
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/d66c3d32-3008-485f-b8d3-7e1a6a0b22a4"
-					(reference "Q9")
 					(unit 1)
 				)
 			)
