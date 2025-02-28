@@ -5779,12 +5779,12 @@
 		(uuid "374dfafa-2b9e-4cdc-a44b-a9ed053765a9")
 	)
 	(label "LED4"
-		(at 157.48 76.2 0)
+		(at 97.79 99.06 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "384266b3-a740-4df3-9806-854358fbaecb")
 	)
@@ -5889,7 +5889,7 @@
 		(uuid "7302496a-0350-436c-9925-34c984e3a137")
 	)
 	(label "LED2"
-		(at 157.48 71.12 0)
+		(at 133.35 81.28 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5979,12 +5979,12 @@
 		(uuid "9ad17a9f-b626-4dbf-97a0-936f57a051d1")
 	)
 	(label "LED1"
-		(at 157.48 68.58 0)
+		(at 97.79 73.66 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "9d47c6f9-2dab-44ce-8e12-f9ecb10de008")
 	)
@@ -6229,12 +6229,12 @@
 		(uuid "fa900e88-bc05-4325-9b55-7f9b18e6d957")
 	)
 	(label "LED3"
-		(at 157.48 73.66 0)
+		(at 97.79 101.6 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "fc778618-05aa-4e1a-9824-ccd10864031d")
 	)
