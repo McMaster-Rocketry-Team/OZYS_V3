@@ -4647,6 +4647,16 @@
 	)
 	(wire
 		(pts
+			(xy 222.25 127) (xy 229.87 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3bcbf605-9885-45a8-a831-f2945a9b326b")
+	)
+	(wire
+		(pts
 			(xy 238.76 142.24) (xy 233.68 142.24)
 		)
 		(stroke
@@ -4874,6 +4884,16 @@
 			(type default)
 		)
 		(uuid "63266464-9a9d-40eb-b063-2a0d6e548933")
+	)
+	(wire
+		(pts
+			(xy 222.25 123.19) (xy 222.25 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "63e3a8c6-f1bb-4462-a093-470f7bb472ee")
 	)
 	(wire
 		(pts
@@ -5144,16 +5164,6 @@
 			(type default)
 		)
 		(uuid "b196b995-838c-4c3c-b9ec-b21e2315400a")
-	)
-	(wire
-		(pts
-			(xy 229.87 127) (xy 226.06 127)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b1d2ebc2-6560-4a6d-949c-c2d78ad2e190")
 	)
 	(wire
 		(pts
@@ -6634,6 +6644,72 @@
 			(project "OZYS_V3_Final"
 				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea"
 					(reference "#PWR069")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3.3V")
+		(at 222.25 123.19 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "1c8d12f2-95bb-4b15-8e02-657e0af83ca0")
+		(property "Reference" "#PWR013"
+			(at 222.25 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 222.2501 119.38 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 222.25 123.19 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 222.25 123.19 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
+			(at 222.25 123.19 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "90109677-6948-4657-a05b-0ea9db7118fb")
+		)
+		(instances
+			(project "OZYS_V3_Final"
+				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea"
+					(reference "#PWR013")
 					(unit 1)
 				)
 			)
@@ -9921,74 +9997,6 @@
 			(project "OZYS_V3_Final"
 				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea"
 					(reference "#PWR073")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+3.3V")
-		(at 226.06 127 90)
-		(mirror x)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "be069c33-fd5a-4c1b-ae4e-e3fa2060ec18")
-		(property "Reference" "#PWR013"
-			(at 229.87 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3.3V"
-			(at 222.25 126.9999 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 226.06 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 226.06 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 226.06 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "3a5d33a4-c37e-4d5e-86a7-faf015d1d5e0")
-		)
-		(instances
-			(project "OZYS_V3_Final"
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea"
-					(reference "#PWR013")
 					(unit 1)
 				)
 			)
