@@ -4407,16 +4407,6 @@
 	)
 	(wire
 		(pts
-			(xy 40.64 68.58) (xy 97.79 68.58)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "03f184bf-8be0-4701-a100-8a029b0d7283")
-	)
-	(wire
-		(pts
 			(xy 107.95 170.18) (xy 111.76 170.18)
 		)
 		(stroke
@@ -4504,6 +4494,16 @@
 			(type default)
 		)
 		(uuid "1a4d3985-dde0-42c8-8d25-7e6f70e8c87d")
+	)
+	(wire
+		(pts
+			(xy 38.1 68.58) (xy 97.79 68.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1aa96e33-dbec-4dd5-88e3-9357f4dbffab")
 	)
 	(wire
 		(pts
@@ -4694,6 +4694,16 @@
 			(type default)
 		)
 		(uuid "4619fdd3-92e5-4dc0-a368-3c1bcaafa2b2")
+	)
+	(wire
+		(pts
+			(xy 96.52 96.52) (xy 97.79 96.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "482550a0-ecb8-4bc7-9aa5-3eb4fc848ef3")
 	)
 	(wire
 		(pts
@@ -5077,7 +5087,7 @@
 	)
 	(wire
 		(pts
-			(xy 40.64 54.61) (xy 33.02 54.61)
+			(xy 38.1 54.61) (xy 33.02 54.61)
 		)
 		(stroke
 			(width 0)
@@ -5207,6 +5217,16 @@
 	)
 	(wire
 		(pts
+			(xy 96.52 91.44) (xy 97.79 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bfe96923-87ee-4ff3-bb79-c1f4139fa099")
+	)
+	(wire
+		(pts
 			(xy 115.57 129.54) (xy 115.57 130.81)
 		)
 		(stroke
@@ -5227,7 +5247,7 @@
 	)
 	(wire
 		(pts
-			(xy 40.64 54.61) (xy 40.64 68.58)
+			(xy 38.1 54.61) (xy 38.1 68.58)
 		)
 		(stroke
 			(width 0)
@@ -5437,6 +5457,16 @@
 	)
 	(wire
 		(pts
+			(xy 96.52 93.98) (xy 97.79 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f4a9ab98-b6d1-49eb-9f67-66856589cbf6")
+	)
+	(wire
+		(pts
 			(xy 157.48 170.18) (xy 161.29 170.18)
 		)
 		(stroke
@@ -5549,12 +5579,12 @@
 		(uuid "03aabea5-2851-45f1-9963-1759789861b0")
 	)
 	(label "CS"
-		(at 157.48 78.74 0)
+		(at 97.79 106.68 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "041e3aad-9d0f-494f-b644-a30b8291b1c3")
 	)
@@ -5579,7 +5609,7 @@
 		(uuid "08e700cc-ca81-40b2-93cc-056500236603")
 	)
 	(label "DM4"
-		(at 173.99 86.36 0)
+		(at 133.35 63.5 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5599,7 +5629,7 @@
 		(uuid "12c8d06f-6799-4566-b696-a6fac70fb7f5")
 	)
 	(label "DM1"
-		(at 173.99 71.12 0)
+		(at 133.35 58.42 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5649,7 +5679,7 @@
 		(uuid "2317dd89-361a-49c0-b860-48ea64c099a7")
 	)
 	(label "MKDV32_Input"
-		(at 97.79 96.52 180)
+		(at 96.52 96.52 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5659,17 +5689,17 @@
 		(uuid "242a08a9-ae52-4347-92cb-a0ba86923973")
 	)
 	(label "DP2"
-		(at 173.99 73.66 0)
+		(at 97.79 111.76 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "27b0d43c-f237-4d8b-93bd-37581d5f334f")
 	)
 	(label "DP1"
-		(at 173.99 68.58 0)
+		(at 133.35 55.88 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5689,27 +5719,27 @@
 		(uuid "32248604-227f-4735-8a76-80ec333cbd7e")
 	)
 	(label "ONE_WIRE_OUT4"
-		(at 189.23 76.2 0)
+		(at 97.79 121.92 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "32304b18-4fa7-4350-89f1-57556d0cfdee")
 	)
 	(label "DP3"
-		(at 173.99 78.74 0)
+		(at 97.79 114.3 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "32c5a6e4-d26b-4062-8628-099ac535110e")
 	)
 	(label "DP4"
-		(at 173.99 83.82 0)
+		(at 133.35 60.96 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5749,7 +5779,7 @@
 		(uuid "384266b3-a740-4df3-9806-854358fbaecb")
 	)
 	(label "ONE_WIRE_OUT1"
-		(at 189.23 68.58 0)
+		(at 133.35 66.04 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5759,12 +5789,12 @@
 		(uuid "4129c342-0b4c-41a0-90fa-92752310a0df")
 	)
 	(label "3V3A_SW_EN"
-		(at 157.48 83.82 0)
+		(at 97.79 116.84 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "41dc41be-e72e-4e47-bf2c-70bc585fb59b")
 	)
@@ -5779,7 +5809,7 @@
 		(uuid "486e4748-632d-4e70-9408-d1ab2d19b63a")
 	)
 	(label "ONE_WIRE_OUT3"
-		(at 189.23 73.66 0)
+		(at 133.35 68.58 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5899,12 +5929,12 @@
 		(uuid "83ee0a68-85c0-45ed-9b3f-6b2d862ee328")
 	)
 	(label "DM3"
-		(at 173.99 81.28 0)
+		(at 97.79 86.36 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "84fdf4aa-4f74-43d0-bc2d-9db0184e23a2")
 	)
@@ -5929,7 +5959,7 @@
 		(uuid "9844535e-1be9-4e7b-9035-dab2aa03608d")
 	)
 	(label "PS"
-		(at 157.48 81.28 0)
+		(at 133.35 73.66 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6009,7 +6039,7 @@
 		(uuid "b6638328-1b7b-48ea-b06f-27146efbaef1")
 	)
 	(label "MKDV32_Clock"
-		(at 97.79 91.44 180)
+		(at 96.52 91.44 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6039,7 +6069,7 @@
 		(uuid "cfa9e024-027a-458a-9734-7895a755d384")
 	)
 	(label "ONE_WIRE_OUT2"
-		(at 189.23 71.12 0)
+		(at 133.35 71.12 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6049,32 +6079,32 @@
 		(uuid "d442185a-a49b-478b-a119-fa88310df9a3")
 	)
 	(label "BAT_V_M"
-		(at 189.23 78.74 0)
+		(at 97.79 88.9 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "d8e16c0b-d4f1-48de-b2b0-ddaabfa4dcd3")
 	)
 	(label "STATUS_LED"
-		(at 157.48 86.36 0)
+		(at 97.79 119.38 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "dfd56f92-7363-4d40-a59b-98dc63d9a9eb")
 	)
 	(label "DM2"
-		(at 173.99 76.2 0)
+		(at 97.79 83.82 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "e12a5370-10bf-4cdb-933f-fa0be32c1430")
 	)
@@ -6149,7 +6179,7 @@
 		(uuid "f3a0ff59-22d7-4f86-8a06-564fcbd31df8")
 	)
 	(label "MKDV32_Output"
-		(at 97.79 93.98 180)
+		(at 96.52 93.98 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6206,7 +6236,6 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "09ab195c-89af-44fd-ab94-8ba1a106715b")
 		(property "Reference" "U2"
 			(at 120.3041 129.54 0)
