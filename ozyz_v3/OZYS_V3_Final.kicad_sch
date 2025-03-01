@@ -2553,251 +2553,6 @@
 				)
 			)
 		)
-		(symbol "Rocketry_Easyeda:2N7002"
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "Q"
-				(at 0 10.16 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "2N7002"
-				(at 0 -10.16 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" "Rocketry_Easyeda:SOT-23-3_L2.9-W1.3-P1.90-LS2.4-BR"
-				(at 0 -12.7 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "https://lcsc.com/product-detail/MOSFET_2N7002-7002_C8545.html"
-				(at 0 -15.24 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "LCSC Part" "C8545"
-				(at 0 -17.78 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "2N7002_0_1"
-				(polyline
-					(pts
-						(xy -2.54 0) (xy -0.51 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -0.51 2.29) (xy -0.51 -2.29)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 -2.29) (xy 0 -1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 -0.51) (xy 0 0.51)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 2.29) (xy 0 1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.54 -1.78) (xy 0 -1.78)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 0) (xy 1.52 -0.51) (xy 1.52 0.51) (xy 0 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(polyline
-					(pts
-						(xy 5.08 0.51) (xy 4.32 -0.76) (xy 5.84 -0.76) (xy 5.08 0.51)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(polyline
-					(pts
-						(xy 6.1 0.51) (xy 5.59 0.51) (xy 4.57 0.51) (xy 4.06 0.51)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 0) (xy 2.54 0) (xy 2.54 -2.54) (xy 5.08 -2.54) (xy 5.08 -0.76)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 1.78) (xy 2.54 1.78) (xy 2.54 2.54) (xy 5.08 2.54) (xy 5.08 0.51)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(pin unspecified line
-					(at -5.08 0 0)
-					(length 2.54)
-					(name "G"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin unspecified line
-					(at 2.54 -5.08 90)
-					(length 2.54)
-					(name "S"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin unspecified line
-					(at 2.54 5.08 270)
-					(length 2.54)
-					(name "D"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-		)
 		(symbol "Rocketry_Easyeda:532610571"
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -4407,7 +4162,7 @@
 	)
 	(wire
 		(pts
-			(xy 107.95 170.18) (xy 111.76 170.18)
+			(xy 114.3 161.29) (xy 123.19 161.29)
 		)
 		(stroke
 			(width 0)
@@ -4434,16 +4189,6 @@
 			(type default)
 		)
 		(uuid "0a80b44e-b555-45c5-a608-80e396caaae5")
-	)
-	(wire
-		(pts
-			(xy 119.38 170.18) (xy 125.73 170.18)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0b01ff03-0803-4a06-9e5d-e76f328f958c")
 	)
 	(wire
 		(pts
@@ -4667,16 +4412,6 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 182.88) (xy 152.4 177.8)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "41fffe5e-8e31-4897-a430-c14d43c0685f")
-	)
-	(wire
-		(pts
 			(xy 154.94 22.86) (xy 168.91 22.86)
 		)
 		(stroke
@@ -4684,6 +4419,16 @@
 			(type default)
 		)
 		(uuid "421aad1d-393a-46ca-8fe0-55a23ca2782a")
+	)
+	(wire
+		(pts
+			(xy 133.35 161.29) (xy 140.97 161.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "422177c8-613f-4abe-86e1-85ca12e1e35d")
 	)
 	(wire
 		(pts
@@ -5147,16 +4892,6 @@
 	)
 	(wire
 		(pts
-			(xy 135.89 170.18) (xy 147.32 170.18)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a73b48a1-4150-4097-a409-f537f5c367a0")
-	)
-	(wire
-		(pts
 			(xy 127 43.18) (xy 140.97 43.18)
 		)
 		(stroke
@@ -5244,6 +4979,16 @@
 			(type default)
 		)
 		(uuid "c14f7770-e591-4c65-86de-e29c8bf4777d")
+	)
+	(wire
+		(pts
+			(xy 148.59 161.29) (xy 156.21 161.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c51082f9-fb32-4763-912d-a417f2c44556")
 	)
 	(wire
 		(pts
@@ -5474,16 +5219,6 @@
 			(type default)
 		)
 		(uuid "f4a9ab98-b6d1-49eb-9f67-66856589cbf6")
-	)
-	(wire
-		(pts
-			(xy 157.48 170.18) (xy 161.29 170.18)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f5d94907-396f-4fa6-bf0b-e5c7a4320dac")
 	)
 	(wire
 		(pts
@@ -5779,7 +5514,7 @@
 		(uuid "374dfafa-2b9e-4cdc-a44b-a9ed053765a9")
 	)
 	(label "LED4"
-		(at 97.79 99.06 180)
+		(at 97.79 101.6 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5909,7 +5644,7 @@
 		(uuid "7b7b8c36-7675-4dc4-8b32-210dfddf34cc")
 	)
 	(label "STATUS_LED"
-		(at 152.4 182.88 180)
+		(at 114.3 161.29 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6229,7 +5964,7 @@
 		(uuid "fa900e88-bc05-4325-9b55-7f9b18e6d957")
 	)
 	(label "LED3"
-		(at 97.79 101.6 180)
+		(at 97.79 99.06 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6578,72 +6313,6 @@
 			(project "OZYS_V3_Final"
 				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea"
 					(reference "#PWR026")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+3.3V")
-		(at 107.95 170.18 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "177ef9f9-454d-465d-8e44-8e8c9773f830")
-		(property "Reference" "#PWR069"
-			(at 111.76 170.18 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3V3"
-			(at 104.14 170.1799 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 107.95 170.18 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 107.95 170.18 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 107.95 170.18 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "87c9db82-1a72-40ea-bad4-4a453726b986")
-		)
-		(instances
-			(project "OZYS_V3_Final"
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea"
-					(reference "#PWR069")
 					(unit 1)
 				)
 			)
@@ -7595,7 +7264,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 161.29 170.18 90)
+		(at 156.21 161.29 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7604,7 +7273,7 @@
 		(fields_autoplaced yes)
 		(uuid "52d46bdb-591d-4b10-9bb2-57c7545b05ff")
 		(property "Reference" "#PWR072"
-			(at 167.64 170.18 0)
+			(at 162.56 161.29 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7613,7 +7282,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 165.1 170.1799 90)
+			(at 160.02 161.2899 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7622,7 +7291,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 161.29 170.18 0)
+			(at 156.21 161.29 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7631,7 +7300,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 161.29 170.18 0)
+			(at 156.21 161.29 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7640,7 +7309,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 161.29 170.18 0)
+			(at 156.21 161.29 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7722,6 +7391,74 @@
 			(project "OZYS_V3_Final"
 				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea"
 					(reference "C40")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 144.78 161.29 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "5b6b0ae4-a010-40e1-a425-3957b53850a9")
+		(property "Reference" "R1"
+			(at 144.78 154.94 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "220R"
+			(at 144.78 157.48 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 144.78 163.068 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 144.78 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 144.78 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "0668e1e4-d592-4571-ab15-865224fede7d")
+		)
+		(pin "2"
+			(uuid "f3948a48-6edc-471a-b814-c364e83c54b7")
+		)
+		(instances
+			(project "OZYS_V3_Final"
+				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea"
+					(reference "R1")
 					(unit 1)
 				)
 			)
@@ -8291,86 +8028,6 @@
 			(project "OZYS_V3_Final"
 				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea"
 					(reference "#PWR04")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Rocketry_Easyeda:2N7002")
-		(at 152.4 172.72 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "7ed1c68b-e30e-4522-80d3-e3aacb47a31c")
-		(property "Reference" "Q3"
-			(at 152.4 161.29 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "2N7002"
-			(at 152.4 163.83 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Rocketry_Easyeda:SOT-23-3_L2.9-W1.3-P1.90-LS2.4-BR"
-			(at 165.1 172.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://lcsc.com/product-detail/MOSFET_2N7002-7002_C8545.html"
-			(at 167.64 172.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 152.4 172.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC Part" "C8545"
-			(at 170.18 172.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "a81026f1-c3b1-4b62-b5a5-e6cc691e8a36")
-		)
-		(pin "2"
-			(uuid "8ccdff32-aff2-42ac-8c53-e5b237038411")
-		)
-		(pin "3"
-			(uuid "a7403a1e-f65f-46c8-9213-f99bbd011839")
-		)
-		(instances
-			(project "OZYS_V3_Final"
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea"
-					(reference "Q3")
 					(unit 1)
 				)
 			)
@@ -9456,74 +9113,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R")
-		(at 115.57 170.18 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "a7bf1eaa-d639-4a88-b477-78766a454d6a")
-		(property "Reference" "R1"
-			(at 115.57 163.83 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "75R"
-			(at 115.57 166.37 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 115.57 171.958 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 115.57 170.18 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 115.57 170.18 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "76888833-8048-44c5-a06c-e3d890217402")
-		)
-		(pin "2"
-			(uuid "9e55f1f8-9bbb-4380-b972-b907318272ac")
-		)
-		(instances
-			(project "OZYS_V3_Final"
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea"
-					(reference "R1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:GND")
 		(at 179.07 30.48 0)
 		(mirror y)
@@ -10003,6 +9592,84 @@
 		)
 	)
 	(symbol
+		(lib_id "Rocketry_Easyeda:19-213_Y2C-CQ2R2L_3T(CY) (0603 Yellow)")
+		(at 128.27 161.29 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "bd41dc95-476c-4561-bc89-6fed4c4d5f69")
+		(property "Reference" "LED5"
+			(at 128.78 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "19-213/Y2C-CQ2R2L/3T(CY)"
+			(at 128.78 153.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Rocketry_Easyeda:LED0603-RD-YELLOW"
+			(at 128.27 168.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://lcsc.com/product-detail/Light-Emitting-Diodes-LED_0603-Yellow-light_C72038.html"
+			(at 128.27 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 128.27 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" "C72038"
+			(at 128.27 173.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b2ef92aa-a4ef-43e2-952f-bddad3745862")
+		)
+		(pin "2"
+			(uuid "d70f38d2-5e9e-47b2-9c70-813cad850873")
+		)
+		(instances
+			(project "OZYS_V3_Final"
+				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea"
+					(reference "LED5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:+3.3V")
 		(at 66.04 34.29 90)
 		(unit 1)
@@ -10294,84 +9961,6 @@
 			(project "OZYS_V3_Final"
 				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea"
 					(reference "U8")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Rocketry_Easyeda:19-213_Y2C-CQ2R2L_3T(CY) (0603 Yellow)")
-		(at 130.81 170.18 0)
-		(mirror y)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "d2fbca89-50e4-4385-add0-a3553f4567ff")
-		(property "Reference" "LED5"
-			(at 131.32 160.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "19-213/Y2C-CQ2R2L/3T(CY)"
-			(at 131.32 162.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Rocketry_Easyeda:LED0603-RD-YELLOW"
-			(at 130.81 177.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://lcsc.com/product-detail/Light-Emitting-Diodes-LED_0603-Yellow-light_C72038.html"
-			(at 130.81 180.34 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 130.81 170.18 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC Part" "C72038"
-			(at 130.81 182.88 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "4c01eb50-f7d2-465c-8a06-b855315d114b")
-		)
-		(pin "2"
-			(uuid "af5f443c-d741-4ed0-8d66-5f1036effdaa")
-		)
-		(instances
-			(project ""
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea"
-					(reference "LED5")
 					(unit 1)
 				)
 			)

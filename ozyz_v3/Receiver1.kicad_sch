@@ -641,371 +641,6 @@
 				)
 			)
 		)
-		(symbol "Rocketry_Easyeda:2N7002"
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "Q"
-				(at 0 10.16 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "2N7002"
-				(at 0 -10.16 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" "Rocketry_Easyeda:SOT-23-3_L2.9-W1.3-P1.90-LS2.4-BR"
-				(at 0 -12.7 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "https://lcsc.com/product-detail/MOSFET_2N7002-7002_C8545.html"
-				(at 0 -15.24 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "LCSC Part" "C8545"
-				(at 0 -17.78 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "2N7002_0_1"
-				(polyline
-					(pts
-						(xy -2.54 0) (xy -0.51 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -0.51 2.29) (xy -0.51 -2.29)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 -2.29) (xy 0 -1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 -0.51) (xy 0 0.51)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 2.29) (xy 0 1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.54 -1.78) (xy 0 -1.78)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 0) (xy 1.52 -0.51) (xy 1.52 0.51) (xy 0 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(polyline
-					(pts
-						(xy 5.08 0.51) (xy 4.32 -0.76) (xy 5.84 -0.76) (xy 5.08 0.51)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(polyline
-					(pts
-						(xy 6.1 0.51) (xy 5.59 0.51) (xy 4.57 0.51) (xy 4.06 0.51)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 0) (xy 2.54 0) (xy 2.54 -2.54) (xy 5.08 -2.54) (xy 5.08 -0.76)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 1.78) (xy 2.54 1.78) (xy 2.54 2.54) (xy 5.08 2.54) (xy 5.08 0.51)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(pin unspecified line
-					(at -5.08 0 0)
-					(length 2.54)
-					(name "G"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin unspecified line
-					(at 2.54 -5.08 90)
-					(length 2.54)
-					(name "S"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin unspecified line
-					(at 2.54 5.08 270)
-					(length 2.54)
-					(name "D"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-		)
-		(symbol "power:+3.3V"
-			(power)
-			(pin_numbers hide)
-			(pin_names
-				(offset 0) hide)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "#PWR"
-				(at 0 -3.81 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Value" "+3.3V"
-				(at 0 3.556 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "global power"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "+3.3V_0_1"
-				(polyline
-					(pts
-						(xy -0.762 1.27) (xy 0 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 0) (xy 0 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 2.54) (xy 0.762 1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "+3.3V_1_1"
-				(pin power_in line
-					(at 0 0 90)
-					(length 0)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-		)
 		(symbol "power:+3.3VA"
 			(power)
 			(pin_numbers hide)
@@ -1267,16 +902,6 @@
 	)
 	(wire
 		(pts
-			(xy 172.72 142.24) (xy 184.15 142.24)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "09c4c50d-1f43-4ae4-ac32-254a3fb2412d")
-	)
-	(wire
-		(pts
 			(xy 163.83 92.71) (xy 163.83 93.98)
 		)
 		(stroke
@@ -1347,6 +972,16 @@
 	)
 	(wire
 		(pts
+			(xy 171.45 142.24) (xy 184.15 142.24)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "295da872-b62b-4a34-9744-d2662a0d6774")
+	)
+	(wire
+		(pts
 			(xy 134.62 105.41) (xy 138.43 105.41)
 		)
 		(stroke
@@ -1384,16 +1019,6 @@
 			(type default)
 		)
 		(uuid "2de623d3-7050-4508-ab0e-43d333b03ea8")
-	)
-	(wire
-		(pts
-			(xy 123.19 142.24) (xy 127 142.24)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "31b2e70d-7759-435b-84fe-e1e1a64cef32")
 	)
 	(wire
 		(pts
@@ -1497,16 +1122,6 @@
 	)
 	(wire
 		(pts
-			(xy 167.64 154.94) (xy 167.64 149.86)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7e499e3f-358a-4429-8d6d-416bd3bee0c1")
-	)
-	(wire
-		(pts
 			(xy 134.62 82.55) (xy 138.43 82.55)
 		)
 		(stroke
@@ -1577,16 +1192,6 @@
 	)
 	(wire
 		(pts
-			(xy 163.83 154.94) (xy 167.64 154.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d5aab147-3467-4d76-ad4c-6102e7aafcac")
-	)
-	(wire
-		(pts
 			(xy 127 105.41) (xy 120.65 105.41)
 		)
 		(stroke
@@ -1627,7 +1232,7 @@
 	)
 	(wire
 		(pts
-			(xy 151.13 142.24) (xy 162.56 142.24)
+			(xy 151.13 142.24) (xy 163.83 142.24)
 		)
 		(stroke
 			(width 0)
@@ -1670,14 +1275,14 @@
 	)
 	(hierarchical_label "LED_SW"
 		(shape input)
-		(at 163.83 154.94 180)
+		(at 134.62 142.24 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right)
 		)
-		(uuid "7d2e10eb-45d1-4779-88a3-e9f827ed025d")
+		(uuid "e5808a14-4f51-4b86-b4fc-e90089cb82d0")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -1920,24 +1525,16 @@
 		)
 	)
 	(symbol
-		(lib_id "Rocketry_Easyeda:2N7002")
-		(at 167.64 144.78 90)
+		(lib_id "Device:R")
+		(at 167.64 142.24 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "42c8d08e-2dc2-454d-9565-86f43ad0f640")
-		(property "Reference" "Q8"
-			(at 167.64 133.35 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "2N7002"
+		(uuid "4053b919-ac0a-43ff-9411-206e858e04ce")
+		(property "Reference" "R15"
 			(at 167.64 135.89 90)
 			(effects
 				(font
@@ -1945,8 +1542,16 @@
 				)
 			)
 		)
-		(property "Footprint" "Rocketry_Easyeda:SOT-23-3_L2.9-W1.3-P1.90-LS2.4-BR"
-			(at 180.34 144.78 0)
+		(property "Value" "220R"
+			(at 167.64 138.43 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 167.64 144.018 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1954,8 +1559,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://lcsc.com/product-detail/MOSFET_2N7002-7002_C8545.html"
-			(at 182.88 144.78 0)
+		(property "Datasheet" "~"
+			(at 167.64 142.24 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1963,17 +1568,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" ""
-			(at 167.64 144.78 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC Part" "C8545"
-			(at 185.42 144.78 0)
+		(property "Description" "Resistor"
+			(at 167.64 142.24 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1982,30 +1578,27 @@
 			)
 		)
 		(pin "1"
-			(uuid "ff3f6c05-3844-4349-b2b8-dece48160538")
+			(uuid "349c1c71-27ba-4947-b4f1-eb64eb01269b")
 		)
 		(pin "2"
-			(uuid "8fc465ac-69c9-40ed-ace6-640781f4abad")
-		)
-		(pin "3"
-			(uuid "9060ea9e-a23f-4475-97b4-0891ba967fc4")
+			(uuid "29983fd2-3377-4010-a4fd-05df99756015")
 		)
 		(instances
 			(project "OZYS_V3_Final"
 				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/55853f5b-0992-495b-b96a-8743589b5403"
-					(reference "Q8")
+					(reference "R26")
 					(unit 1)
 				)
 				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/6e4545c6-9e5c-4e6b-94f2-451b2f16f4ae"
-					(reference "Q4")
+					(reference "R17")
 					(unit 1)
 				)
 				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/92ea14e4-7796-41b2-9af7-4cb5ffd88b52"
-					(reference "Q6")
+					(reference "R15")
 					(unit 1)
 				)
 				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/d66c3d32-3008-485f-b8d3-7e1a6a0b22a4"
-					(reference "Q10")
+					(reference "R32")
 					(unit 1)
 				)
 			)
@@ -2911,86 +2504,6 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 130.81 142.24 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "e58007df-18f1-4bc4-82be-3c2b619a297e")
-		(property "Reference" "R26"
-			(at 130.81 135.89 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "33R"
-			(at 130.81 138.43 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 130.81 144.018 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 130.81 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 130.81 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "aeb49dba-3578-48b2-8350-09d6a01da946")
-		)
-		(pin "2"
-			(uuid "6a9157d5-3290-4553-b930-7e19bc21d473")
-		)
-		(instances
-			(project "OZYS_V3_Final"
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/55853f5b-0992-495b-b96a-8743589b5403"
-					(reference "R26")
-					(unit 1)
-				)
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/6e4545c6-9e5c-4e6b-94f2-451b2f16f4ae"
-					(reference "R17")
-					(unit 1)
-				)
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/92ea14e4-7796-41b2-9af7-4cb5ffd88b52"
-					(reference "R15")
-					(unit 1)
-				)
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/d66c3d32-3008-485f-b8d3-7e1a6a0b22a4"
-					(reference "R32")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
 		(at 130.81 82.55 270)
 		(unit 1)
 		(exclude_from_sim no)
@@ -3147,84 +2660,6 @@
 				)
 				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/d66c3d32-3008-485f-b8d3-7e1a6a0b22a4"
 					(reference "C29")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+3.3V")
-		(at 123.19 142.24 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "f8ba2585-b05d-4f5d-888d-b80c5f5a1653")
-		(property "Reference" "#PWR054"
-			(at 127 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3V3"
-			(at 119.38 142.2399 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 123.19 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 123.19 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 123.19 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "7a112bcc-9f98-4e19-a64a-f9e1fc87ce4e")
-		)
-		(instances
-			(project "OZYS_V3_Final"
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/55853f5b-0992-495b-b96a-8743589b5403"
-					(reference "#PWR054")
-					(unit 1)
-				)
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/6e4545c6-9e5c-4e6b-94f2-451b2f16f4ae"
-					(reference "#PWR051")
-					(unit 1)
-				)
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/92ea14e4-7796-41b2-9af7-4cb5ffd88b52"
-					(reference "#PWR049")
-					(unit 1)
-				)
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea/d66c3d32-3008-485f-b8d3-7e1a6a0b22a4"
-					(reference "#PWR070")
 					(unit 1)
 				)
 			)
