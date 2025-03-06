@@ -5723,7 +5723,7 @@
 		)
 		(uuid "9d47c6f9-2dab-44ce-8e12-f9ecb10de008")
 	)
-	(label "ONE_WIRE_OUT1"
+	(label "ONE_WIRE_OUT3"
 		(at 226.06 80.01 0)
 		(effects
 			(font
