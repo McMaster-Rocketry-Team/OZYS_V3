@@ -2386,7 +2386,7 @@
 				)
 			)
 		)
-		(symbol "Rocketry_Easyeda:19-213_Y2C-CQ2R2L_3T(CY) (0603 Yellow)"
+		(symbol "Rocketry_Easyeda:17-21SUYC_TR8"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -2398,7 +2398,7 @@
 					)
 				)
 			)
-			(property "Value" "19-213/Y2C-CQ2R2L/3T(CY)"
+			(property "Value" "17-21SUYC/TR8"
 				(at 0 -5.08 0)
 				(effects
 					(font
@@ -2406,7 +2406,7 @@
 					)
 				)
 			)
-			(property "Footprint" "Rocketry_Easyeda:LED0603-RD-YELLOW"
+			(property "Footprint" "Rocketry_Easyeda:LED0805-R-RD"
 				(at 0 -7.62 0)
 				(effects
 					(font
@@ -2415,7 +2415,7 @@
 					(hide yes)
 				)
 			)
-			(property "Datasheet" "https://lcsc.com/product-detail/Light-Emitting-Diodes-LED_0603-Yellow-light_C72038.html"
+			(property "Datasheet" "https://lcsc.com/product-detail/Light-Emitting-Diodes-LED_Yellow-light-0805-Highlighted_C2296.html"
 				(at 0 -10.16 0)
 				(effects
 					(font
@@ -2433,7 +2433,7 @@
 					(hide yes)
 				)
 			)
-			(property "LCSC Part" "C72038"
+			(property "LCSC Part" "C2296"
 				(at 0 -12.7 0)
 				(effects
 					(font
@@ -2442,10 +2442,10 @@
 					(hide yes)
 				)
 			)
-			(symbol "19-213_Y2C-CQ2R2L_3T(CY) (0603 Yellow)_0_1"
+			(symbol "17-21SUYC_TR8_0_1"
 				(polyline
 					(pts
-						(xy -1.27 1.52) (xy -1.27 -1.52)
+						(xy -2.03 1.52) (xy -3.81 3.3)
 					)
 					(stroke
 						(width 0)
@@ -2457,7 +2457,7 @@
 				)
 				(polyline
 					(pts
-						(xy -0.51 2.03) (xy -2.29 3.81)
+						(xy -1.27 2.03) (xy -1.27 -2.03)
 					)
 					(stroke
 						(width 0)
@@ -2469,7 +2469,7 @@
 				)
 				(polyline
 					(pts
-						(xy 0.51 3.05) (xy -1.27 4.83)
+						(xy -1.02 2.54) (xy -2.79 4.32)
 					)
 					(stroke
 						(width 0)
@@ -2481,7 +2481,7 @@
 				)
 				(polyline
 					(pts
-						(xy -2.29 3.81) (xy -1.27 3.3) (xy -1.78 2.79) (xy -2.29 3.81)
+						(xy -3.81 3.3) (xy -2.79 2.79) (xy -3.3 2.29) (xy -3.81 3.3)
 					)
 					(stroke
 						(width 0)
@@ -2493,7 +2493,7 @@
 				)
 				(polyline
 					(pts
-						(xy -1.27 4.83) (xy -0.25 4.32) (xy -0.76 3.81) (xy -1.27 4.83)
+						(xy -2.79 4.32) (xy -1.78 3.81) (xy -2.29 3.3) (xy -2.79 4.32)
 					)
 					(stroke
 						(width 0)
@@ -2505,7 +2505,7 @@
 				)
 				(polyline
 					(pts
-						(xy 1.27 -1.52) (xy -1.27 0) (xy 1.27 1.52) (xy 1.27 -1.52)
+						(xy 1.27 -1.52) (xy -1.27 0) (xy 1.27 1.78) (xy 1.27 -1.52)
 					)
 					(stroke
 						(width 0)
@@ -2515,10 +2515,10 @@
 						(type background)
 					)
 				)
-				(pin input line
-					(at -5.08 0 0)
+				(pin unspecified line
+					(at 5.08 0 180)
 					(length 3.81)
-					(name "C"
+					(name "+"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2533,10 +2533,10 @@
 						)
 					)
 				)
-				(pin input line
-					(at 5.08 0 180)
+				(pin unspecified line
+					(at -5.08 0 0)
 					(length 3.81)
-					(name "A"
+					(name "-"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -7531,6 +7531,84 @@
 		)
 	)
 	(symbol
+		(lib_id "Rocketry_Easyeda:17-21SUYC_TR8")
+		(at 128.27 161.29 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "6548ab9f-ba69-4375-be38-65a7129054d8")
+		(property "Reference" "LED5"
+			(at 129.54 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "17-21SUYC/TR8"
+			(at 129.54 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Rocketry_Easyeda:LED0805-R-RD"
+			(at 128.27 168.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://lcsc.com/product-detail/Light-Emitting-Diodes-LED_Yellow-light-0805-Highlighted_C2296.html"
+			(at 128.27 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 128.27 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" "C2296"
+			(at 128.27 173.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "11281b76-5fb7-48ef-8649-d1b96d8c8519")
+		)
+		(pin "2"
+			(uuid "79b740d8-669f-45d1-a10f-351bbe5fd993")
+		)
+		(instances
+			(project ""
+				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea"
+					(reference "LED5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Rocketry_Easyeda:MC-30632.768kHz6.0pF20ppm")
 		(at 29.21 88.9 0)
 		(mirror y)
@@ -9586,84 +9664,6 @@
 			(project "OZYS_V3_Final"
 				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea"
 					(reference "#PWR073")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Rocketry_Easyeda:19-213_Y2C-CQ2R2L_3T(CY) (0603 Yellow)")
-		(at 128.27 161.29 0)
-		(mirror y)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "bd41dc95-476c-4561-bc89-6fed4c4d5f69")
-		(property "Reference" "LED5"
-			(at 128.78 151.13 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "19-213/Y2C-CQ2R2L/3T(CY)"
-			(at 128.78 153.67 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Rocketry_Easyeda:LED0603-RD-YELLOW"
-			(at 128.27 168.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://lcsc.com/product-detail/Light-Emitting-Diodes-LED_0603-Yellow-light_C72038.html"
-			(at 128.27 171.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 128.27 161.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC Part" "C72038"
-			(at 128.27 173.99 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "b2ef92aa-a4ef-43e2-952f-bddad3745862")
-		)
-		(pin "2"
-			(uuid "d70f38d2-5e9e-47b2-9c70-813cad850873")
-		)
-		(instances
-			(project "OZYS_V3_Final"
-				(path "/2ecddb92-e766-42eb-adbc-b6d17a65e8ea"
-					(reference "LED5")
 					(unit 1)
 				)
 			)
