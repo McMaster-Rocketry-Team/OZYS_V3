@@ -1534,7 +1534,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4053b919-ac0a-43ff-9411-206e858e04ce")
-		(property "Reference" "R15"
+		(property "Reference" "R26"
 			(at 167.64 135.89 90)
 			(effects
 				(font
