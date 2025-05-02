@@ -3,8 +3,10 @@
 
 use {defmt_rtt as _, panic_probe as _};
 
+use chrono::{NaiveDate, NaiveDateTime};
 use defmt::info;
 use embassy_executor::Spawner;
+use embassy_stm32::rtc::{Rtc, RtcConfig};
 use embassy_stm32::{
     gpio::{Level, Output, Speed},
     time::mhz,
@@ -63,7 +65,20 @@ async fn main(_spawner: Spawner) {
 
     info!("Hello OZYS V3!");
 
+    let now = NaiveDate::from_ymd_opt(2025, 5, 2)
+        .unwrap()
+        .and_hms_opt(10, 30, 15)
+        .unwrap();
+
+    let mut rtc = Rtc::new(p.RTC, RtcConfig::default());
+
+    rtc.set_datetime(now.into()).unwrap();
+
     loop {
+        let now: NaiveDateTime = rtc.now().unwrap().into();
+
+        info!("{}", now.and_utc().timestamp());
+
         status_led.set_high();
         Timer::after(Duration::from_millis(500)).await;
         status_led.set_low();
