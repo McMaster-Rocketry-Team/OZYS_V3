@@ -59,8 +59,8 @@ async fn main(_spawner: Spawner) {
     };
     let mut p = embassy_stm32::init(config);
 
-    Output::new(p.PA7, Level::Low, Speed::Low); // PS pin, low: force pwm
-    Output::new(p.PC13, Level::High, Speed::Low); // Status LED
+    let ps = Output::new(p.PA7, Level::Low, Speed::Low); // PS pin, low: force pwm
+    let led1 = Output::new(p.PC13, Level::High, Speed::Low); // LED1
 
     info!("Hello OZYS V3!");
 
