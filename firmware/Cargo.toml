@@ -48,6 +48,12 @@ path = "src/sd_test.rs"
 test = false
 bench = false
 
+[[bin]]
+name = "adc_test"
+path = "src/adc_test.rs"
+test = false
+bench = false
+
 [profile.dev]
 debug = true
 lto = true
