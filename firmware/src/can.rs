@@ -13,13 +13,8 @@ use embassy_stm32::{
     Peri,
 };
 use embassy_sync::blocking_mutex::raw::NoopRawMutex;
-use embassy_time::{Duration, Instant, Ticker};
 use firmware_common_new::can_bus::{
     id::can_node_id_from_serial_number,
-    messages::{
-        node_status::{NodeHealth, NodeMode},
-        NodeStatusMessage,
-    },
     node_types::OZYS_NODE_TYPE,
     receiver::CanReceiver,
     sender::CanSender,

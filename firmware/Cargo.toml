@@ -25,7 +25,7 @@ embassy-stm32 = { git = "https://github.com/embassy-rs/embassy.git", features = 
     "defmt",
     "unstable-pac",
     "chrono",
-    "dual-bank"
+    "single-bank"
 ] }
 embassy-sync = { git = "https://github.com/embassy-rs/embassy.git" }
 embassy-time = { git = "https://github.com/embassy-rs/embassy.git", features = [
@@ -52,7 +52,7 @@ embedded-can = "0.4.1"
 embassy-sync = { git = "https://github.com/embassy-rs/embassy.git" }
 
 [[bin]]
-name = "firmware"
+name = "main"
 path = "src/main.rs"
 test = false
 bench = false
