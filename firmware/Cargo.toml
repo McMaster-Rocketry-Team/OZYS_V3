@@ -35,6 +35,13 @@ embassy-time = { git = "https://github.com/embassy-rs/embassy.git", features = [
 embassy-embedded-hal = { git = "https://github.com/embassy-rs/embassy.git" }
 embedded-sdmmc = { version = "0.8.1", default-features = false, features = ["defmt-log"] }
 panic-probe = { version = "1.0.0", features = ["print-defmt"] }
+firmware-common-new = { path = "../../Rust_Monorepo/firmware-common-new", default-features = false, features = [
+    "defmt",
+] }
+stm32-device-signature = { version = "0.3.3", features = ["stm32g0"] }
+
+[patch.crates-io]
+embassy-sync = { git = "https://github.com/embassy-rs/embassy.git" }
 
 [[bin]]
 name = "firmware"
@@ -51,6 +58,12 @@ bench = false
 [[bin]]
 name = "adc_test"
 path = "src/adc_test.rs"
+test = false
+bench = false
+
+[[bin]]
+name = "can_main"
+path = "src/can_main.rs"
 test = false
 bench = false
 

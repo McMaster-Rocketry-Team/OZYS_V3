@@ -95,7 +95,7 @@ async fn main(_spawner: Spawner) {
         info!("Vref+: {}V", vref_plus);
 
         let measured = vref_plus / (1 << 12) as f32 * measured as f32;
-        info!("Measured: {}V", measured);
+        info!("Measured: {}V", (measured - vref_plus / 2.0) * 2.0);
 
         Timer::after_millis(500).await;
     }
