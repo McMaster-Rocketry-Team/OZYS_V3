@@ -352,9 +352,37 @@ dependencies = [
 ]
 
 [[package]]
+name = "embassy-boot"
+version = "0.4.0"
+source = "git+https://github.com/embassy-rs/embassy.git#575eab3c60c0d2098f9e9d2a22429aa174b6b968"
+dependencies = [
+ "digest",
+ "embassy-embedded-hal",
+ "embassy-sync",
+ "embedded-storage",
+ "embedded-storage-async",
+ "signature",
+]
+
+[[package]]
+name = "embassy-boot-stm32"
+version = "0.2.0"
+source = "git+https://github.com/embassy-rs/embassy.git#575eab3c60c0d2098f9e9d2a22429aa174b6b968"
+dependencies = [
+ "cfg-if",
+ "cortex-m 0.7.7",
+ "cortex-m-rt",
+ "embassy-boot",
+ "embassy-stm32",
+ "embassy-sync",
+ "embedded-storage",
+ "embedded-storage-async",
+]
+
+[[package]]
 name = "embassy-embedded-hal"
 version = "0.3.0"
-source = "git+https://github.com/embassy-rs/embassy.git#716160e9abe7591b171250a9029bad5ec656ac6d"
+source = "git+https://github.com/embassy-rs/embassy.git#575eab3c60c0d2098f9e9d2a22429aa174b6b968"
 dependencies = [
  "defmt 0.3.100",
  "embassy-futures 0.1.1 (git+https://github.com/embassy-rs/embassy.git)",
@@ -372,7 +400,7 @@ dependencies = [
 [[package]]
 name = "embassy-executor"
 version = "0.7.0"
-source = "git+https://github.com/embassy-rs/embassy.git#716160e9abe7591b171250a9029bad5ec656ac6d"
+source = "git+https://github.com/embassy-rs/embassy.git#575eab3c60c0d2098f9e9d2a22429aa174b6b968"
 dependencies = [
  "cortex-m 0.7.7",
  "critical-section",
@@ -383,7 +411,7 @@ dependencies = [
 [[package]]
 name = "embassy-executor-macros"
 version = "0.6.2"
-source = "git+https://github.com/embassy-rs/embassy.git#716160e9abe7591b171250a9029bad5ec656ac6d"
+source = "git+https://github.com/embassy-rs/embassy.git#575eab3c60c0d2098f9e9d2a22429aa174b6b968"
 dependencies = [
  "darling",
  "proc-macro2",
@@ -400,12 +428,12 @@ checksum = "1f878075b9794c1e4ac788c95b728f26aa6366d32eeb10c7051389f898f7d067"
 [[package]]
 name = "embassy-futures"
 version = "0.1.1"
-source = "git+https://github.com/embassy-rs/embassy.git#716160e9abe7591b171250a9029bad5ec656ac6d"
+source = "git+https://github.com/embassy-rs/embassy.git#575eab3c60c0d2098f9e9d2a22429aa174b6b968"
 
 [[package]]
 name = "embassy-hal-internal"
 version = "0.2.0"
-source = "git+https://github.com/embassy-rs/embassy.git#716160e9abe7591b171250a9029bad5ec656ac6d"
+source = "git+https://github.com/embassy-rs/embassy.git#575eab3c60c0d2098f9e9d2a22429aa174b6b968"
 dependencies = [
  "cortex-m 0.7.7",
  "critical-section",
@@ -416,7 +444,7 @@ dependencies = [
 [[package]]
 name = "embassy-net-driver"
 version = "0.2.0"
-source = "git+https://github.com/embassy-rs/embassy.git#716160e9abe7591b171250a9029bad5ec656ac6d"
+source = "git+https://github.com/embassy-rs/embassy.git#575eab3c60c0d2098f9e9d2a22429aa174b6b968"
 dependencies = [
  "defmt 0.3.100",
 ]
@@ -424,7 +452,7 @@ dependencies = [
 [[package]]
 name = "embassy-stm32"
 version = "0.2.0"
-source = "git+https://github.com/embassy-rs/embassy.git#716160e9abe7591b171250a9029bad5ec656ac6d"
+source = "git+https://github.com/embassy-rs/embassy.git#575eab3c60c0d2098f9e9d2a22429aa174b6b968"
 dependencies = [
  "aligned 0.4.2",
  "bit_field",
@@ -472,7 +500,7 @@ dependencies = [
 [[package]]
 name = "embassy-sync"
 version = "0.6.2"
-source = "git+https://github.com/embassy-rs/embassy.git#716160e9abe7591b171250a9029bad5ec656ac6d"
+source = "git+https://github.com/embassy-rs/embassy.git#575eab3c60c0d2098f9e9d2a22429aa174b6b968"
 dependencies = [
  "cfg-if",
  "critical-section",
@@ -486,7 +514,7 @@ dependencies = [
 [[package]]
 name = "embassy-time"
 version = "0.4.0"
-source = "git+https://github.com/embassy-rs/embassy.git#716160e9abe7591b171250a9029bad5ec656ac6d"
+source = "git+https://github.com/embassy-rs/embassy.git#575eab3c60c0d2098f9e9d2a22429aa174b6b968"
 dependencies = [
  "cfg-if",
  "critical-section",
@@ -502,7 +530,7 @@ dependencies = [
 [[package]]
 name = "embassy-time-driver"
 version = "0.2.0"
-source = "git+https://github.com/embassy-rs/embassy.git#716160e9abe7591b171250a9029bad5ec656ac6d"
+source = "git+https://github.com/embassy-rs/embassy.git#575eab3c60c0d2098f9e9d2a22429aa174b6b968"
 dependencies = [
  "document-features",
 ]
@@ -510,7 +538,7 @@ dependencies = [
 [[package]]
 name = "embassy-time-queue-utils"
 version = "0.1.0"
-source = "git+https://github.com/embassy-rs/embassy.git#716160e9abe7591b171250a9029bad5ec656ac6d"
+source = "git+https://github.com/embassy-rs/embassy.git#575eab3c60c0d2098f9e9d2a22429aa174b6b968"
 dependencies = [
  "embassy-executor",
  "heapless 0.8.0",
@@ -519,15 +547,16 @@ dependencies = [
 [[package]]
 name = "embassy-usb-driver"
 version = "0.1.0"
-source = "git+https://github.com/embassy-rs/embassy.git#716160e9abe7591b171250a9029bad5ec656ac6d"
+source = "git+https://github.com/embassy-rs/embassy.git#575eab3c60c0d2098f9e9d2a22429aa174b6b968"
 dependencies = [
  "defmt 0.3.100",
+ "embedded-io-async",
 ]
 
 [[package]]
 name = "embassy-usb-synopsys-otg"
 version = "0.2.0"
-source = "git+https://github.com/embassy-rs/embassy.git#716160e9abe7591b171250a9029bad5ec656ac6d"
+source = "git+https://github.com/embassy-rs/embassy.git#575eab3c60c0d2098f9e9d2a22429aa174b6b968"
 dependencies = [
  "critical-section",
  "defmt 0.3.100",
@@ -640,12 +669,16 @@ dependencies = [
  "cortex-m-rt",
  "defmt 1.0.1",
  "defmt-rtt",
+ "embassy-boot",
+ "embassy-boot-stm32",
  "embassy-embedded-hal",
  "embassy-executor",
  "embassy-futures 0.1.1 (git+https://github.com/embassy-rs/embassy.git)",
  "embassy-stm32",
  "embassy-sync",
  "embassy-time",
+ "embedded-can",
+ "embedded-io-async",
  "embedded-sdmmc",
  "firmware-common-new",
  "panic-probe",
@@ -1212,6 +1245,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "signature"
+version = "2.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "77549399552de45a898a580c1b41d445bf730df867cc44e6c0233bbc4b8329de"
+
+[[package]]
 name = "spin"
 version = "0.9.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1253,7 +1292,7 @@ dependencies = [
 [[package]]
 name = "stm32-metapac"
 version = "16.0.0"
-source = "git+https://github.com/embassy-rs/stm32-data-generated?tag=stm32-data-169e38298f9421dddbabc0eb81d0c30fb1eec0a7#473c3e2d72ccaf0a9ae381a5f65778479d029639"
+source = "git+https://github.com/embassy-rs/stm32-data-generated?tag=stm32-data-7251801e3273011ce28a89e8f2e45eec2e419e26#6033c9c93326dfbdea8e65757ed158adfcbd9854"
 dependencies = [
  "cortex-m 0.7.7",
  "cortex-m-rt",
