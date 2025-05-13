@@ -46,7 +46,7 @@ async fn main(spawner: Spawner) {
             prediv: PllPreDiv::DIV4,
             mul: PllMul::MUL75,
             divp: Some(PllPDiv::DIV2),
-            divq: Some(PllQDiv::DIV8),
+            divq: Some(PllQDiv::DIV2),
             divr: Some(PllRDiv::DIV2),
         });
 

@@ -18,14 +18,13 @@ embassy-executor = { git = "https://github.com/embassy-rs/embassy.git", features
 ] }
 embassy-futures = { git = "https://github.com/embassy-rs/embassy.git" }
 embassy-stm32 = { git = "https://github.com/embassy-rs/embassy.git", features = [
-    "memory-x",
     "stm32g474ce",
     "time-driver-any",
     "exti",
     "defmt",
     "unstable-pac",
     "chrono",
-    "single-bank"
+    "dual-bank"
 ] }
 embassy-sync = { git = "https://github.com/embassy-rs/embassy.git" }
 embassy-time = { git = "https://github.com/embassy-rs/embassy.git", features = [
