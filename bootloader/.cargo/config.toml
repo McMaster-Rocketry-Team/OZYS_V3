@@ -5,7 +5,7 @@ runner = 'probe-rs run --chip STM32G474CETx --connect-under-reset'
 rustflags = [
   "-C", "link-arg=--nmagic",
   "-C", "link-arg=-Tlink.x",
-  "-C", "link-arg=-Tdefmt.x",
+  # "-C", "link-arg=-Tdefmt.x",
   # "-C", "linker=flip-link",
 ]
 
@@ -14,7 +14,7 @@ rustflags = [
 target = "thumbv7em-none-eabihf"
 
 [env]
-DEFMT_LOG = "trace"
+DEFMT_LOG = "off"
 
 [unstable]
 build-std = ["core"]

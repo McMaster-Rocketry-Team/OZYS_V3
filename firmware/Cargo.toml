@@ -57,6 +57,20 @@ test = false
 bench = false
 
 [[bin]]
+name = "update_first"
+path = "src/update_first.rs"
+test = false
+bench = false
+
+
+[[bin]]
+name = "update_payload"
+path = "src/update_payload_main.rs"
+test = false
+bench = false
+
+
+[[bin]]
 name = "sd_test"
 path = "src/sd_test.rs"
 test = false
