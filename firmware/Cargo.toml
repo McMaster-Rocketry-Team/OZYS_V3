@@ -24,7 +24,7 @@ embassy-stm32 = { git = "https://github.com/embassy-rs/embassy.git", features = 
     "defmt",
     "unstable-pac",
     "chrono",
-    "dual-bank"
+    "dual-bank",
 ] }
 embassy-sync = { git = "https://github.com/embassy-rs/embassy.git" }
 embassy-time = { git = "https://github.com/embassy-rs/embassy.git", features = [
@@ -33,17 +33,15 @@ embassy-time = { git = "https://github.com/embassy-rs/embassy.git", features = [
     "defmt-timestamp-uptime",
 ] }
 embassy-embedded-hal = { git = "https://github.com/embassy-rs/embassy.git" }
-embedded-sdmmc = { version = "0.8.1", default-features = false, features = ["defmt-log"] }
+embedded-sdmmc = { version = "0.8.1", default-features = false, features = [
+    "defmt-log",
+] }
 panic-probe = { version = "1.0.0", features = ["print-defmt"] }
 firmware-common-new = { path = "../../Rust_Monorepo/firmware-common-new", default-features = false, features = [
     "defmt",
 ] }
 # stm32g0 and stm32g4 have the same memory location for device signature
 stm32-device-signature = { version = "0.3.3", features = ["stm32g0"] }
-embassy-boot-stm32 = { git = "https://github.com/embassy-rs/embassy.git" }
-embassy-boot = { git = "https://github.com/embassy-rs/embassy.git", features = [
-    # "ed25519-salty",
-] }
 embedded-io-async = "0.6.1"
 embedded-can = "0.4.1"
 

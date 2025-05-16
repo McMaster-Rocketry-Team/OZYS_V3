@@ -8,7 +8,7 @@ mod ota;
 use core::{mem::MaybeUninit, ptr::write_volatile};
 
 use can::start_can_bus_tasks;
-use cortex_m::{asm, singleton};
+use cortex_m::singleton;
 use cortex_m_rt::entry;
 use defmt::*;
 use embassy_executor::Executor;

@@ -352,34 +352,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "embassy-boot"
-version = "0.4.0"
-source = "git+https://github.com/embassy-rs/embassy.git#5a19b64fec396db1ababa6d3e7a71f4b3c6bab18"
-dependencies = [
- "digest",
- "embassy-embedded-hal",
- "embassy-sync",
- "embedded-storage",
- "embedded-storage-async",
- "signature",
-]
-
-[[package]]
-name = "embassy-boot-stm32"
-version = "0.2.0"
-source = "git+https://github.com/embassy-rs/embassy.git#5a19b64fec396db1ababa6d3e7a71f4b3c6bab18"
-dependencies = [
- "cfg-if",
- "cortex-m 0.7.7",
- "cortex-m-rt",
- "embassy-boot",
- "embassy-stm32",
- "embassy-sync",
- "embedded-storage",
- "embedded-storage-async",
-]
-
-[[package]]
 name = "embassy-embedded-hal"
 version = "0.3.0"
 source = "git+https://github.com/embassy-rs/embassy.git#5a19b64fec396db1ababa6d3e7a71f4b3c6bab18"
@@ -669,8 +641,6 @@ dependencies = [
  "cortex-m-rt",
  "defmt 1.0.1",
  "defmt-rtt",
- "embassy-boot",
- "embassy-boot-stm32",
  "embassy-embedded-hal",
  "embassy-executor",
  "embassy-futures 0.1.1 (git+https://github.com/embassy-rs/embassy.git)",
@@ -1243,12 +1213,6 @@ dependencies = [
  "cpufeatures",
  "digest",
 ]
-
-[[package]]
-name = "signature"
-version = "2.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "77549399552de45a898a580c1b41d445bf730df867cc44e6c0233bbc4b8329de"
 
 [[package]]
 name = "spin"

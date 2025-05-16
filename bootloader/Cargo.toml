@@ -17,10 +17,6 @@ embassy-executor = { git = "https://github.com/embassy-rs/embassy.git", features
     "arch-cortex-m",
     "executor-thread",
 ] }
-embassy-boot-stm32 = { git = "https://github.com/embassy-rs/embassy.git", features = [
-]}
-embassy-boot = { git = "https://github.com/embassy-rs/embassy.git", features = [
-]}
 embassy-sync = { git = "https://github.com/embassy-rs/embassy.git" }
 embassy-time = { git = "https://github.com/embassy-rs/embassy.git", features = [
     "tick-hz-1_000_000",
@@ -51,12 +47,6 @@ name = "main"
 path = "src/main.rs"
 test = false
 bench = false
-
-# [[bin]]
-# name = "main_old"
-# path = "src/main_old.rs"
-# test = false
-# bench = false
 
 [profile.dev]
 debug = true

@@ -135,6 +135,7 @@ async fn ota_receive_task(
     }
 }
 
+#[allow(dead_code)]
 trait TryReadExact {
     fn try_read_exact(&mut self, buf: &mut [u8]) -> Result<usize, ()>;
 }
