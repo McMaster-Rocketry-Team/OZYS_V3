@@ -5,10 +5,10 @@
 mod can;
 mod ota;
 
-use core::mem::MaybeUninit;
+use core::{mem::MaybeUninit, ptr::write_volatile};
 
 use can::start_can_bus_tasks;
-use cortex_m::singleton;
+use cortex_m::{asm, singleton};
 use cortex_m_rt::entry;
 use defmt::*;
 use embassy_executor::Executor;
@@ -23,10 +23,8 @@ use embassy_sync::blocking_mutex::raw::NoopRawMutex;
 use embassy_time::{Duration, Instant, Ticker, Timer};
 use firmware_common_new::can_bus::{
     messages::{
-        node_status::{NodeHealth, NodeMode},
-        NodeStatusMessage,
-    },
-    sender::CanSender,
+        node_status::{NodeHealth, NodeMode}, CanBusMessageEnum, NodeStatusMessage, ResetMessage
+    }, receiver::CanReceiver, sender::CanSender
 };
 use {defmt_rtt as _, panic_probe as _};
 
@@ -36,8 +34,8 @@ use {defmt_rtt as _, panic_probe as _};
 ///
 /// # Trial boots
 ///
-/// Prior to loading the main application, the bootloader will keep BACKUP_RAM\[0\]
-/// at 0x69426942 and start a watchdog that if not refreshed in 1 second, will reset
+/// Prior to loading the main application, the bootloader will set BACKUP_RAM\[0\]
+/// to 0x69426942 and start a watchdog that if not refreshed in 1 second, will reset
 /// the device.
 ///
 /// After the main application is started, it should reset BACKUP_RAM\[0\] to 0 and
@@ -58,13 +56,12 @@ pub fn configure_next_boot(boot_option: BootOption) {
         #[allow(static_mut_refs)]
         BACKUP_RAM.assume_init_mut()
     };
-    match boot_option {
-        BootOption::Bootloader => {
-            backup_ram[0] = 0x69426942;
-        }
-        BootOption::Application => {
-            backup_ram[0] = 0;
-        }
+    let magic = match boot_option {
+        BootOption::Bootloader => 0x69426942,
+        BootOption::Application => 0,
+    };
+    unsafe {
+        write_volatile(backup_ram.as_mut_ptr(), magic);
     }
 }
 
@@ -115,25 +112,6 @@ fn main() -> ! {
     };
     let p = embassy_stm32::init(config);
 
-    let backup_ram = unsafe {
-        #[allow(static_mut_refs)]
-        BACKUP_RAM.assume_init_mut()
-    };
-
-    if backup_ram[0] != 0x69426942 {
-        // no magic number found, boot normally
-        let mut wdt = IndependentWatchdog::new(p.IWDG, 1_000_000);
-        wdt.unleash();
-
-        unsafe {
-            let mut p = cortex_m::Peripherals::steal();
-            p.SCB.invalidate_icache();
-            p.SCB.vtor.write(APP_ADDRESS);
-            cortex_m::asm::bootload(APP_ADDRESS as *const u32);
-        }
-    }
-    // enter bootloader only if magic number detected
-
     // this is ordered by led from top to bottom, power connector on the top left
     // LED order from top to bottom: (power connector on the top left)
     // led 2: PA10
@@ -146,6 +124,26 @@ fn main() -> ! {
     let mut _led4 = Output::new(p.PB7, Level::Low, Speed::Low);
     let mut _led1 = Output::new(p.PC13, Level::Low, Speed::Low);
 
+    let backup_ram = unsafe {
+        #[allow(static_mut_refs)]
+        BACKUP_RAM.assume_init_mut()
+    };
+
+    if backup_ram[0] != 0x69426942 {
+        // no magic number found, boot normally
+        configure_next_boot(BootOption::Bootloader);
+        let mut wdt = IndependentWatchdog::new(p.IWDG, 1_000_000);
+        wdt.unleash();
+        
+        unsafe {
+            let mut p = cortex_m::Peripherals::steal();
+            p.SCB.invalidate_icache();
+            p.SCB.vtor.write(APP_ADDRESS);
+            cortex_m::asm::bootload(APP_ADDRESS as *const u32);
+        }
+    }
+
+    // enter bootloader only if magic number detected
     info!("Bootloader!");
     let executor = singleton!(: Executor = Executor::new()).unwrap();
     executor.run(|spawner| {
@@ -153,6 +151,7 @@ fn main() -> ! {
         let (self_can_node_id, can_sender, can_receiver) =
             start_can_bus_tasks(&spawner, p.FDCAN3, p.PA8, p.PA15);
         spawner.must_spawn(node_status_task(can_sender));
+        spawner.must_spawn(can_reset_task(self_can_node_id, can_receiver));
     });
 }
 
@@ -189,5 +188,30 @@ async fn node_status_task(can_sender: &'static CanSender<NoopRawMutex, 4>) {
             )
             .await;
         ticker.next().await;
+    }
+}
+
+#[embassy_executor::task]
+async fn can_reset_task(
+    self_can_node_id: u16,
+    can_receiver: &'static CanReceiver<NoopRawMutex, 4, 1>,
+) {
+    let mut subscriber = can_receiver.subscriber().unwrap();
+    loop {
+        let can_message = subscriber.next_message_pure().await.data.message;
+        if let CanBusMessageEnum::Reset(ResetMessage {
+            node_id,
+            reset_all,
+            into_bootloader,
+        }) = can_message
+            && (node_id == self_can_node_id || reset_all)
+        {
+            configure_next_boot(if into_bootloader {
+                BootOption::Bootloader
+            } else {
+                BootOption::Application
+            });
+            cortex_m::peripheral::SCB::sys_reset();
+        }
     }
 }

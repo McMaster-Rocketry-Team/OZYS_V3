@@ -14,6 +14,3 @@ SECTIONS
         *(.backup_ram)
     } > BACKUP_RAM
 }
-
-__bootloader_app_start = ORIGIN(APP) - ORIGIN(FLASH);
-__bootloader_app_end = ORIGIN(APP) - ORIGIN(FLASH) + LENGTH(APP);
