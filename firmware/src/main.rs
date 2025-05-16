@@ -67,6 +67,10 @@ async fn main(spawner: Spawner) {
     };
     let p = embassy_stm32::init(config);
     info!("Hello OZYS V3!");
+    let mut led1 = Output::new(p.PC13, Level::Low, Speed::Low);
+    let mut led2 = Output::new(p.PA10, Level::Low, Speed::Low);
+    let mut led3 = Output::new(p.PB6, Level::Low, Speed::Low);
+    let mut led4 = Output::new(p.PB7, Level::Low, Speed::Low);
 
     spawner.must_spawn(status_led_task(p.PB14));
     let (self_can_node_id, can_sender, can_receiver) =

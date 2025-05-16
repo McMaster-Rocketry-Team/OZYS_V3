@@ -1,14 +1,17 @@
+use core::cell::RefCell;
+
 use cortex_m::singleton;
 use defmt::info;
-use embassy_boot_stm32::{AlignedBuffer, FirmwareUpdater, FirmwareUpdaterConfig};
-use embassy_embedded_hal::adapter::BlockingAsync;
+use embassy_boot::{BlockingFirmwareState, BlockingFirmwareUpdater};
+use embassy_boot_stm32::{AlignedBuffer, FirmwareUpdaterConfig};
 use embassy_executor::Spawner;
 use embassy_futures::select::{select, Either};
+use embassy_futures::yield_now;
 use embassy_stm32::flash::{Flash, WRITE_SIZE};
 use embassy_stm32::peripherals::FLASH;
 use embassy_stm32::Peri;
 use embassy_sync::blocking_mutex::raw::{NoopRawMutex, RawMutex};
-use embassy_sync::mutex::Mutex;
+use embassy_sync::blocking_mutex::Mutex as BlockingMutex;
 use embassy_sync::pipe::{Pipe, Reader, Writer};
 use embassy_sync::signal::Signal;
 use embassy_time::Timer;
@@ -63,12 +66,17 @@ async fn ota_write_disk_task(
     reset_signal_receiver: SignalWithAckReceiver<'static, NoopRawMutex, (), ()>,
     receive_done_signal: &'static Signal<NoopRawMutex, ()>,
 ) {
-    let flash = Flash::new_blocking(flash);
-    let flash = Mutex::new(BlockingAsync::new(flash));
-
-    let config = FirmwareUpdaterConfig::from_linkerfile(&flash, &flash);
+    let layout = Flash::new_blocking(flash).into_blocking_regions();
+    let flash_bank1 = BlockingMutex::new(RefCell::new(layout.bank1_region));
+    let flash_bank2 = BlockingMutex::new(RefCell::new(layout.bank2_region));
+    let config = FirmwareUpdaterConfig::from_linkerfile_blocking(&flash_bank2, &flash_bank1);
     let mut magic = AlignedBuffer([0; WRITE_SIZE]);
-    let mut updater = FirmwareUpdater::new(config, &mut magic.0);
+    let mut firmware_state = BlockingFirmwareState::from_config(config, &mut magic.0);
+    firmware_state.mark_booted().unwrap();
+    info!("Mark booted");
+
+    let config = FirmwareUpdaterConfig::from_linkerfile_blocking(&flash_bank2, &flash_bank1);
+    let mut updater = BlockingFirmwareUpdater::new(config, &mut magic.0);
 
     let mut firmware_write_offset = 0usize;
     let mut pipe_rx_read_buffer = [0u8; WRITE_SIZE];
@@ -95,9 +103,9 @@ async fn ota_write_disk_task(
                 // Pipe can't EOF, so we dont need to handle the result returned by read_exact
                 updater
                     .write_firmware(firmware_write_offset, &pipe_rx_read_buffer)
-                    .await
                     .unwrap();
                 firmware_write_offset += WRITE_SIZE;
+                yield_now().await;
             }
         };
 
@@ -109,9 +117,8 @@ async fn ota_write_disk_task(
                 }
                 updater
                     .write_firmware(firmware_write_offset, &pipe_rx_read_buffer)
-                    .await
                     .unwrap();
-                updater.mark_updated().await.unwrap();
+                updater.mark_updated().unwrap();
                 // let verify_result = updater
                 //     .verify_and_mark_updated(todo!(), todo!(), todo!())
                 //     .await;

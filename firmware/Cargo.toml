@@ -56,11 +56,11 @@ path = "src/main.rs"
 test = false
 bench = false
 
-[[bin]]
-name = "update_first"
-path = "src/update_first.rs"
-test = false
-bench = false
+# [[bin]]
+# name = "update_first"
+# path = "src/update_first.rs"
+# test = false
+# bench = false
 
 
 [[bin]]
