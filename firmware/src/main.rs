@@ -22,12 +22,14 @@ use embassy_stm32::{
 };
 use embassy_sync::blocking_mutex::raw::NoopRawMutex;
 use embassy_time::{Duration, Instant, Ticker, Timer};
-use firmware_common_new::can_bus::messages::NodeStatusMessage;
-use firmware_common_new::can_bus::sender::CanSender;
+use firmware_common_new::can_bus::{
+    messages::{node_status::NodeStatusMessage, reset::ResetMessage},
+    sender::CanSender,
+};
 use firmware_common_new::can_bus::{
     messages::{
         node_status::{NodeHealth, NodeMode},
-        CanBusMessageEnum, ResetMessage,
+        CanBusMessageEnum,
     },
     receiver::CanReceiver,
 };

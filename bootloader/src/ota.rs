@@ -1,14 +1,15 @@
+use defmt::warn;
 use embassy_stm32::{
+    Peri,
     flash::{Flash, WRITE_SIZE},
     peripherals::FLASH,
-    Peri,
 };
 use embassy_sync::blocking_mutex::raw::NoopRawMutex;
 use embassy_time::Timer;
 use firmware_common_new::{
     bootloader::verify_firmware,
     can_bus::{
-        messages::{ack::AckMessage, data_transfer::DataType, CanBusMessageEnum},
+        messages::{CanBusMessageEnum, ack::AckMessage, data_transfer::DataType},
         receiver::CanReceiver,
         sender::CanSender,
     },
@@ -16,7 +17,7 @@ use firmware_common_new::{
 use heapless::Vec;
 use salty::Sha512;
 
-use crate::{configure_next_boot, BootOption, APP_ADDRESS};
+use crate::{APP_ADDRESS, BootOption, configure_next_boot};
 
 static PUBLIC_KEY: &[u8] = include_bytes!("../pub.key");
 
@@ -32,6 +33,7 @@ pub async fn ota_task(
     let mut sha512 = Sha512::new();
     let mut signature = Vec::<u8, 64>::new();
     let mut firmware_write_offset = APP_ADDRESS - 0x08000000;
+    let mut last_sequence_number = 0u8;
     let mut write_buffer = Vec::<u8, WRITE_SIZE>::new();
     let mut can_sub = can_receiver.subscriber().unwrap();
 
@@ -46,7 +48,17 @@ pub async fn ota_task(
                 sha512 = Sha512::new();
                 signature.clear();
                 firmware_write_offset = APP_ADDRESS - 0x08000000;
+                last_sequence_number = data_transfer.sequence_number;
                 write_buffer.clear();
+            } else {
+                let expected_sequence_number = last_sequence_number.wrapping_add(1);
+                if data_transfer.sequence_number != expected_sequence_number {
+                    warn!(
+                        "out of order message detected, expected sequence number {}, received {}",
+                        expected_sequence_number, data_transfer.sequence_number
+                    );
+                    continue;
+                }
             }
 
             let mut data = data_transfer.data();
