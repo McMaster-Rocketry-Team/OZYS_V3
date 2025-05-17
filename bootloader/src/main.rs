@@ -15,18 +15,18 @@ use cortex_m::singleton;
 use cortex_m_rt::entry;
 use embassy_executor::Executor;
 use embassy_stm32::{
+    Peri,
     gpio::{Level, Output, Speed},
     peripherals::PB14,
     time::mhz,
     wdg::IndependentWatchdog,
-    Peri,
 };
 use embassy_sync::blocking_mutex::raw::NoopRawMutex;
 use embassy_time::{Duration, Instant, Ticker, Timer};
 use firmware_common_new::can_bus::{
     messages::{
-        node_status::{NodeHealth, NodeMode},
         CanBusMessageEnum, NodeStatusMessage, ResetMessage,
+        node_status::{NodeHealth, NodeMode},
     },
     receiver::CanReceiver,
     sender::CanSender,
@@ -50,7 +50,7 @@ use {defmt_rtt as _, panic_probe as _};
 ///
 /// If the main application failed to start, the watchdog will reset the device and
 /// due to the magic number in BACKUP_RAM\[0\], the device will stay in bootloader.
-#[link_section = ".backup_ram"]
+#[unsafe(link_section = ".backup_ram")]
 static mut BACKUP_RAM: MaybeUninit<[u32; 256]> = MaybeUninit::uninit();
 
 pub enum BootOption {
@@ -232,7 +232,6 @@ unsafe extern "C" fn HardFault() {
 unsafe fn DefaultHandler(_: i16) -> ! {
     panic!();
 }
-
 
 #[panic_handler]
 #[cfg(not(feature = "defmt"))]
