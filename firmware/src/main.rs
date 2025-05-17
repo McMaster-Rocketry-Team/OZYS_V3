@@ -163,7 +163,7 @@ async fn watchdog_task(wdt: Peri<'static, IWDG>) {
 async fn status_led_task(yellow_led: Peri<'static, PB14>) {
     let mut yellow_led = Output::new(yellow_led, Level::High, Speed::Low);
 
-    let mut ticker = Ticker::every(Duration::from_millis(1000));
+    let mut ticker = Ticker::every(Duration::from_millis(100));
     loop {
         yellow_led.set_high();
         Timer::after_millis(50).await;

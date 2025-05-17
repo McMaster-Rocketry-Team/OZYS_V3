@@ -3,6 +3,8 @@
 #![feature(let_chains)]
 #![feature(slice_as_array)]
 
+mod fmt;
+
 mod can;
 mod ota;
 
@@ -11,7 +13,6 @@ use core::{mem::MaybeUninit, ptr::write_volatile};
 use can::start_can_bus_tasks;
 use cortex_m::singleton;
 use cortex_m_rt::entry;
-use defmt::*;
 use embassy_executor::Executor;
 use embassy_stm32::{
     gpio::{Level, Output, Speed},
@@ -24,9 +25,14 @@ use embassy_sync::blocking_mutex::raw::NoopRawMutex;
 use embassy_time::{Duration, Instant, Ticker, Timer};
 use firmware_common_new::can_bus::{
     messages::{
-        node_status::{NodeHealth, NodeMode}, CanBusMessageEnum, NodeStatusMessage, ResetMessage
-    }, receiver::CanReceiver, sender::CanSender
+        node_status::{NodeHealth, NodeMode},
+        CanBusMessageEnum, NodeStatusMessage, ResetMessage,
+    },
+    receiver::CanReceiver,
+    sender::CanSender,
 };
+use ota::ota_task;
+#[cfg(feature = "defmt")]
 use {defmt_rtt as _, panic_probe as _};
 
 /// # BACKUP_RAM\[0\]:
@@ -135,7 +141,7 @@ fn main() -> ! {
         configure_next_boot(BootOption::Bootloader);
         let mut wdt = IndependentWatchdog::new(p.IWDG, 1_000_000);
         wdt.unleash();
-        
+
         unsafe {
             let mut p = cortex_m::Peripherals::steal();
             p.SCB.invalidate_icache();
@@ -145,14 +151,14 @@ fn main() -> ! {
     }
 
     // enter bootloader only if magic number detected
-    info!("Bootloader!");
+    log_info!("Bootloader!");
     let executor = singleton!(: Executor = Executor::new()).unwrap();
     executor.run(|spawner| {
         spawner.must_spawn(status_led_task(p.PB14));
-        let (self_can_node_id, can_sender, can_receiver) =
-            start_can_bus_tasks(&spawner, p.FDCAN3, p.PA8, p.PA15);
+        let (can_sender, can_receiver) = start_can_bus_tasks(&spawner, p.FDCAN3, p.PA8, p.PA15);
         spawner.must_spawn(node_status_task(can_sender));
-        spawner.must_spawn(can_reset_task(self_can_node_id, can_receiver));
+        spawner.must_spawn(can_reset_task(can_receiver));
+        spawner.must_spawn(ota_task(can_sender, can_receiver, p.FLASH));
     });
 }
 
@@ -193,19 +199,17 @@ async fn node_status_task(can_sender: &'static CanSender<NoopRawMutex, 4>) {
 }
 
 #[embassy_executor::task]
-async fn can_reset_task(
-    self_can_node_id: u16,
-    can_receiver: &'static CanReceiver<NoopRawMutex, 4, 1>,
-) {
+async fn can_reset_task(can_receiver: &'static CanReceiver<NoopRawMutex, 4, 2>) {
     let mut subscriber = can_receiver.subscriber().unwrap();
     loop {
         let can_message = subscriber.next_message_pure().await.data.message;
+
         if let CanBusMessageEnum::Reset(ResetMessage {
             node_id,
             reset_all,
             into_bootloader,
         }) = can_message
-            && (node_id == self_can_node_id || reset_all)
+            && (node_id == can_receiver.self_node_id() || reset_all)
         {
             configure_next_boot(if into_bootloader {
                 BootOption::Bootloader
@@ -215,4 +219,23 @@ async fn can_reset_task(
             cortex_m::peripheral::SCB::sys_reset();
         }
     }
+}
+#[no_mangle]
+#[cfg_attr(target_os = "none", link_section = ".HardFault.user")]
+#[cfg(not(feature = "defmt"))]
+unsafe extern "C" fn HardFault() {
+    cortex_m::peripheral::SCB::sys_reset();
+}
+
+#[cortex_m_rt::exception]
+#[cfg(not(feature = "defmt"))]
+unsafe fn DefaultHandler(_: i16) -> ! {
+    panic!();
+}
+
+
+#[panic_handler]
+#[cfg(not(feature = "defmt"))]
+fn panic(_info: &core::panic::PanicInfo) -> ! {
+    cortex_m::asm::udf();
 }

@@ -1,17 +1,10 @@
-use defmt::*;
-use embassy_futures::select::{select, Either};
 use embassy_stm32::{
     flash::{Flash, WRITE_SIZE},
     peripherals::FLASH,
     Peri,
 };
-use embassy_sync::{
-    blocking_mutex::raw::{NoopRawMutex, RawMutex},
-    pipe::{Reader, Writer},
-    signal::Signal,
-};
+use embassy_sync::blocking_mutex::raw::NoopRawMutex;
 use embassy_time::Timer;
-use embedded_io_async::{Read, Write};
 use firmware_common_new::{
     bootloader::verify_firmware,
     can_bus::{
@@ -19,7 +12,6 @@ use firmware_common_new::{
         receiver::CanReceiver,
         sender::CanSender,
     },
-    signal_with_ack::{SignalWithAckReceiver, SignalWithAckSender},
 };
 use heapless::Vec;
 use salty::Sha512;
@@ -29,134 +21,64 @@ use crate::{configure_next_boot, BootOption, APP_ADDRESS};
 static PUBLIC_KEY: &[u8] = include_bytes!("../pub.key");
 
 #[embassy_executor::task]
-async fn ota_write_disk_task(
+pub async fn ota_task(
+    can_sender: &'static CanSender<NoopRawMutex, 4>,
+    can_receiver: &'static CanReceiver<NoopRawMutex, 4, 2>,
     flash: Peri<'static, FLASH>,
-    mut pipe_rx: Reader<'static, NoopRawMutex, 64>,
-    reset_signal_receiver: SignalWithAckReceiver<'static, NoopRawMutex, (), ()>,
-    receive_done_signal: &'static Signal<NoopRawMutex, ()>,
 ) {
+    // writing to flash stalls the cpu anyways, so its fine to use blocking api here
     let mut flash = Flash::new_blocking(flash);
     const PAGE_SIZE: u32 = 2 * 1024;
-    let mut pipe_rx_read_buffer = [0u8; WRITE_SIZE];
     let mut sha512 = Sha512::new();
     let mut signature = Vec::<u8, 64>::new();
     let mut firmware_write_offset = APP_ADDRESS - 0x08000000;
-
-    let mut write_firmware = |buffer: &[u8; WRITE_SIZE],
-                              sha512: &mut Sha512,
-                              signature: &mut Vec<u8, 64>,
-                              firmware_write_offset: &mut u32| {
-        if signature.len() < signature.capacity() {
-            // first 64 byte of the "firmware" is the signature
-            signature.extend_from_slice(buffer).unwrap();
-        } else {
-            if *firmware_write_offset % PAGE_SIZE == 0 {
-                flash
-                    .blocking_erase(*firmware_write_offset, *firmware_write_offset + PAGE_SIZE)
-                    .unwrap();
-            }
-            sha512.update(buffer);
-            flash
-                .blocking_write(*firmware_write_offset, buffer)
-                .unwrap();
-            *firmware_write_offset += WRITE_SIZE as u32;
-        }
-    };
-
-    loop {
-        let reset_signal_fut = reset_signal_receiver.wait();
-        let read_pipe_fut = pipe_rx.read_exact(&mut pipe_rx_read_buffer);
-        match select(reset_signal_fut, read_pipe_fut).await {
-            Either::First(_) => {
-                // firmware transmission is going to start
-
-                // empty the existing data in the pipe
-                loop {
-                    if pipe_rx.try_read(&mut pipe_rx_read_buffer).is_err() {
-                        break;
-                    }
-                }
-                // reset write offset
-                firmware_write_offset = APP_ADDRESS - 0x08000000;
-
-                signature.clear();
-                receive_done_signal.reset();
-                reset_signal_receiver.ack(());
-            }
-            Either::Second(_) => {
-                // Pipe can't EOF, so we dont need to handle the result returned by read_exact
-                write_firmware(
-                    &pipe_rx_read_buffer,
-                    &mut sha512,
-                    &mut signature,
-                    &mut firmware_write_offset,
-                );
-            }
-        };
-
-        if receive_done_signal.try_take().is_some() {
-            // all firmware has been received in the pipe
-            loop {
-                if pipe_rx.try_read_exact(&mut pipe_rx_read_buffer).is_err() {
-                    break;
-                }
-                write_firmware(
-                    &pipe_rx_read_buffer,
-                    &mut sha512,
-                    &mut signature,
-                    &mut firmware_write_offset,
-                );
-            }
-
-            let sha512_bytes = sha512.finalize();
-            sha512 = Sha512::new();
-
-            if signature.len() != signature.capacity() {
-                warn!("signature not full");
-                continue;
-            }
-
-            match verify_firmware(
-                &sha512_bytes,
-                signature.as_slice().try_into().unwrap(),
-                PUBLIC_KEY.try_into().unwrap(),
-            ) {
-                Ok(()) => {
-                    info!("Firmware verification succeeded, rebooting to application.....");
-                    configure_next_boot(BootOption::Application);
-                    cortex_m::peripheral::SCB::sys_reset();
-                }
-                Err(e) => {
-                    warn!("Firmware verification failed: {}", e)
-                }
-            };
-        }
-    }
-}
-
-#[embassy_executor::task]
-async fn ota_receive_task(
-    self_can_node_id: u16,
-    can_sender: &'static CanSender<NoopRawMutex, 4>,
-    can_receiver: &'static CanReceiver<NoopRawMutex, 4, 1>,
-    mut pipe_tx: Writer<'static, NoopRawMutex, 64>,
-    restart_signal_sender: SignalWithAckSender<'static, NoopRawMutex, (), ()>,
-    receive_done_signal: &'static Signal<NoopRawMutex, ()>,
-) {
+    let mut write_buffer = Vec::<u8, WRITE_SIZE>::new();
     let mut can_sub = can_receiver.subscriber().unwrap();
+
     loop {
         let message = can_sub.next_message_pure().await.data;
 
         if let CanBusMessageEnum::DataTransfer(data_transfer) = message.message
             && data_transfer.data_type == DataType::Firmware
-            && data_transfer.destination_node_id == self_can_node_id
+            && data_transfer.destination_node_id == can_receiver.self_node_id()
         {
             if data_transfer.start_of_transfer {
-                info!("Starting to receive firmware.....");
-                restart_signal_sender.send_and_wait_for_ack(()).await;
+                sha512 = Sha512::new();
+                signature.clear();
+                firmware_write_offset = APP_ADDRESS - 0x08000000;
+                write_buffer.clear();
             }
 
-            pipe_tx.write_all(data_transfer.data()).await.unwrap();
+            let mut data = data_transfer.data();
+            while data.len() > 0 {
+                let copy_len = (WRITE_SIZE - write_buffer.len()).min(data.len());
+                write_buffer.extend_from_slice(&data[..copy_len]).unwrap();
+                data = &data[copy_len..];
+
+                if write_buffer.len() == WRITE_SIZE {
+                    if signature.len() < signature.capacity() {
+                        // first 64 byte of the "firmware" is the signature
+                        log_info!("write signature");
+                        signature.extend_from_slice(&write_buffer).unwrap();
+                    } else {
+                        if firmware_write_offset % PAGE_SIZE == 0 {
+                            log_info!("erase flash");
+                            flash
+                                .blocking_erase(
+                                    firmware_write_offset,
+                                    firmware_write_offset + PAGE_SIZE,
+                                )
+                                .unwrap();
+                        }
+                        log_info!("write flash");
+                        sha512.update(&write_buffer);
+                        flash
+                            .blocking_write(firmware_write_offset, &write_buffer)
+                            .unwrap();
+                        firmware_write_offset += WRITE_SIZE as u32;
+                    }
+                }
+            }
 
             can_sender
                 .send(
@@ -169,33 +91,33 @@ async fn ota_receive_task(
                 .await;
 
             if data_transfer.end_of_transfer {
-                info!("Received firmware successfully");
-                can_sender.flush().await;
-                Timer::after_millis(50).await;
-                receive_done_signal.signal(());
-            }
-        }
-    }
-}
+                log_info!("firmware received");
 
-#[allow(dead_code)]
-trait TryReadExact {
-    fn try_read_exact(&mut self, buf: &mut [u8]) -> Result<usize, ()>;
-}
+                let sha512_bytes = sha512.finalize();
+                sha512 = Sha512::new();
 
-impl<'p, M: RawMutex, const N: usize> TryReadExact for Reader<'p, M, N> {
-    fn try_read_exact(&mut self, mut buf: &mut [u8]) -> Result<usize, ()> {
-        let mut total_read = 0;
-        while !buf.is_empty() {
-            match self.try_read(buf) {
-                Ok(0) => break,
-                Ok(n) => {
-                    total_read += n;
-                    buf = &mut buf[n..];
+                if signature.len() != signature.capacity() {
+                    log_warn!("signature not full");
+                    continue;
                 }
-                Err(_) => return Err(()),
+
+                match verify_firmware(
+                    &sha512_bytes,
+                    signature.as_slice().try_into().unwrap(),
+                    PUBLIC_KEY.try_into().unwrap(),
+                ) {
+                    Ok(()) => {
+                        log_info!("Firmware verification succeeded, rebooting to application.....");
+                        // wait 50ms to make sure the ack message is sent
+                        Timer::after_millis(50).await;
+                        configure_next_boot(BootOption::Application);
+                        // cortex_m::peripheral::SCB::sys_reset();
+                    }
+                    Err(_e) => {
+                        log_warn!("Firmware verification failed: {}", _e)
+                    }
+                };
             }
         }
-        Ok(total_read)
     }
 }

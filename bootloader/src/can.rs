@@ -1,5 +1,4 @@
 use cortex_m::singleton;
-use defmt::info;
 use embassy_executor::Spawner;
 use embassy_stm32::{
     bind_interrupts,
@@ -14,11 +13,8 @@ use embassy_stm32::{
 };
 use embassy_sync::blocking_mutex::raw::NoopRawMutex;
 use firmware_common_new::can_bus::{
-    id::can_node_id_from_serial_number,
-    node_types::OZYS_NODE_TYPE,
-    receiver::CanReceiver,
-    sender::CanSender,
-    CanBusFrame, CanBusRX, CanBusTX,
+    id::can_node_id_from_serial_number, node_types::OZYS_NODE_TYPE, receiver::CanReceiver,
+    sender::CanSender, CanBusFrame, CanBusRX, CanBusTX,
 };
 use stm32_device_signature::device_id;
 
@@ -29,17 +25,17 @@ pub fn start_can_bus_tasks(
     pa8: Peri<'static, PA8>,
     pa15: Peri<'static, PA15>,
 ) -> (
-    u16,
     &'static CanSender<NoopRawMutex, 4>,
-    &'static CanReceiver<NoopRawMutex, 4, 1>,
+    &'static CanReceiver<NoopRawMutex, 4, 2>,
 ) {
     let can_node_id = can_node_id_from_serial_number(device_id());
-    info!("CAN Device ID: {}", can_node_id);
+    log_info!("CAN Device ID: {}", can_node_id);
 
     let can_sender =
         singleton!(: CanSender<NoopRawMutex, 4> = CanSender::new(OZYS_NODE_TYPE, can_node_id))
             .unwrap();
-    let can_receiver = singleton!(: CanReceiver<NoopRawMutex, 4, 1> = CanReceiver::new()).unwrap();
+    let can_receiver =
+        singleton!(: CanReceiver<NoopRawMutex, 4, 2> = CanReceiver::new(can_node_id)).unwrap();
 
     bind_interrupts!(struct Irqs {
         FDCAN3_IT0 => can::IT0InterruptHandler<FDCAN3>;
@@ -54,7 +50,7 @@ pub fn start_can_bus_tasks(
     spawner.must_spawn(can_bus_tx_task(can_sender, tx));
     spawner.must_spawn(can_bus_rx_task(can_receiver, rx));
 
-    (can_node_id, can_sender, can_receiver)
+    (can_sender, can_receiver)
 }
 
 #[embassy_executor::task]
@@ -80,7 +76,7 @@ async fn can_bus_tx_task(can_sender: &'static CanSender<NoopRawMutex, 4>, tx: Ca
 
 #[embassy_executor::task]
 async fn can_bus_rx_task(
-    can_receiver: &'static CanReceiver<NoopRawMutex, 4, 1>,
+    can_receiver: &'static CanReceiver<NoopRawMutex, 4, 2>,
     rx: CanRx<'static>,
 ) {
     struct RxWrapper(CanRx<'static>);
