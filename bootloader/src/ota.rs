@@ -20,6 +20,8 @@ use firmware_common_new::{
     },
     signal_with_ack::{SignalWithAckReceiver, SignalWithAckSender},
 };
+use heapless::Vec;
+use salty::{PublicKey, Sha512, Signature};
 
 use crate::{configure_next_boot, BootOption, APP_ADDRESS};
 
@@ -34,6 +36,8 @@ async fn ota_write_disk_task(
     const PAGE_SIZE: u32 = 2 * 1024;
     let mut firmware_write_offset = APP_ADDRESS - 0x08000000;
     let mut pipe_rx_read_buffer = [0u8; WRITE_SIZE];
+    let mut sha512 = Sha512::new();
+    let mut signature = Vec::<u8, 64>::new();
 
     loop {
         let reset_signal_fut = reset_signal_receiver.wait();
@@ -51,20 +55,31 @@ async fn ota_write_disk_task(
                 // reset write offset
                 firmware_write_offset = APP_ADDRESS - 0x08000000;
 
-                reset_signal_receiver.ack(());
+                signature.clear();
                 receive_done_signal.reset();
+                reset_signal_receiver.ack(());
             }
             Either::Second(_) => {
                 // Pipe can't EOF, so we dont need to handle the result returned by read_exact
-                if firmware_write_offset % PAGE_SIZE == 0 {
+
+                if signature.len() < signature.capacity() {
+                    // first 64 byte of the "firmware" is the signature
+                    signature.extend_from_slice(&pipe_rx_read_buffer).unwrap();
+                } else {
+                    if firmware_write_offset % PAGE_SIZE == 0 {
+                        flash
+                            .blocking_erase(
+                                firmware_write_offset,
+                                firmware_write_offset + PAGE_SIZE,
+                            )
+                            .unwrap();
+                    }
+                    sha512.update(&pipe_rx_read_buffer);
                     flash
-                        .blocking_erase(firmware_write_offset, firmware_write_offset + PAGE_SIZE)
+                        .blocking_write(firmware_write_offset, &pipe_rx_read_buffer)
                         .unwrap();
+                    firmware_write_offset += WRITE_SIZE as u32;
                 }
-                flash
-                    .blocking_write(firmware_write_offset, &pipe_rx_read_buffer)
-                    .unwrap();
-                firmware_write_offset += WRITE_SIZE as u32;
             }
         };
 
@@ -79,16 +94,48 @@ async fn ota_write_disk_task(
                         .blocking_erase(firmware_write_offset, firmware_write_offset + PAGE_SIZE)
                         .unwrap();
                 }
+                sha512.update(&pipe_rx_read_buffer);
                 flash
                     .blocking_write(firmware_write_offset, &pipe_rx_read_buffer)
                     .unwrap();
-                // TODO verify firmware is signed
-
-                configure_next_boot(BootOption::Application);
-                cortex_m::peripheral::SCB::sys_reset();
             }
+
+            let sha512 = sha512.finalize();
+            match verify_firmware(&sha512, &signature, defmt::todo!()) {
+                Ok(_) => {
+                    configure_next_boot(BootOption::Application);
+                    cortex_m::peripheral::SCB::sys_reset();
+                }
+                Err(e) => {
+                    warn!("Firmware verification failed: {}", e);
+                }
+            };
         }
     }
+}
+
+#[derive(Clone, Copy, Debug, defmt::Format)]
+enum VerifyFirmwareError {
+    SignatureTooShort(usize),
+    SaltyError(#[defmt(Debug2Format)] salty::Error),
+}
+
+fn verify_firmware(
+    sha512: &[u8; 64],
+    signature: &Vec<u8, 64>,
+    public_key: &[u8; 32],
+) -> Result<(), VerifyFirmwareError> {
+    if signature.len() != 64 {
+        return Err(VerifyFirmwareError::SignatureTooShort(signature.len()));
+    }
+    let signature: &[u8; 64] = signature.as_array().unwrap();
+    let signature = Signature::try_from(signature).unwrap();
+
+    let public_key = PublicKey::try_from(public_key).map_err(VerifyFirmwareError::SaltyError)?;
+    public_key
+        .verify_prehashed(sha512, &signature, None)
+        .map_err(VerifyFirmwareError::SaltyError)?;
+    Ok(())
 }
 
 #[embassy_executor::task]

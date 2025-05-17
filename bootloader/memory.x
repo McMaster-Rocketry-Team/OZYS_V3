@@ -9,7 +9,7 @@ MEMORY
 
 SECTIONS
 {
-    .backup_ram :
+    .backup_ram (NOLOAD):
     {
         *(.backup_ram)
     } > BACKUP_RAM

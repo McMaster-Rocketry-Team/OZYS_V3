@@ -1,4 +1,4 @@
 /target
 /vendor
 firmware.bin*
-key.*
+secret.key

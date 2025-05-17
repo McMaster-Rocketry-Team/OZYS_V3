@@ -38,6 +38,8 @@ stm32-device-signature = { version = "0.3.3", features = ["stm32g0"] }
 embedded-can = "0.4.1"
 embedded-io-async = "0.6.1"
 embassy-futures = { git = "https://github.com/embassy-rs/embassy.git" }
+salty = "0.3.0"
+heapless = "0.8.0"
 
 [patch.crates-io]
 embassy-sync = { git = "https://github.com/embassy-rs/embassy.git" }

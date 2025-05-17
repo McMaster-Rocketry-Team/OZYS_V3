@@ -1,6 +1,7 @@
 #![no_std]
 #![no_main]
 #![feature(let_chains)]
+#![feature(slice_as_array)]
 
 mod can;
 mod ota;
