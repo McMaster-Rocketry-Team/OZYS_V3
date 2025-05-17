@@ -25,8 +25,7 @@ use embassy_sync::blocking_mutex::raw::NoopRawMutex;
 use embassy_time::{Duration, Instant, Ticker, Timer};
 use firmware_common_new::can_bus::{
     messages::{
-        CanBusMessageEnum, NodeStatusMessage, ResetMessage,
-        node_status::{NodeHealth, NodeMode},
+        node_status::{NodeHealth, NodeMode, NodeStatusMessage}, reset::ResetMessage, CanBusMessageEnum
     },
     receiver::CanReceiver,
     sender::CanSender,
@@ -220,8 +219,8 @@ async fn can_reset_task(can_receiver: &'static CanReceiver<NoopRawMutex, 4, 2>) 
         }
     }
 }
-#[no_mangle]
-#[cfg_attr(target_os = "none", link_section = ".HardFault.user")]
+#[unsafe(no_mangle)]
+#[cfg_attr(target_os = "none", unsafe(link_section = ".HardFault.user"))]
 #[cfg(not(feature = "defmt"))]
 unsafe extern "C" fn HardFault() {
     cortex_m::peripheral::SCB::sys_reset();

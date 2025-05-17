@@ -62,7 +62,7 @@ macro_rules! log_unreachable {
     () => {
         #[allow(unreachable_code)]
         {
-            ##[cfg(feature = "defmt")]
+            #[cfg(feature = "defmt")]
             ::defmt::unreachable!();
 
             ::core::panic!("unreachable");
