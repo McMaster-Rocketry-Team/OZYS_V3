@@ -25,7 +25,9 @@ use embassy_sync::blocking_mutex::raw::NoopRawMutex;
 use embassy_time::{Duration, Instant, Ticker, Timer};
 use firmware_common_new::can_bus::{
     messages::{
-        node_status::{NodeHealth, NodeMode, NodeStatusMessage}, reset::ResetMessage, CanBusMessageEnum
+        CanBusMessageEnum,
+        node_status::{NodeHealth, NodeMode, NodeStatusMessage},
+        reset::ResetMessage,
     },
     receiver::CanReceiver,
     sender::CanSender,
@@ -149,8 +151,8 @@ fn main() -> ! {
         }
     }
 
-    // enter bootloader only if magic number detected
-    log_info!("Bootloader!");
+    // enter DFU only if magic number detected
+    log_info!("DFU!");
     let executor = singleton!(: Executor = Executor::new()).unwrap();
     executor.run(|spawner| {
         spawner.must_spawn(status_led_task(p.PB14));

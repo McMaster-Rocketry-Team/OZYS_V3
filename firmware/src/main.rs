@@ -123,10 +123,10 @@ async fn main(spawner: Spawner) {
     // led 4: PB7
     // led 1: PC13
     // status led: PB14
-    let mut led2 = Output::new(p.PA10, Level::Low, Speed::Low);
-    let mut led3 = Output::new(p.PB6, Level::Low, Speed::Low);
-    let mut led4 = Output::new(p.PB7, Level::Low, Speed::Low);
-    let mut led1 = Output::new(p.PC13, Level::Low, Speed::Low);
+    let mut _led2 = Output::new(p.PA10, Level::Low, Speed::Low);
+    let mut _led3 = Output::new(p.PB6, Level::Low, Speed::Low);
+    let mut _led4 = Output::new(p.PB7, Level::Low, Speed::Low);
+    let mut _led1 = Output::new(p.PC13, Level::Low, Speed::Low);
 
     configure_next_boot(BootOption::Application);
     spawner.must_spawn(watchdog_task(p.IWDG));

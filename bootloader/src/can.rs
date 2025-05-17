@@ -110,5 +110,5 @@ async fn can_bus_rx_task(
     }
 
     let mut rx_wrapper = RxWrapper(rx);
-    can_receiver.run_daemon::<_, 8>(&mut rx_wrapper, None).await;
+    can_receiver.run_daemon::<_, 8>(&mut rx_wrapper).await;
 }

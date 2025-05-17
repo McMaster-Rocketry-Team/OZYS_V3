@@ -14,7 +14,8 @@ use embassy_stm32::{
 };
 use embassy_sync::blocking_mutex::raw::NoopRawMutex;
 use firmware_common_new::can_bus::{
-    id::can_node_id_from_serial_number,
+    id::{can_node_id_from_serial_number, CanBusExtendedId},
+    messages::DATA_TRANSFER_MESSAGE_TYPE,
     node_types::OZYS_NODE_TYPE,
     receiver::CanReceiver,
     sender::CanSender,
@@ -39,7 +40,8 @@ pub async fn start_can_bus_tasks(
     let can_sender =
         singleton!(: CanSender<NoopRawMutex, 4> = CanSender::new(OZYS_NODE_TYPE, can_node_id))
             .unwrap();
-    let can_receiver = singleton!(: CanReceiver<NoopRawMutex, 4, 1> = CanReceiver::new(can_node_id)).unwrap();
+    let can_receiver =
+        singleton!(: CanReceiver<NoopRawMutex, 4, 1> = CanReceiver::new(can_node_id)).unwrap();
 
     bind_interrupts!(struct Irqs {
         FDCAN3_IT0 => can::IT0InterruptHandler<FDCAN3>;
@@ -66,10 +68,6 @@ async fn can_bus_tx_task(can_sender: &'static CanSender<NoopRawMutex, 4>, tx: Ca
         async fn send(&mut self, id: u32, data: &[u8]) -> Result<(), Self::Error> {
             let frame = Frame::new_extended(id, data)?;
             self.0.write(&frame).await;
-            // FIXME: not a big problem for now, but will be a problem if we implement OTA
-            // it needs to flush all the can frames before rebooting
-            // tx.flush_all().await;
-
             Ok(())
         }
     }
@@ -108,8 +106,15 @@ async fn can_bus_rx_task(
         type Frame = EnvelopeWrapper;
 
         async fn receive(&mut self) -> Result<Self::Frame, Self::Error> {
-            let frame = self.0.read().await.map(EnvelopeWrapper)?;
-            Ok(frame)
+            loop {
+                let frame = self.0.read().await.map(EnvelopeWrapper)?;
+                let id = CanBusExtendedId::from_raw(frame.id());
+
+                // filter out data transfer messages so we don't waste time decoding them
+                if id.message_type != DATA_TRANSFER_MESSAGE_TYPE {
+                    return Ok(frame);
+                }
+            }
         }
     }
 
