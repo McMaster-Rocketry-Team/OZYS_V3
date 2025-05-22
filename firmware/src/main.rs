@@ -123,12 +123,11 @@ async fn main(spawner: Spawner) {
     // led 4: PB7
     // led 1: PC13
     // status led: PB14
-    let mut _led2 = Output::new(p.PA10, Level::Low, Speed::Low);
+    let mut _led2 = Output::new(p.PA10, Level::High, Speed::Low);
     let mut _led3 = Output::new(p.PB6, Level::Low, Speed::Low);
     let mut _led4 = Output::new(p.PB7, Level::Low, Speed::Low);
     let mut _led1 = Output::new(p.PC13, Level::Low, Speed::Low);
 
-    configure_next_boot(BootOption::Application);
     spawner.must_spawn(watchdog_task(p.IWDG));
     spawner.must_spawn(status_led_task(p.PB14));
     let (self_can_node_id, can_sender, can_receiver) =
@@ -137,6 +136,10 @@ async fn main(spawner: Spawner) {
     spawner.must_spawn(can_reset_task(self_can_node_id, can_receiver));
 
     info!("All tasks started");
+
+    loop {
+        Timer::after_secs(1).await;
+    }
 
     // let now = NaiveDate::from_ymd_opt(2025, 5, 2)
     //     .unwrap()
@@ -151,6 +154,7 @@ async fn main(spawner: Spawner) {
 
 #[embassy_executor::task]
 async fn watchdog_task(wdt: Peri<'static, IWDG>) {
+    configure_next_boot(BootOption::Application);
     let mut wdt = IndependentWatchdog::new(wdt, 500_000);
     wdt.unleash();
 
@@ -165,7 +169,7 @@ async fn watchdog_task(wdt: Peri<'static, IWDG>) {
 async fn status_led_task(yellow_led: Peri<'static, PB14>) {
     let mut yellow_led = Output::new(yellow_led, Level::High, Speed::Low);
 
-    let mut ticker = Ticker::every(Duration::from_millis(100));
+    let mut ticker = Ticker::every(Duration::from_millis(1000));
     loop {
         yellow_led.set_high();
         Timer::after_millis(50).await;

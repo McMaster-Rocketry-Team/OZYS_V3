@@ -1,4 +1,4 @@
-use defmt::warn;
+use defmt::{info, warn};
 use embassy_stm32::{
     Peri,
     flash::{Flash, WRITE_SIZE},
@@ -51,11 +51,11 @@ pub async fn ota_task(
                 last_sequence_number = data_transfer.sequence_number;
                 write_buffer.clear();
             } else {
-                let expected_sequence_number = last_sequence_number.wrapping_add(1);
-                if data_transfer.sequence_number != expected_sequence_number {
+                last_sequence_number = last_sequence_number.wrapping_add(1);
+                if data_transfer.sequence_number != last_sequence_number {
                     warn!(
                         "out of order message detected, expected sequence number {}, received {}",
-                        expected_sequence_number, data_transfer.sequence_number
+                        last_sequence_number, data_transfer.sequence_number
                     );
                     continue;
                 }
@@ -89,6 +89,7 @@ pub async fn ota_task(
                             .unwrap();
                         firmware_write_offset += WRITE_SIZE as u32;
                     }
+                    write_buffer.clear();
                 }
             }
 
@@ -123,7 +124,7 @@ pub async fn ota_task(
                         // wait 50ms to make sure the ack message is sent
                         Timer::after_millis(50).await;
                         configure_next_boot(BootOption::Application);
-                        // cortex_m::peripheral::SCB::sys_reset();
+                        cortex_m::peripheral::SCB::sys_reset();
                     }
                     Err(_e) => {
                         log_warn!("Firmware verification failed: {}", _e)
