@@ -1,4 +1,4 @@
-use defmt::{info, warn};
+use defmt::warn;
 use embassy_stm32::{
     Peri,
     flash::{Flash, WRITE_SIZE},
