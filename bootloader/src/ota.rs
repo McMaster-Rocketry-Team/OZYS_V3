@@ -1,4 +1,3 @@
-use defmt::warn;
 use embassy_stm32::{
     Peri,
     flash::{Flash, WRITE_SIZE},
@@ -53,9 +52,10 @@ pub async fn ota_task(
             } else {
                 last_sequence_number = last_sequence_number.wrapping_add(1);
                 if data_transfer.sequence_number != last_sequence_number {
-                    warn!(
+                    log_warn!(
                         "out of order message detected, expected sequence number {}, received {}",
-                        last_sequence_number, data_transfer.sequence_number
+                        last_sequence_number,
+                        data_transfer.sequence_number
                     );
                     continue;
                 }
