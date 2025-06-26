@@ -25,6 +25,7 @@ embassy-stm32 = { git = "https://github.com/embassy-rs/embassy.git", features = 
 embassy-executor = { git = "https://github.com/embassy-rs/embassy.git", features = [
     "arch-cortex-m",
     "executor-thread",
+    "nightly",
 ] }
 embassy-sync = { git = "https://github.com/embassy-rs/embassy.git" }
 embassy-time = { git = "https://github.com/embassy-rs/embassy.git", features = [
