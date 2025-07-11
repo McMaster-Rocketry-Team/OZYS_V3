@@ -81,6 +81,12 @@ path = "src/adc_test.rs"
 test = false
 bench = false
 
+[[bin]]
+name = "toggle_pwm"
+path = "src/toggle_pwm.rs"
+test = false
+bench = false
+
 [profile.dev]
 debug = true
 lto = true
