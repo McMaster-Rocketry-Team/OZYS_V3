@@ -1,3 +1,4 @@
+use binary_macros::base64;
 use embassy_stm32::{
     Peri,
     flash::{Flash, WRITE_SIZE},
@@ -18,7 +19,7 @@ use salty::Sha512;
 
 use crate::{APP_ADDRESS, BootOption, configure_next_boot};
 
-static PUBLIC_KEY: &[u8] = include_bytes!("../pub.key");
+static PUBLIC_KEY: &[u8] = base64!("file:pub.key");
 
 #[embassy_executor::task]
 pub async fn ota_task(
@@ -31,9 +32,11 @@ pub async fn ota_task(
     const PAGE_SIZE: u32 = 2 * 1024;
     let mut sha512 = Sha512::new();
     let mut signature = Vec::<u8, 64>::new();
-    let mut firmware_write_offset = APP_ADDRESS - 0x08000000;
+    let firmware_start_address = APP_ADDRESS - 0x08000000;
+    let mut firmware_write_offset = firmware_start_address;
     let mut last_sequence_number = 0u8;
     let mut write_buffer = Vec::<u8, WRITE_SIZE>::new();
+    let mut first_page_data = Vec::<u8, { PAGE_SIZE as usize }>::new();
     let mut can_sub = can_receiver.subscriber().unwrap();
 
     loop {
@@ -46,7 +49,7 @@ pub async fn ota_task(
             if data_transfer.start_of_transfer {
                 sha512 = Sha512::new();
                 signature.clear();
-                firmware_write_offset = APP_ADDRESS - 0x08000000;
+                firmware_write_offset = firmware_start_address;
                 last_sequence_number = data_transfer.sequence_number;
                 write_buffer.clear();
             } else {
@@ -82,11 +85,18 @@ pub async fn ota_task(
                                 )
                                 .unwrap();
                         }
-                        log_info!("write flash");
+
                         sha512.update(&write_buffer);
-                        flash
-                            .blocking_write(firmware_write_offset, &write_buffer)
-                            .unwrap();
+
+                        if !first_page_data.is_full() {
+                            log_info!("write first page");
+                            first_page_data.extend_from_slice(&write_buffer).unwrap();
+                        } else {
+                            log_info!("write flash");
+                            flash
+                                .blocking_write(firmware_write_offset, &write_buffer)
+                                .unwrap();
+                        }
                         firmware_write_offset += WRITE_SIZE as u32;
                     }
                     write_buffer.clear();
@@ -109,8 +119,13 @@ pub async fn ota_task(
                 let sha512_bytes = sha512.finalize();
                 sha512 = Sha512::new();
 
-                if signature.len() != signature.capacity() {
+                if !signature.is_full() {
                     log_warn!("signature not full");
+                    continue;
+                }
+
+                if !first_page_data.is_full() {
+                    log_warn!("first_page_data not full");
                     continue;
                 }
 
@@ -120,13 +135,31 @@ pub async fn ota_task(
                     PUBLIC_KEY.try_into().unwrap(),
                 ) {
                     Ok(()) => {
-                        log_info!("Firmware verification succeeded, rebooting to application.....");
+                        log_info!("Firmware verification succeeded, writing the first page");
+
+                        let mut address = firmware_start_address + PAGE_SIZE - WRITE_SIZE as u32;
+                        let mut first_page_data = first_page_data.as_slice();
+                        while !first_page_data.is_empty() {
+                            flash
+                                .blocking_write(
+                                    address,
+                                    &first_page_data[first_page_data.len() - 8..],
+                                )
+                                .unwrap();
+                            first_page_data = &first_page_data[..first_page_data.len() - 8];
+                            address -= WRITE_SIZE as u32;
+                        }
+
+                        log_info!("Rebooting to application");
                         // wait 50ms to make sure the ack message is sent
                         Timer::after_millis(50).await;
                         configure_next_boot(BootOption::Application);
                         cortex_m::peripheral::SCB::sys_reset();
                     }
                     Err(_e) => {
+                        // FIXME: even if firmware verification failed it
+                        // is still possible to go into the firmware after reboot
+                        // TODO do not write the first page until verification succeed
                         log_warn!("Firmware verification failed: {}", _e)
                     }
                 };

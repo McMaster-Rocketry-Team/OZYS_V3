@@ -37,13 +37,14 @@ cortex-m = { version = "0.7.7", features = [
 ] }
 cortex-m-rt = "0.7.5"
 firmware-common-new = { path = "../../Rust_Monorepo/firmware-common-new", default-features = false, features = [
-    "bootloader"
-]}
+    "bootloader",
+] }
 # stm32g0 and stm32g4 have the same memory location for device signature
 stm32-device-signature = { version = "0.3.3", features = ["stm32g0"] }
 embedded-can = "0.4.1"
 salty = "0.3.0"
 heapless = "0.8.0"
+binary_macros = { git = "https://github.com/PegasisForever/binary_macros.git" }
 
 [patch.crates-io]
 embassy-sync = { git = "https://github.com/embassy-rs/embassy.git" }
