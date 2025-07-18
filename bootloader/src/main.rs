@@ -1,6 +1,5 @@
 #![no_std]
 #![no_main]
-#![feature(let_chains)]
 #![feature(slice_as_array)]
 #![feature(impl_trait_in_assoc_type)]
 
