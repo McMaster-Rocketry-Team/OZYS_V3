@@ -30,7 +30,7 @@ pub fn start_can_bus_tasks(
     log_info!("CAN Device ID: {}", can_node_id);
 
     let can_sender =
-        singleton!(: CanSender<NoopRawMutex, 4> = CanSender::new(OZYS_NODE_TYPE, can_node_id, None, None))
+        singleton!(: CanSender<NoopRawMutex, 4> = CanSender::new(OZYS_NODE_TYPE, can_node_id, None))
             .unwrap();
     let can_receiver =
         singleton!(: CanReceiver<NoopRawMutex, 4, 2> = CanReceiver::new(can_node_id)).unwrap();

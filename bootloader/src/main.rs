@@ -189,12 +189,11 @@ async fn node_status_task(can_sender: &'static CanSender<NoopRawMutex, 4>) {
                 NodeStatusMessage {
                     uptime_s: Instant::now().as_secs() as u32,
                     health: NodeHealth::Healthy,
-                    mode: NodeMode::Maintainance,
+                    mode: NodeMode::Maintenance,
                     custom_status: 0,
                 }
                 .into(),
-            )
-            .await;
+            );
         ticker.next().await;
     }
 }

@@ -4,7 +4,7 @@
 
 use core::cell::RefCell;
 
-use {defmt_rtt as _, panic_probe as _};
+use {defmt_rtt_pipe as _, panic_probe as _};
 
 use defmt::info;
 use embassy_embedded_hal::shared_bus::blocking::spi::SpiDeviceWithConfig;

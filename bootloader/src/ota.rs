@@ -110,8 +110,7 @@ pub async fn ota_task(
                         node_id: message.id.node_id,
                     }
                     .into(),
-                )
-                .await;
+                );
 
             if data_transfer.end_of_transfer {
                 log_info!("firmware received");

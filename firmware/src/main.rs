@@ -7,7 +7,7 @@ mod can;
 
 use core::{mem::MaybeUninit, ptr::write_volatile};
 
-use {defmt_rtt as _, panic_probe as _};
+use {defmt_rtt_pipe as _, panic_probe as _};
 
 use can::start_can_bus_tasks;
 use defmt::info;
@@ -50,7 +50,7 @@ use firmware_common_new::can_bus::{
 ///
 /// If the main application failed to start, the watchdog will reset the device and
 /// due to the magic number in BACKUP_RAM\[0\], the device will stay in bootloader.
-#[link_section = ".backup_ram"]
+#[unsafe(link_section = ".backup_ram")]
 static mut BACKUP_RAM: MaybeUninit<[u32; 256]> = MaybeUninit::uninit();
 
 pub enum BootOption {
@@ -192,8 +192,7 @@ async fn node_status_task(can_sender: &'static CanSender<NoopRawMutex, 4>) {
                     custom_status: 0,
                 }
                 .into(),
-            )
-            .await;
+            );
         ticker.next().await;
     }
 }

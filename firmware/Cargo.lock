@@ -69,9 +69,9 @@ dependencies = [
 
 [[package]]
 name = "autocfg"
-version = "1.4.0"
+version = "1.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ace50bade8e6234aa140d9a2f552bbee1db4d353f69b8217bc503490fc1a9f26"
+checksum = "c08606f8c3cbf4ce6ec8e28fb0014a2c086708fe954eaa885384a6165172e7e8"
 
 [[package]]
 name = "bare-metal"
@@ -147,14 +147,14 @@ name = "calculate-required-bits"
 version = "0.1.0"
 dependencies = [
  "quote",
- "syn 2.0.101",
+ "syn 2.0.104",
 ]
 
 [[package]]
 name = "cfg-if"
-version = "1.0.0"
+version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
+checksum = "9555578bc9e57714c812a1f84e4fc5b4d21fcb063490c624de019f7464c91268"
 
 [[package]]
 name = "chrono"
@@ -188,9 +188,12 @@ dependencies = [
 
 [[package]]
 name = "cobs"
-version = "0.2.3"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "67ba02a97a2bd10f4b59b25c7973101c79642302776489e030cd13cdab09ed15"
+checksum = "0fa961b519f0b462e3a3b4a34b64d119eeaca1d59af726fe450bbba07a9fc0a1"
+dependencies = [
+ "thiserror",
+]
 
 [[package]]
 name = "cortex-m"
@@ -235,7 +238,7 @@ checksum = "e37549a379a9e0e6e576fd208ee60394ccb8be963889eebba3ffe0980364f472"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.101",
+ "syn 2.0.104",
 ]
 
 [[package]]
@@ -299,7 +302,7 @@ dependencies = [
  "proc-macro2",
  "quote",
  "strsim",
- "syn 2.0.101",
+ "syn 2.0.104",
 ]
 
 [[package]]
@@ -310,7 +313,7 @@ checksum = "fc34b93ccb385b40dc71c6fceac4b2ad23662c7eeb248cf10d529b7e055b6ead"
 dependencies = [
  "darling_core",
  "quote",
- "syn 2.0.101",
+ "syn 2.0.104",
 ]
 
 [[package]]
@@ -351,7 +354,7 @@ dependencies = [
  "proc-macro-error2",
  "proc-macro2",
  "quote",
- "syn 2.0.101",
+ "syn 2.0.104",
 ]
 
 [[package]]
@@ -364,13 +367,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "defmt-rtt"
+name = "defmt-rtt-pipe"
 version = "1.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b2cac3b8a5644a9e02b75085ebad3b6deafdbdbdec04bb25086523828aa4dfd1"
 dependencies = [
  "critical-section",
  "defmt 1.0.1",
+ "embassy-sync",
 ]
 
 [[package]]
@@ -404,13 +406,13 @@ dependencies = [
 
 [[package]]
 name = "embassy-embedded-hal"
-version = "0.3.0"
-source = "git+https://github.com/embassy-rs/embassy.git#9409afb02e7fd46d0c3b2257a938a8bc88244f5b"
+version = "0.3.1"
+source = "git+https://github.com/embassy-rs/embassy.git#77a8bc27e9c34e363f321132ebb9e8d8ff684a9f"
 dependencies = [
  "defmt 1.0.1",
  "embassy-futures 0.1.1 (git+https://github.com/embassy-rs/embassy.git)",
  "embassy-hal-internal",
- "embassy-sync 0.6.2",
+ "embassy-sync",
  "embassy-time",
  "embedded-hal 0.2.7",
  "embedded-hal 1.0.0",
@@ -423,7 +425,7 @@ dependencies = [
 [[package]]
 name = "embassy-executor"
 version = "0.7.0"
-source = "git+https://github.com/embassy-rs/embassy.git#9409afb02e7fd46d0c3b2257a938a8bc88244f5b"
+source = "git+https://github.com/embassy-rs/embassy.git#77a8bc27e9c34e363f321132ebb9e8d8ff684a9f"
 dependencies = [
  "cortex-m 0.7.7",
  "critical-section",
@@ -434,12 +436,12 @@ dependencies = [
 [[package]]
 name = "embassy-executor-macros"
 version = "0.6.2"
-source = "git+https://github.com/embassy-rs/embassy.git#9409afb02e7fd46d0c3b2257a938a8bc88244f5b"
+source = "git+https://github.com/embassy-rs/embassy.git#77a8bc27e9c34e363f321132ebb9e8d8ff684a9f"
 dependencies = [
  "darling",
  "proc-macro2",
  "quote",
- "syn 2.0.101",
+ "syn 2.0.104",
 ]
 
 [[package]]
@@ -451,12 +453,12 @@ checksum = "1f878075b9794c1e4ac788c95b728f26aa6366d32eeb10c7051389f898f7d067"
 [[package]]
 name = "embassy-futures"
 version = "0.1.1"
-source = "git+https://github.com/embassy-rs/embassy.git#9409afb02e7fd46d0c3b2257a938a8bc88244f5b"
+source = "git+https://github.com/embassy-rs/embassy.git#77a8bc27e9c34e363f321132ebb9e8d8ff684a9f"
 
 [[package]]
 name = "embassy-hal-internal"
-version = "0.2.0"
-source = "git+https://github.com/embassy-rs/embassy.git#9409afb02e7fd46d0c3b2257a938a8bc88244f5b"
+version = "0.3.0"
+source = "git+https://github.com/embassy-rs/embassy.git#77a8bc27e9c34e363f321132ebb9e8d8ff684a9f"
 dependencies = [
  "cortex-m 0.7.7",
  "critical-section",
@@ -467,7 +469,7 @@ dependencies = [
 [[package]]
 name = "embassy-net-driver"
 version = "0.2.0"
-source = "git+https://github.com/embassy-rs/embassy.git#9409afb02e7fd46d0c3b2257a938a8bc88244f5b"
+source = "git+https://github.com/embassy-rs/embassy.git#77a8bc27e9c34e363f321132ebb9e8d8ff684a9f"
 dependencies = [
  "defmt 1.0.1",
 ]
@@ -475,7 +477,7 @@ dependencies = [
 [[package]]
 name = "embassy-stm32"
 version = "0.2.0"
-source = "git+https://github.com/embassy-rs/embassy.git#9409afb02e7fd46d0c3b2257a938a8bc88244f5b"
+source = "git+https://github.com/embassy-rs/embassy.git#77a8bc27e9c34e363f321132ebb9e8d8ff684a9f"
 dependencies = [
  "aligned 0.4.2",
  "bit_field",
@@ -492,7 +494,7 @@ dependencies = [
  "embassy-futures 0.1.1 (git+https://github.com/embassy-rs/embassy.git)",
  "embassy-hal-internal",
  "embassy-net-driver",
- "embassy-sync 0.6.2",
+ "embassy-sync",
  "embassy-time",
  "embassy-time-driver",
  "embassy-time-queue-utils",
@@ -523,36 +525,22 @@ dependencies = [
 
 [[package]]
 name = "embassy-sync"
-version = "0.6.2"
-source = "git+https://github.com/embassy-rs/embassy.git#9409afb02e7fd46d0c3b2257a938a8bc88244f5b"
+version = "0.7.0"
+source = "git+https://github.com/embassy-rs/embassy.git#77a8bc27e9c34e363f321132ebb9e8d8ff684a9f"
 dependencies = [
  "cfg-if",
  "critical-section",
  "defmt 1.0.1",
  "embedded-io-async",
+ "futures-core",
  "futures-sink",
- "futures-util",
- "heapless 0.8.0",
-]
-
-[[package]]
-name = "embassy-sync"
-version = "0.7.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cef1a8a1ea892f9b656de0295532ac5d8067e9830d49ec75076291fd6066b136"
-dependencies = [
- "cfg-if",
- "critical-section",
- "embedded-io-async",
- "futures-sink",
- "futures-util",
  "heapless 0.8.0",
 ]
 
 [[package]]
 name = "embassy-time"
 version = "0.4.0"
-source = "git+https://github.com/embassy-rs/embassy.git#9409afb02e7fd46d0c3b2257a938a8bc88244f5b"
+source = "git+https://github.com/embassy-rs/embassy.git#77a8bc27e9c34e363f321132ebb9e8d8ff684a9f"
 dependencies = [
  "cfg-if",
  "critical-section",
@@ -562,13 +550,13 @@ dependencies = [
  "embedded-hal 0.2.7",
  "embedded-hal 1.0.0",
  "embedded-hal-async",
- "futures-util",
+ "futures-core",
 ]
 
 [[package]]
 name = "embassy-time-driver"
 version = "0.2.0"
-source = "git+https://github.com/embassy-rs/embassy.git#9409afb02e7fd46d0c3b2257a938a8bc88244f5b"
+source = "git+https://github.com/embassy-rs/embassy.git#77a8bc27e9c34e363f321132ebb9e8d8ff684a9f"
 dependencies = [
  "document-features",
 ]
@@ -576,7 +564,7 @@ dependencies = [
 [[package]]
 name = "embassy-time-queue-utils"
 version = "0.1.0"
-source = "git+https://github.com/embassy-rs/embassy.git#9409afb02e7fd46d0c3b2257a938a8bc88244f5b"
+source = "git+https://github.com/embassy-rs/embassy.git#77a8bc27e9c34e363f321132ebb9e8d8ff684a9f"
 dependencies = [
  "embassy-executor",
  "heapless 0.8.0",
@@ -584,8 +572,8 @@ dependencies = [
 
 [[package]]
 name = "embassy-usb-driver"
-version = "0.1.0"
-source = "git+https://github.com/embassy-rs/embassy.git#9409afb02e7fd46d0c3b2257a938a8bc88244f5b"
+version = "0.2.0"
+source = "git+https://github.com/embassy-rs/embassy.git#77a8bc27e9c34e363f321132ebb9e8d8ff684a9f"
 dependencies = [
  "defmt 1.0.1",
  "embedded-io-async",
@@ -593,12 +581,12 @@ dependencies = [
 
 [[package]]
 name = "embassy-usb-synopsys-otg"
-version = "0.2.0"
-source = "git+https://github.com/embassy-rs/embassy.git#9409afb02e7fd46d0c3b2257a938a8bc88244f5b"
+version = "0.3.0"
+source = "git+https://github.com/embassy-rs/embassy.git#77a8bc27e9c34e363f321132ebb9e8d8ff684a9f"
 dependencies = [
  "critical-section",
  "defmt 1.0.1",
- "embassy-sync 0.6.2",
+ "embassy-sync",
  "embassy-usb-driver",
 ]
 
@@ -667,9 +655,9 @@ dependencies = [
 
 [[package]]
 name = "embedded-sdmmc"
-version = "0.8.1"
+version = "0.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "eb637331040ec9b35f6a8151904d1aca914cc349d14c91b9a3e92ba789b22f3f"
+checksum = "a1132a10f327a9dff9d0629124e8b26cb2b3a930ab3dfedbadd295c107955e92"
 dependencies = [
  "byteorder",
  "defmt 0.3.100",
@@ -706,12 +694,12 @@ dependencies = [
  "cortex-m 0.7.7",
  "cortex-m-rt",
  "defmt 1.0.1",
- "defmt-rtt",
+ "defmt-rtt-pipe",
  "embassy-embedded-hal",
  "embassy-executor",
  "embassy-futures 0.1.1 (git+https://github.com/embassy-rs/embassy.git)",
  "embassy-stm32",
- "embassy-sync 0.6.2",
+ "embassy-sync",
  "embassy-time",
  "embedded-can",
  "embedded-io-async",
@@ -731,7 +719,7 @@ dependencies = [
  "crc",
  "defmt 1.0.1",
  "embassy-futures 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "embassy-sync 0.7.0",
+ "embassy-sync",
  "embedded-hal-async",
  "embedded-io-async",
  "heapless 0.8.0",
@@ -947,9 +935,9 @@ dependencies = [
 
 [[package]]
 name = "libc"
-version = "0.2.172"
+version = "0.2.174"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d750af042f7ef4f724306de029d18836c26c1765a54a6a3f094cbd23a7267ffa"
+checksum = "1171693293099992e19cddea4e8b849964e9846f4acee11b3948bcc337be8776"
 
 [[package]]
 name = "libm"
@@ -959,15 +947,15 @@ checksum = "f9fbbcab51052fe104eb5e5d351cf728d30a5be1fe14d9be8a3b097481fb97de"
 
 [[package]]
 name = "litrs"
-version = "0.4.1"
+version = "0.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b4ce301924b7887e9d637144fdade93f9dfff9b60981d4ac161db09720d39aa5"
+checksum = "f5e54036fe321fd421e10d732f155734c4e4afd610dd556d9a82833ab3ee0bed"
 
 [[package]]
 name = "lock_api"
-version = "0.4.12"
+version = "0.4.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "07af8b9cdd281b7915f413fa73f29ebd5d55d0d3f0155584dade1ff18cea1b17"
+checksum = "96936507f153605bddfcda068dd804796c84324ed2510809e5b2a624c81da765"
 dependencies = [
  "autocfg",
  "scopeguard",
@@ -976,7 +964,7 @@ dependencies = [
 [[package]]
 name = "lora-modulation"
 version = "0.1.5"
-source = "git+https://github.com/lora-rs/lora-rs.git#9223e421135ebf95af0f67a07ee33715c77465c7"
+source = "git+https://github.com/lora-rs/lora-rs.git#cf3c067e0d878074f9599f555b896d59d3e6b96d"
 dependencies = [
  "defmt 0.3.100",
 ]
@@ -984,7 +972,7 @@ dependencies = [
 [[package]]
 name = "lora-phy"
 version = "3.0.2-alpha"
-source = "git+https://github.com/lora-rs/lora-rs.git#9223e421135ebf95af0f67a07ee33715c77465c7"
+source = "git+https://github.com/lora-rs/lora-rs.git#cf3c067e0d878074f9599f555b896d59d3e6b96d"
 dependencies = [
  "defmt 0.3.100",
  "document-features",
@@ -998,7 +986,7 @@ dependencies = [
 [[package]]
 name = "lorawan"
 version = "0.9.1"
-source = "git+https://github.com/lora-rs/lora-rs.git#9223e421135ebf95af0f67a07ee33715c77465c7"
+source = "git+https://github.com/lora-rs/lora-rs.git#cf3c067e0d878074f9599f555b896d59d3e6b96d"
 dependencies = [
  "aes",
  "cmac",
@@ -1010,7 +998,7 @@ dependencies = [
 [[package]]
 name = "lorawan-device"
 version = "0.12.2"
-source = "git+https://github.com/lora-rs/lora-rs.git#9223e421135ebf95af0f67a07ee33715c77465c7"
+source = "git+https://github.com/lora-rs/lora-rs.git#cf3c067e0d878074f9599f555b896d59d3e6b96d"
 dependencies = [
  "defmt 0.3.100",
  "document-features",
@@ -1025,18 +1013,18 @@ dependencies = [
 [[package]]
 name = "lorawan-macros"
 version = "0.1.0"
-source = "git+https://github.com/lora-rs/lora-rs.git#9223e421135ebf95af0f67a07ee33715c77465c7"
+source = "git+https://github.com/lora-rs/lora-rs.git#cf3c067e0d878074f9599f555b896d59d3e6b96d"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.101",
+ "syn 2.0.104",
 ]
 
 [[package]]
 name = "memchr"
-version = "2.7.4"
+version = "2.7.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "78ca9ab1a0babb1e7d5695e3530886289c18cf2f87ec19a575a0abdce112e3a3"
+checksum = "32a282da65faaf38286cf3be983213fcf1d2e2a58700e808f83f4ea9a4804bc0"
 
 [[package]]
 name = "micromath"
@@ -1067,7 +1055,7 @@ checksum = "574af9cd5b9971cbfdf535d6a8d533778481b241c447826d976101e0149392a1"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.101",
+ "syn 2.0.104",
 ]
 
 [[package]]
@@ -1172,9 +1160,9 @@ checksum = "8b870d8c151b6f2fb93e84a13146138f05d02ed11c7e7c54f8826aaaf7c9f184"
 
 [[package]]
 name = "postcard"
-version = "1.1.1"
+version = "1.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "170a2601f67cc9dba8edd8c4870b15f71a6a2dc196daec8c83f72b59dff628a8"
+checksum = "6764c3b5dd454e283a30e6dfe78e9b31096d9e32036b5d1eaac7a6119ccb9a24"
 dependencies = [
  "cobs",
  "heapless 0.7.17",
@@ -1200,7 +1188,7 @@ dependencies = [
  "proc-macro-error-attr2",
  "proc-macro2",
  "quote",
- "syn 2.0.101",
+ "syn 2.0.104",
 ]
 
 [[package]]
@@ -1229,7 +1217,7 @@ checksum = "ca414edb151b4c8d125c12566ab0d74dc9cdba36fb80eb7b848c15f495fd32d1"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.101",
+ "syn 2.0.104",
 ]
 
 [[package]]
@@ -1301,7 +1289,7 @@ checksum = "246b40ac189af6c675d124b802e8ef6d5246c53e17367ce9501f8f66a81abb7a"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.101",
+ "syn 2.0.104",
 ]
 
 [[package]]
@@ -1383,7 +1371,7 @@ checksum = "5b0276cf7f2c73365f7157c8123c21cd9a50fbbd844757af28ca1f5925fc2a00"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.101",
+ "syn 2.0.104",
 ]
 
 [[package]]
@@ -1445,10 +1433,11 @@ dependencies = [
 [[package]]
 name = "stm32-metapac"
 version = "16.0.0"
-source = "git+https://github.com/embassy-rs/stm32-data-generated?tag=stm32-data-27ef8fba3483187e852eaf3796d827259f61e8ec#c8e4a666a1b1e0c934585599c278cc66dad04ce5"
+source = "git+https://github.com/embassy-rs/stm32-data-generated?tag=stm32-data-9fc86ca7b3a8bc05182bf1ce3045602df1f5dce3#bfe8180a0675ad4e9b2b7bf1da21ebf356b64a1b"
 dependencies = [
  "cortex-m 0.7.7",
  "cortex-m-rt",
+ "defmt 0.3.100",
 ]
 
 [[package]]
@@ -1476,9 +1465,9 @@ dependencies = [
 
 [[package]]
 name = "syn"
-version = "2.0.101"
+version = "2.0.104"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8ce2b7fc941b3a24138a0a7cf8e858bfc6a992e7978a068a5c760deb0ed43caf"
+checksum = "17b6f705963418cdb9927482fa304bc562ece2fdd4f616084c50b7023b435a40"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1508,7 +1497,7 @@ checksum = "7f7cf42b4507d8ea322120659672cf1b9dbb93f8f2d4ecfd6e51350ff5b17a1d"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.101",
+ "syn 2.0.104",
 ]
 
 [[package]]
@@ -1576,5 +1565,5 @@ checksum = "ce36e65b0d2999d2aafac989fb249189a141aee1f53c612c1f37d72631959f69"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.101",
+ "syn 2.0.104",
 ]

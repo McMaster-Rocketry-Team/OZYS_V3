@@ -1,5 +1,5 @@
 [package]
-edition = "2021"
+edition = "2024"
 name = "firmware"
 version = "0.1.0"
 
@@ -11,7 +11,7 @@ cortex-m = { version = "0.7.7", features = [
 ] }
 cortex-m-rt = "0.7.5"
 defmt = "1.0.1"
-defmt-rtt = "1.0.0"
+defmt-rtt-pipe = { path = "../../Rust_Monorepo/defmt-rtt-pipe" }
 embassy-executor = { git = "https://github.com/embassy-rs/embassy.git", features = [
     "arch-cortex-m",
     "executor-thread",
@@ -55,20 +55,6 @@ path = "src/main.rs"
 test = false
 bench = false
 
-# [[bin]]
-# name = "update_first"
-# path = "src/update_first.rs"
-# test = false
-# bench = false
-
-
-[[bin]]
-name = "update_payload"
-path = "src/update_payload_main.rs"
-test = false
-bench = false
-
-
 [[bin]]
 name = "sd_test"
 path = "src/sd_test.rs"
@@ -78,12 +64,6 @@ bench = false
 [[bin]]
 name = "adc_test"
 path = "src/adc_test.rs"
-test = false
-bench = false
-
-[[bin]]
-name = "toggle_pwm"
-path = "src/toggle_pwm.rs"
 test = false
 bench = false
 

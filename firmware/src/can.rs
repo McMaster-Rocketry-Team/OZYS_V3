@@ -38,7 +38,7 @@ pub async fn start_can_bus_tasks(
     info!("CAN Device ID: {}", can_node_id);
 
     let can_sender =
-        singleton!(: CanSender<NoopRawMutex, 4> = CanSender::new(OZYS_NODE_TYPE, can_node_id))
+        singleton!(: CanSender<NoopRawMutex, 4> = CanSender::new(OZYS_NODE_TYPE, can_node_id,  Some(&defmt_rtt_pipe::PIPE)))
             .unwrap();
     let can_receiver =
         singleton!(: CanReceiver<NoopRawMutex, 4, 1> = CanReceiver::new(can_node_id)).unwrap();
