@@ -1,4 +1,4 @@
 /target
 /vendor
-firmware.bin*
-secret.key
+logs
+.rocket-cli.toml

@@ -1,11 +1,12 @@
 MEMORY
 {
   /* NOTE 1 K = 1 KiBi = 1024 bytes */
-  FLASH                             : ORIGIN = 0x08000000, LENGTH = 64K
-  APP                               : ORIGIN = 0x08010000, LENGTH = 448K
-  RAM                         (rwx) : ORIGIN = 0x20000000, LENGTH = 127K
-  BACKUP_RAM                        : ORIGIN = 0x2001fc00, LENGTH = 1K
+  FLASH                             : ORIGIN = 0x08000000, LENGTH = 32K
+  RAM                         (rwx) : ORIGIN = 0x20000000, LENGTH = 131064 /* 128K - 8 */
+  BACKUP_RAM                  (rw)  : ORIGIN = 0x2001fffc, LENGTH = 8
 }
+
+__app_address = ORIGIN(FLASH) + LENGTH(FLASH);
 
 SECTIONS
 {

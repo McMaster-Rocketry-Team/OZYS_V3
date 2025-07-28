@@ -1,7 +1,9 @@
 # This file was automatically generated.
 
 [target.thumbv7em-none-eabihf]
-runner = 'probe-rs run --chip STM32G474CETx --connect-under-reset'
+runner = 'rocket-cli download STM32G474CETx ../../Rust_Monorepo/bootloader/secret.key ozys'
+# runner = 'probe-rs run --chip STM32G474CETx --connect-under-reset'
+
 rustflags = [
   "-C", "link-arg=--nmagic",
   "-C", "link-arg=-Tlink.x",
@@ -9,12 +11,11 @@ rustflags = [
   # "-C", "linker=flip-link",
 ]
 
-
 [build]
 target = "thumbv7em-none-eabihf"
 
 [env]
-DEFMT_LOG = "trace"
+DEFMT_LOG = "debug,embassy_stm32=info"
 
 [unstable]
 build-std = ["core"]
