@@ -2,10 +2,10 @@
 #![no_main]
 #![feature(impl_trait_in_assoc_type)]
 
-mod can;
 mod bootloader;
+mod can;
 
-use crate::bootloader::{configure_next_boot, watchdog_task, BootOption};
+use crate::bootloader::{BootOption, configure_next_boot, watchdog_task};
 
 use {defmt_rtt_pipe as _, panic_probe as _};
 
@@ -13,23 +13,23 @@ use can::start_can_bus_tasks;
 use defmt::info;
 use embassy_executor::Spawner;
 use embassy_stm32::Peri;
+use embassy_stm32::peripherals::PB14;
 use embassy_stm32::{
     gpio::{Level, Output, Speed},
     time::mhz,
 };
-use embassy_stm32::peripherals::PB14;
 use embassy_sync::blocking_mutex::raw::NoopRawMutex;
 use embassy_time::{Duration, Instant, Ticker, Timer};
 use firmware_common_new::can_bus::{
-    messages::{node_status::NodeStatusMessage, reset::ResetMessage},
-    sender::CanSender,
-};
-use firmware_common_new::can_bus::{
     messages::{
-        node_status::{NodeHealth, NodeMode},
         CanBusMessageEnum,
+        node_status::{NodeHealth, NodeMode},
     },
     receiver::CanReceiver,
+};
+use firmware_common_new::can_bus::{
+    messages::{node_status::NodeStatusMessage, reset::ResetMessage},
+    sender::CanSender,
 };
 
 #[embassy_executor::main]
@@ -98,8 +98,11 @@ async fn main(spawner: Spawner) {
 
     info!("All tasks started");
 
+    let mut i = 0usize;
     loop {
         Timer::after_secs(1).await;
+        info!("Hello OZYS {}", i);
+        i += 1;
     }
 
     // let now = NaiveDate::from_ymd_opt(2025, 5, 2)
@@ -130,16 +133,15 @@ async fn status_led_task(yellow_led: Peri<'static, PB14>) {
 async fn node_status_task(can_sender: &'static CanSender<NoopRawMutex, 4>) {
     let mut ticker = Ticker::every(Duration::from_millis(500));
     loop {
-        can_sender
-            .send(
-                NodeStatusMessage {
-                    uptime_s: Instant::now().as_secs() as u32,
-                    health: NodeHealth::Healthy,
-                    mode: NodeMode::Operational,
-                    custom_status: 0,
-                }
-                .into(),
-            );
+        can_sender.send(
+            NodeStatusMessage {
+                uptime_s: Instant::now().as_secs() as u32,
+                health: NodeHealth::Healthy,
+                mode: NodeMode::Operational,
+                custom_status: 0,
+            }
+            .into(),
+        );
         ticker.next().await;
     }
 }
