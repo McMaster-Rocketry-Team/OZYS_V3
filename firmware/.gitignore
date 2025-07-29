@@ -2,3 +2,4 @@
 /vendor
 logs
 .rocket-cli.toml
+.rocket-cli.log
