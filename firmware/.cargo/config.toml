@@ -1,5 +1,3 @@
-# This file was automatically generated.
-
 [target.thumbv7em-none-eabihf]
 runner = 'rocket-cli download STM32G474CETx ../../Rust_Monorepo/bootloader/secret.key ozys'
 # runner = 'probe-rs run --chip STM32G474CETx --connect-under-reset'
