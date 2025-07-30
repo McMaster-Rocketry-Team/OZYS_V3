@@ -1,5 +1,9 @@
 # OZYS V3 Bootloader
 
+- Update firmware from CAN Bus
+- Automatically reset to DFU mode if the new firmware halted
+- Cryptographic signature verification of the new firmware
+
 ## Memory Layout
 
 The memory layout is defined in `memory.x`.
