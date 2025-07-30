@@ -10,7 +10,6 @@ RAM_SIZE_KIB = 127
 
 build_env = os.environ.copy()
 
-subprocess.run('cargo build --release'.split(' '))
 result = subprocess.run(
     'cargo bloat --release --no-default-features --crates --split-std --no-relative-size -n 20'.split(' '), capture_output=True)
 if result.stderr.decode("utf-8").find("error: could not compile") >= 0:
