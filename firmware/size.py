@@ -10,20 +10,19 @@ RAM_SIZE_KIB = 127
 
 build_env = os.environ.copy()
 
-subprocess.run('cargo build --release'.split(' '))
 result = subprocess.run(
-    'cargo bloat --release --bin main --crates --split-std --no-relative-size -n 20'.split(' '), capture_output=True)
+    'cargo bloat --bin main --crates --split-std --no-relative-size -n 20'.split(' '), capture_output=True)
 if result.stderr.decode("utf-8").find("error: could not compile") >= 0:
     exit(1)
 print()
 print(result.stdout.decode("utf-8")[:-93])
 
 result = subprocess.run(
-    'cargo bloat --release --bin main --split-std --no-relative-size -n 20'.split(' '), capture_output=True)
+    'cargo bloat --bin main --split-std --no-relative-size -n 20'.split(' '), capture_output=True)
 print(result.stdout.decode("utf-8")[:-93])
 
 result = subprocess.run(
-    'cargo size --release --bin main -- -A'.split(' '), capture_output=True)
+    'cargo size --bin main -- -A'.split(' '), capture_output=True)
 lines = result.stdout.decode("utf-8").split('\n')
 
 global_bytes = 0
