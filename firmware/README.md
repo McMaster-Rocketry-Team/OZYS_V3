@@ -26,4 +26,10 @@ The memory layout is defined in `memory.x`.
 
 `rocket-cli` uses ST-Link or bluetooth for uploading depending on if an ST-Link is connected.
 
-If you suspect something is wrong with `rocket-cli`, causing missing error messages etc, you can switch it back to `probe-rs` in `.cargo/config.toml`.
+## Troubleshooting
+
+If you think your code should run but the stm does not start or stops in the middle of execution:
+
+1. Switch back from `rocket-cli` to `probe-rs` in `.cargo/config.toml`
+2. Do not connect to ST-Link, instead use an external power
+3. Power cycle stm to reset bootloader state

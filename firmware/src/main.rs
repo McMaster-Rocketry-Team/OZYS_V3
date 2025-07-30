@@ -90,10 +90,9 @@ async fn main(spawner: Spawner) {
     let mut _led1 = Output::new(p.PC13, Level::Low, Speed::Low);
 
     spawner.must_spawn(status_led_task(p.PB14));
-    let (self_can_node_id, can_sender, can_receiver) =
-        start_can_bus_tasks(&spawner, p.FDCAN3, p.PA8, p.PA15).await;
+    let (can_sender, can_receiver) = start_can_bus_tasks(&spawner, p.FDCAN3, p.PA8, p.PA15).await;
     spawner.must_spawn(node_status_task(can_sender));
-    spawner.must_spawn(can_reset_task(self_can_node_id, can_receiver));
+    spawner.must_spawn(can_reset_task(can_receiver));
     spawner.must_spawn(watchdog_task(p.IWDG));
 
     info!("All tasks started");
@@ -147,10 +146,7 @@ async fn node_status_task(can_sender: &'static CanSender<NoopRawMutex, 4>) {
 }
 
 #[embassy_executor::task]
-async fn can_reset_task(
-    self_can_node_id: u16,
-    can_receiver: &'static CanReceiver<NoopRawMutex, 4, 1>,
-) {
+async fn can_reset_task(can_receiver: &'static CanReceiver<NoopRawMutex, 4, 1>) {
     let mut subscriber = can_receiver.subscriber().unwrap();
     loop {
         let can_message = subscriber.next_message_pure().await.data.message;
@@ -159,7 +155,7 @@ async fn can_reset_task(
             reset_all,
             into_bootloader,
         }) = can_message
-            && (node_id == self_can_node_id || reset_all)
+            && (node_id == can_receiver.self_node_id() || reset_all)
         {
             configure_next_boot(if into_bootloader {
                 BootOption::Bootloader

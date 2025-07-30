@@ -2,24 +2,22 @@ use cortex_m::singleton;
 use defmt::info;
 use embassy_executor::Spawner;
 use embassy_stm32::{
-    bind_interrupts,
+    Peri, bind_interrupts,
     can::{
-        self,
+        self, CanConfigurator, CanRx, CanTx, Frame,
         enums::{BusError, FrameCreateError},
         frame::Envelope,
-        CanConfigurator, CanRx, CanTx, Frame,
     },
-    peripherals::{FDCAN3, PA15, PA8},
-    Peri,
+    peripherals::{FDCAN3, PA8, PA15},
 };
 use embassy_sync::blocking_mutex::raw::NoopRawMutex;
 use firmware_common_new::can_bus::{
-    id::{can_node_id_from_serial_number, CanBusExtendedId},
+    CanBusFrame, CanBusRX, CanBusTX,
+    id::{CanBusExtendedId, can_node_id_from_serial_number},
     messages::DATA_TRANSFER_MESSAGE_TYPE,
     node_types::OZYS_NODE_TYPE,
     receiver::CanReceiver,
     sender::CanSender,
-    CanBusFrame, CanBusRX, CanBusTX,
 };
 use stm32_device_signature::device_id;
 
@@ -30,7 +28,6 @@ pub async fn start_can_bus_tasks(
     pa8: Peri<'static, PA8>,
     pa15: Peri<'static, PA15>,
 ) -> (
-    u16,
     &'static CanSender<NoopRawMutex, 4>,
     &'static CanReceiver<NoopRawMutex, 4, 1>,
 ) {
@@ -56,7 +53,7 @@ pub async fn start_can_bus_tasks(
     spawner.must_spawn(can_bus_tx_task(can_sender, tx));
     spawner.must_spawn(can_bus_rx_task(can_receiver, rx));
 
-    (can_node_id, can_sender, can_receiver)
+    (can_sender, can_receiver)
 }
 
 #[embassy_executor::task]

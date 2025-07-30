@@ -11,7 +11,9 @@ cortex-m = { version = "0.7.7", features = [
 ] }
 cortex-m-rt = "0.7.5"
 defmt = "1.0.1"
-defmt-rtt-pipe = { path = "../../Rust_Monorepo/defmt-rtt-pipe" }
+defmt-rtt-pipe = { path = "../../Rust_Monorepo/defmt-rtt-pipe", features = [
+    "disable-blocking-mode",
+] }
 embassy-executor = { git = "https://github.com/embassy-rs/embassy.git", features = [
     "arch-cortex-m",
     "executor-thread",
