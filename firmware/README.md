@@ -1,4 +1,4 @@
-# OZYS Firmware (Application)
+# OZYS V3 Firmware (Application)
 
 The bootloader (`../bootloader`) is required to be flashed to OZYS first before the application can be run.
 

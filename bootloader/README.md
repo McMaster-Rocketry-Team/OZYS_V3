@@ -1,4 +1,4 @@
-# OZYS Bootloader
+# OZYS V3 Bootloader
 
 ## Memory Layout
 
