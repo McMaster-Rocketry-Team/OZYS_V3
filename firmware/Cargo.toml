@@ -12,7 +12,7 @@ cortex-m = { version = "0.7.7", features = [
 cortex-m-rt = "0.7.5"
 defmt = "1.0.1"
 defmt-rtt-pipe = { path = "../../Rust_Monorepo/defmt-rtt-pipe", features = [
-    "disable-blocking-mode",
+    # "disable-blocking-mode",
 ] }
 embassy-executor = { git = "https://github.com/embassy-rs/embassy.git", features = [
     "arch-cortex-m",
@@ -36,7 +36,7 @@ embassy-time = { git = "https://github.com/embassy-rs/embassy.git", features = [
     "defmt-timestamp-uptime",
 ] }
 embassy-embedded-hal = { git = "https://github.com/embassy-rs/embassy.git" }
-embedded-sdmmc = { version = "0.8.1", default-features = false, features = [
+embedded-sdmmc = { git= "https://github.com/Be-ing/embedded-sdmmc-rs.git", rev="5f270ac", default-features = false, features = [
     "defmt-log",
 ] }
 panic-probe = { version = "1.0.0", features = ["print-defmt"] }

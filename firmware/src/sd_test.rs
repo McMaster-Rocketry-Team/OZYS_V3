@@ -2,27 +2,28 @@
 #![no_main]
 #![feature(impl_trait_in_assoc_type)]
 
-use core::cell::RefCell;
+mod bootloader;
+
+use crate::bootloader::{BootOption, configure_next_boot};
 
 use {defmt_rtt_pipe as _, panic_probe as _};
 
 use defmt::info;
-use embassy_embedded_hal::shared_bus::blocking::spi::SpiDeviceWithConfig;
+use embassy_embedded_hal::shared_bus::asynch::spi::SpiDevice;
 use embassy_executor::Spawner;
-use embassy_stm32::crc::{Config as CrcConfig, Crc, InputReverseConfig, PolySize};
-use embassy_stm32::time::Hertz;
 use embassy_stm32::{
     bind_interrupts, peripherals,
-    rng::{self, Rng},
+    rng::{self},
     spi::{Config as SpiConfig, Spi},
 };
 use embassy_stm32::{
     gpio::{Level, Output, Speed},
     time::mhz,
 };
-use embassy_sync::blocking_mutex::{raw::NoopRawMutex, Mutex};
+use embassy_stm32::{peripherals::PB3, time::Hertz};
+use embassy_sync::{blocking_mutex::raw::NoopRawMutex, mutex::Mutex};
 use embassy_time::Delay;
-use embedded_sdmmc::{Block, BlockDevice, BlockIdx, SdCard};
+use embedded_sdmmc::asynchronous::SdCard;
 
 bind_interrupts!(struct Irqs {
     RNG => rng::InterruptHandler<peripherals::RNG>;
@@ -71,59 +72,53 @@ async fn main(_spawner: Spawner) {
         config
     };
     let p = embassy_stm32::init(config);
+    configure_next_boot(BootOption::Application);
 
     Output::new(p.PB14, Level::High, Speed::Low);
 
     info!("Hello OZYS V3!");
 
+    let mut cs = Output::new(p.PB9, Level::High, Speed::High);
+
     let mut spi_config = SpiConfig::default();
-    spi_config.frequency = Hertz(1_000_000);
-    let spi3 = Mutex::<NoopRawMutex, _>::new(RefCell::new(Spi::new_blocking(
-        p.SPI1, p.PB3, p.PB5, p.PB4, spi_config,
-    )));
-    let sd = SpiDeviceWithConfig::new(
-        &spi3,
-        Output::new(p.PB9, Level::High, Speed::High),
+    spi_config.frequency = Hertz(100_000);
+    let mut spi1 = Spi::new(
+        p.SPI1,
+        unsafe { PB3::steal() },
+        p.PB5,
+        p.PB4,
+        p.DMA1_CH2,
+        p.DMA1_CH1,
         spi_config,
     );
-
+    let spi1 = Mutex::<NoopRawMutex, _>::new(spi1);
+    let sd = SpiDevice::new(&spi1, cs);
     let sdcard = SdCard::new(sd, Delay);
-    let size = sdcard.num_bytes().unwrap();
+
+    let size = sdcard.num_bytes().await.unwrap();
     let block_count = (size / 512) as u32;
     info!("Card size is {} bytes, {} blocks", size, block_count);
 
-    let mut rng = Rng::new(p.RNG, Irqs);
-    let crc_config =
-        CrcConfig::new(InputReverseConfig::None, false, PolySize::Width8, 69, 69).unwrap();
-    let mut crc = Crc::new(p.CRC, crc_config);
+    // let mut blocks = [Block::default()];
+    // blocks[0].fill(0x69);
+    // for block_i in 0..1 {
+    //     info!(
+    //         "Testing block {} ({}MiB).....",
+    //         block_i,
+    //         (block_i as f32) * 512.0 / 1024.0 / 1024.0
+    //     );
 
-    let mut blocks = [Block::default()];
-    for block_i in 0..10 {
-        info!(
-            "Testing block {} ({}MiB).....",
-            block_i,
-            (block_i as f32) * 512.0 / 1024.0 / 1024.0
-        );
+    //     let block_id = BlockIdx(block_i);
+    //     sdcard.write(&mut blocks, block_id).await.unwrap();
 
-        rng.async_fill_bytes(&mut blocks[0].contents[..508])
-            .await
-            .unwrap();
-        crc.reset();
-        let check_sum = crc.feed_bytes(&blocks[0].contents[..508]);
-        blocks[0].contents[508..512].copy_from_slice(&check_sum.to_le_bytes());
-
-        let block_id = BlockIdx(block_i);
-        sdcard.write(&mut blocks, block_id).unwrap();
-
-        sdcard.read(&mut blocks, block_id, "").unwrap();
-        crc.reset();
-        let check_sum = crc.feed_bytes(&blocks[0].contents[..508]);
-        let check_sum2 = u32::from_le_bytes(blocks[0].contents[508..512].try_into().unwrap());
-        if check_sum != check_sum2 {
-            info!("Failed, checksum mismatch: {} != {}", check_sum, check_sum2);
-            break;
-        }
-    }
+    //     sdcard.read(&mut blocks, block_id).await.unwrap();
+    //     // let check_sum = crc.feed_bytes(&blocks[0].contents[..508]);
+    //     // let check_sum2 = u32::from_le_bytes(blocks[0].contents[508..512].try_into().unwrap());
+    //     // if check_sum != check_sum2 {
+    //     //     info!("Failed, checksum mismatch: {} != {}", check_sum, check_sum2);
+    //     //     break;
+    //     // }
+    // }
 
     info!("SD Card test passed!")
 }
