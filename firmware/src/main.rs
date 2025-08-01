@@ -32,6 +32,14 @@ use firmware_common_new::can_bus::{
     sender::CanSender,
 };
 
+// receive messages:
+// - unix time
+// - VLStatusMessage - start recording if armed, stop recording 1 min after landed
+// send messages:
+// - send values for the four strain gauges every sec
+// - send node status
+// detect which sg port is connected -> blink leds -> send via node status
+// record strain gauges -> write sd card
 #[embassy_executor::main]
 async fn main(spawner: Spawner) {
     let config = {
@@ -128,6 +136,7 @@ async fn status_led_task(yellow_led: Peri<'static, PB14>) {
     }
 }
 
+// TODO also send values for the four strain gauges every sec
 #[embassy_executor::task]
 async fn node_status_task(can_sender: &'static CanSender<NoopRawMutex, 4>) {
     let mut ticker = Ticker::every(Duration::from_millis(500));
@@ -137,7 +146,7 @@ async fn node_status_task(can_sender: &'static CanSender<NoopRawMutex, 4>) {
                 uptime_s: Instant::now().as_secs() as u32,
                 health: NodeHealth::Healthy,
                 mode: NodeMode::Operational,
-                custom_status: 0,
+                custom_status: 0, // 11 bits of anything
             }
             .into(),
         );

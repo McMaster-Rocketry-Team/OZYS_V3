@@ -23,7 +23,7 @@ use embassy_stm32::{
 use embassy_stm32::{peripherals::PB3, time::Hertz};
 use embassy_sync::{blocking_mutex::raw::NoopRawMutex, mutex::Mutex};
 use embassy_time::Delay;
-use embedded_sdmmc::asynchronous::SdCard;
+use embedded_sdmmc::asynchronous::{Block, BlockDevice as _, BlockIdx, SdCard};
 
 bind_interrupts!(struct Irqs {
     RNG => rng::InterruptHandler<peripherals::RNG>;
@@ -99,26 +99,26 @@ async fn main(_spawner: Spawner) {
     let block_count = (size / 512) as u32;
     info!("Card size is {} bytes, {} blocks", size, block_count);
 
-    // let mut blocks = [Block::default()];
-    // blocks[0].fill(0x69);
-    // for block_i in 0..1 {
-    //     info!(
-    //         "Testing block {} ({}MiB).....",
-    //         block_i,
-    //         (block_i as f32) * 512.0 / 1024.0 / 1024.0
-    //     );
+    let mut blocks = [Block::default()];
+    blocks[0].fill(0x69);
+    for block_i in 0..1 {
+        info!(
+            "Testing block {} ({}MiB).....",
+            block_i,
+            (block_i as f32) * 512.0 / 1024.0 / 1024.0
+        );
 
-    //     let block_id = BlockIdx(block_i);
-    //     sdcard.write(&mut blocks, block_id).await.unwrap();
+        let block_id = BlockIdx(block_i);
+        sdcard.write(&mut blocks, block_id).await.unwrap();
 
-    //     sdcard.read(&mut blocks, block_id).await.unwrap();
-    //     // let check_sum = crc.feed_bytes(&blocks[0].contents[..508]);
-    //     // let check_sum2 = u32::from_le_bytes(blocks[0].contents[508..512].try_into().unwrap());
-    //     // if check_sum != check_sum2 {
-    //     //     info!("Failed, checksum mismatch: {} != {}", check_sum, check_sum2);
-    //     //     break;
-    //     // }
-    // }
+        sdcard.read(&mut blocks, block_id).await.unwrap();
+        // let check_sum = crc.feed_bytes(&blocks[0].contents[..508]);
+        // let check_sum2 = u32::from_le_bytes(blocks[0].contents[508..512].try_into().unwrap());
+        // if check_sum != check_sum2 {
+        //     info!("Failed, checksum mismatch: {} != {}", check_sum, check_sum2);
+        //     break;
+        // }
+    }
 
     info!("SD Card test passed!")
 }
