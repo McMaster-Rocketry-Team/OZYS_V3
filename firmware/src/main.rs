@@ -21,6 +21,7 @@ use embassy_stm32::{
 use embassy_sync::blocking_mutex::raw::NoopRawMutex;
 use embassy_time::{Duration, Instant, Ticker, Timer};
 use firmware_common_new::can_bus::{
+    custom_status::ozys_custom_status::OzysCustomStatus,
     messages::{
         CanBusMessageEnum,
         node_status::{NodeHealth, NodeMode},
@@ -36,7 +37,7 @@ use firmware_common_new::can_bus::{
 // - unix time
 // - VLStatusMessage - start recording if armed, stop recording 1 min after landed
 // send messages:
-// - send values for the four strain gauges every sec
+// - send values for the four strain gauges every sec (OzysMeasurementMessage)
 // - send node status
 // detect which sg port is connected -> blink leds -> send via node status
 // record strain gauges -> write sd card
@@ -136,18 +137,17 @@ async fn status_led_task(yellow_led: Peri<'static, PB14>) {
     }
 }
 
-// TODO also send values for the four strain gauges every sec
 #[embassy_executor::task]
 async fn node_status_task(can_sender: &'static CanSender<NoopRawMutex, 4>) {
     let mut ticker = Ticker::every(Duration::from_millis(500));
     loop {
         can_sender.send(
-            NodeStatusMessage {
-                uptime_s: Instant::now().as_secs() as u32,
-                health: NodeHealth::Healthy,
-                mode: NodeMode::Operational,
-                custom_status: 0, // 11 bits of anything
-            }
+            NodeStatusMessage::new(
+                Instant::now().as_secs() as u32,
+                NodeHealth::Healthy,
+                NodeMode::Operational,
+                OzysCustomStatus::new(false, false, false, false, true, 0.0),
+            )
             .into(),
         );
         ticker.next().await;
