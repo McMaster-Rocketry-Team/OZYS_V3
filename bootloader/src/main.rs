@@ -196,12 +196,11 @@ async fn node_status_task(can_sender: &'static CanSender<NoopRawMutex, 4>) {
     let mut ticker = Ticker::every(Duration::from_millis(500));
     loop {
         can_sender.send(
-            NodeStatusMessage {
-                uptime_s: Instant::now().as_secs() as u32,
-                health: NodeHealth::Healthy,
-                mode: NodeMode::Maintenance,
-                custom_status: 0,
-            }
+            NodeStatusMessage::new_no_custom_status(
+                Instant::now().as_secs() as u32,
+                NodeHealth::Healthy,
+                NodeMode::Maintenance,
+            )
             .into(),
         );
         ticker.next().await;
