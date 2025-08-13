@@ -11,16 +11,16 @@ use {defmt_rtt_pipe as _, panic_probe as _};
 use defmt::info;
 use embassy_embedded_hal::shared_bus::asynch::spi::SpiDevice;
 use embassy_executor::Spawner;
+
 use embassy_stm32::{
-    bind_interrupts, peripherals,
-    rng::{self},
-    spi::{Config as SpiConfig, Spi},
+    bind_interrupts, pac::crc::Crc, peripherals, rng::{self}, spi::{Config as SpiConfig, Spi}
 };
 use embassy_stm32::{
     gpio::{Level, Output, Speed},
     time::mhz,
 };
 use embassy_stm32::{peripherals::PB3, time::Hertz};
+
 use embassy_sync::{blocking_mutex::raw::NoopRawMutex, mutex::Mutex};
 use embassy_time::Delay;
 use embedded_sdmmc::asynchronous::{Block, BlockDevice as _, BlockIdx, SdCard};
@@ -77,48 +77,47 @@ async fn main(_spawner: Spawner) {
     Output::new(p.PB14, Level::High, Speed::Low);
 
     info!("Hello OZYS V3!");
-
-    let mut cs = Output::new(p.PB9, Level::High, Speed::High);
+                                                                    // is it opposite?? Level::Low? 
+    let mut cs = Output::new(p.PB9, Level::High, Speed::High); // needed to configure as spi mode on peripheral  
 
     let mut spi_config = SpiConfig::default();
     spi_config.frequency = Hertz(100_000);
     let mut spi1 = Spi::new(
         p.SPI1,
-        unsafe { PB3::steal() },
+        unsafe { PB3::steal() }, 
         p.PB5,
         p.PB4,
-        p.DMA1_CH2,
+        p.DMA1_CH2, 
         p.DMA1_CH1,
         spi_config,
     );
     let spi1 = Mutex::<NoopRawMutex, _>::new(spi1);
-    let sd = SpiDevice::new(&spi1, cs);
-    let sdcard = SdCard::new(sd, Delay);
+    _spawner.must_spawn(sd_test_fn(spi1, cs));
+    info!("SD Card test passed!")
+}
 
-    let size = sdcard.num_bytes().await.unwrap();
+#[embassy_executor::task]
+async fn sd_test_fn(
+    _spi: Mutex<NoopRawMutex, Spi<'static, embassy_stm32::mode::Async>>,
+    cs: Output<'static>,
+){
+    let sd = SpiDevice::new(&_spi, cs);
+    let sdcard = SdCard::new(sd, Delay);
+    let size: u64 = sdcard.num_bytes().await.unwrap(); // magically abstracted spi communication? 
     let block_count = (size / 512) as u32;
     info!("Card size is {} bytes, {} blocks", size, block_count);
-
     let mut blocks = [Block::default()];
-    blocks[0].fill(0x69);
-    for block_i in 0..1 {
+    let mut read_block = [Block::default()];
+    for block_i in 0..10 {
+        blocks[0].fill(block_i as u8);
         info!(
             "Testing block {} ({}MiB).....",
             block_i,
-            (block_i as f32) * 512.0 / 1024.0 / 1024.0
+            (block_i as f32 + 1.0) * 512.0 / 1024.0 / 1024.0 // Mb at block[i] = i blocks *512 bytes each block / 1024bytes each Kb / 1024kb each Mb
         );
-
         let block_id = BlockIdx(block_i);
         sdcard.write(&mut blocks, block_id).await.unwrap();
-
-        sdcard.read(&mut blocks, block_id).await.unwrap();
-        // let check_sum = crc.feed_bytes(&blocks[0].contents[..508]);
-        // let check_sum2 = u32::from_le_bytes(blocks[0].contents[508..512].try_into().unwrap());
-        // if check_sum != check_sum2 {
-        //     info!("Failed, checksum mismatch: {} != {}", check_sum, check_sum2);
-        //     break;
-        // }
+        sdcard.read(&mut read_block, block_id).await.unwrap();
+        info!("{}",read_block[0].contents.clone());
     }
-
-    info!("SD Card test passed!")
 }

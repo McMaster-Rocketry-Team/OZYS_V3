@@ -2,36 +2,53 @@
 #![no_main]
 #![feature(impl_trait_in_assoc_type)]
 
-mod bootloader;
+mod bootloader; // sd 
 mod can;
 
+use core::ptr;
 use crate::bootloader::{BootOption, configure_next_boot, watchdog_task};
-
-use {defmt_rtt_pipe as _, panic_probe as _};
+use {defmt_rtt_pipe as _, panic_probe as _}; 
 
 use can::start_can_bus_tasks;
-use defmt::info;
-use embassy_executor::Spawner;
-use embassy_stm32::Peri;
-use embassy_stm32::peripherals::PB14;
-use embassy_stm32::{
+use defmt::info; 
+use embassy_executor::Spawner; 
+
+use embassy_stm32::Peri; 
+use embassy_stm32::{peripherals::PB3,peripherals::PB14, time::Hertz};
+use embassy_stm32::{ 
     gpio::{Level, Output, Speed},
     time::mhz,
+    bind_interrupts, 
+    pac::crc::Crc, 
+    peripherals, 
+    rng::{self}, 
+    spi::{Config as SpiConfig, Spi}
 };
-use embassy_sync::blocking_mutex::raw::NoopRawMutex;
-use embassy_time::{Duration, Instant, Ticker, Timer};
+use embassy_stm32::{adc::{self, Adc, AdcChannel, SampleTime}, peripherals::ADC1};
+
+use embassy_sync::{
+    blocking_mutex::raw::NoopRawMutex,
+    mutex::Mutex, 
+    channel::Channel,
+    pubsub::PubSubChannel,
+};
+use embassy_time::{Duration, Instant, Ticker, Timer, Delay}; 
+
+use embedded_sdmmc::asynchronous::{Block, BlockDevice as _, BlockIdx, SdCard};
 use firmware_common_new::can_bus::{
-    custom_status::ozys_custom_status::OzysCustomStatus,
+    custom_status::{ozys_custom_status::OzysCustomStatus, vl_custom_status::VLCustomStatus},
     messages::{
-        CanBusMessageEnum,
-        node_status::{NodeHealth, NodeMode},
+        node_status::{NodeHealth, NodeMode}, unix_time::UnixTimeMessage, vl_status::{FlightStage, VLStatusMessage}, CanBusMessageEnum, OZYS_MEASUREMENT_MESSAGE_TYPE, VL_STATUS_MESSAGE_TYPE
     },
     receiver::CanReceiver,
 };
 use firmware_common_new::can_bus::{
-    messages::{node_status::NodeStatusMessage, reset::ResetMessage},
+    messages::{node_status::NodeStatusMessage, reset::ResetMessage,ozys_measurement::OzysMeasurementMessage},
     sender::CanSender,
 };
+bind_interrupts!(struct Irqs {
+    RNG => rng::InterruptHandler<peripherals::RNG>;
+});
 
 // receive messages:
 // - unix time
@@ -83,7 +100,7 @@ async fn main(spawner: Spawner) {
 
         config
     };
-    let p = embassy_stm32::init(config);
+    let mut p = embassy_stm32::init(config);
     info!("Hello OZYS V3!");
 
     // this is ordered by led from top to bottom, power connector on the top left
@@ -93,41 +110,44 @@ async fn main(spawner: Spawner) {
     // led 4: PB7
     // led 1: PC13
     // status led: PB14
-    let mut _led2 = Output::new(p.PA10, Level::High, Speed::Low);
-    let mut _led3 = Output::new(p.PB6, Level::Low, Speed::Low);
-    let mut _led4 = Output::new(p.PB7, Level::Low, Speed::Low);
-    let mut _led1 = Output::new(p.PC13, Level::Low, Speed::Low);
-
-    spawner.must_spawn(status_led_task(p.PB14));
-    let (can_sender, can_receiver) = start_can_bus_tasks(&spawner, p.FDCAN3, p.PA8, p.PA15).await;
-    spawner.must_spawn(node_status_task(can_sender));
-    spawner.must_spawn(can_reset_task(can_receiver));
+    let mut _led2 = Output::new(p.PA10, Level::High, Speed::Low); // good 
+    let mut _led3 = Output::new(p.PB6, Level::Low, Speed::Low); // good
+    let mut _led4 = Output::new(p.PB7, Level::Low, Speed::Low); // good 
+    let mut _led1 = Output::new(p.PC13, Level::Low, Speed::Low); // good 
+    spawner.must_spawn(status_led_task(p.PB14)); // good 
     spawner.must_spawn(watchdog_task(p.IWDG));
 
-    info!("All tasks started");
+    let ps = Output::new(p.PA7, Level::Low, Speed::Low); // PS pin, low: force pwm // good 
+    let mut adc: Adc<'_, peripherals::ADC1> = Adc::new(p.ADC1);
+    let mut vrefint_channel: adc::AnyAdcChannel<ADC1> = adc.enable_vrefint().degrade_adc();
+    adc.set_sample_time(SampleTime::CYCLES640_5);
+    adc.set_differential(&mut p.PA0, true); // Assuming takes hold of PA1
+    let mut pa0: adc::AnyAdcChannel<ADC1> = p.PA0.degrade_adc();
+    //let mut adc_async_channel = Channel::new();
 
+    let (can_sender, can_receiver) = start_can_bus_tasks(&spawner, p.FDCAN3, p.PA8, p.PA15).await; // good 
+    spawner.must_spawn(node_status_task(can_sender));
+    spawner.must_spawn(can_reset_task(can_receiver));
+
+    // END OF CONFIG
+
+    info!("All tasks started");
     let mut i = 0usize;
     loop {
         Timer::after_secs(1).await;
         info!("Hello OZYS {}", i);
         i += 1;
+        // STARTING LOOP LOGIC HERE /////////////////////////
+
+        
+
+        // ENDING LOOP LOGIC HERE /////////////////////////
     }
-
-    // let now = NaiveDate::from_ymd_opt(2025, 5, 2)
-    //     .unwrap()
-    //     .and_hms_opt(10, 30, 15)
-    //     .unwrap();
-
-    // let mut rtc = Rtc::new(p.RTC, RtcConfig::default());
-
-    // rtc.set_datetime(now.into()).unwrap();
-    // let now: NaiveDateTime = rtc.now().unwrap().into();
 }
 
 #[embassy_executor::task]
 async fn status_led_task(yellow_led: Peri<'static, PB14>) {
     let mut yellow_led = Output::new(yellow_led, Level::High, Speed::Low);
-
     let mut ticker = Ticker::every(Duration::from_millis(1000));
     loop {
         yellow_led.set_high();
@@ -154,7 +174,7 @@ async fn node_status_task(can_sender: &'static CanSender<NoopRawMutex, 4>) {
     }
 }
 
-#[embassy_executor::task]
+#[embassy_executor::task]                                                   // CHANGE SUBSCRIBER LIMIT??
 async fn can_reset_task(can_receiver: &'static CanReceiver<NoopRawMutex, 4, 1>) {
     let mut subscriber = can_receiver.subscriber().unwrap();
     loop {
@@ -175,3 +195,54 @@ async fn can_reset_task(can_receiver: &'static CanReceiver<NoopRawMutex, 4, 1>) 
         }
     }
 }
+
+////////////////// Djordje's Implemented Tasks ///////////////////////
+/* TO DO 
+#[embassy_executor::task]                                                  // CHANGE SUBSCRIBER LIMIT??
+async fn can_vl_status_check(can_receiver: &'static CanReceiver<NoopRawMutex, 4, 1>) {
+    let mut subscriber = can_receiver.subscriber().unwrap();
+    loop {
+        let can_message = subscriber.next_message_pure().await.data.message;
+        if let CanBusMessageEnum::VLStatus(VLStatusMessage{
+            flight_stage,
+            battery_mv,            
+        }) = can_message {
+            //GET A WATCH?? 
+        }
+    }
+}
+*/
+
+/* TO DO 
+#[embassy_executor::task]               
+async fn can_get_unix_time(can_receiver: &'static CanReceiver<NoopRawMutex, 4, 1>) {
+    let mut subscriber = can_receiver.subscriber().unwrap();
+    loop {
+        let can_message = subscriber.next_message_pure().await.data.message;
+        if let CanBusMessageEnum::UnixTime(UnixTimeMessage{
+            timestamp_us
+        }) = can_message {
+            //GET A WATCH ???? 
+        }
+    }
+}
+*/
+
+/* TO DO 
+#[embassy_executor::task]
+async fn ozys_measurement_can_task (can_sender: &'static CanSender<NoopRawMutex, 4>) {
+    let mut ticker = Ticker::every(Duration::from_secs(1));
+    loop {
+        /*
+        can_sender.send(
+            OzysMeasurementMessage::new(
+                // GET FROM CHANNEL (PUBSUB??)
+            )
+            .into(),
+        );
+        */
+        ticker.next().await;
+    }
+}
+*/
+
