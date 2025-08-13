@@ -105,16 +105,21 @@ async fn main(_spawner: Spawner) {
     _spawner.must_spawn(adc_test_fn(adc, dma, adc_pin, read_buffer,_led2,_pub));
 
     let mut block = [Block::new()];
-    match _sub.next_message().await {
-        WaitResult::Message(msg)=>{
-            [block[0].contents[0],block[0].contents[1]]= msg[0].to_le_bytes();
-            [block[0].contents[2],block[0].contents[3]]= msg[1].to_le_bytes();
-            info!("{}",&block[0].contents);
-        }
-        WaitResult::Lagged(missed)=>{
-            info!("missed: {}",missed);
-        }
+    let mut block_index = 0;
+    while block_index<20{
+        match _sub.next_message().await {
+            WaitResult::Message(msg)=>{
+                [block[0].contents[block_index],block[0].contents[block_index+1]]= msg[0].to_le_bytes();
+                [block[0].contents[block_index+2],block[0].contents[block_index+3]]= msg[1].to_le_bytes();
+            }
+            WaitResult::Lagged(missed)=>{
+                info!("missed: {}",missed);
+            }
+        }       
+        block_index+=4;
     }
+    info!("{}",&block[0].contents);
+    
     // SPI TASK
     /* 
     let mut cs = Output::new(p.PB9, Level::High, Speed::High); // needed to configure as spi mode on peripheral  
@@ -166,7 +171,7 @@ async fn adc_test_fn(
         _pub.publish_immediate([read_buffer[0],read_buffer[1]]);
         let vrefint = read_buffer[0];
         let measured = read_buffer[1];
-        info!("Vrefint: {}, Measure: {}", vrefint,measured);
+        info!("Vrefint: {}, Measure: {}", vrefint.to_le_bytes(),measured.to_le_bytes());
         //let vref_plus = 3.0 * vref_cal / vrefint as f32;
         //info!("Vref+: {}V", vref_plus);
         //let measured = vref_plus / (1 << 12) as f32 * measured as f32;
@@ -195,5 +200,4 @@ async fn single_write_sd(
     sdcard.write( &blocks, block_id).await.unwrap();
     sdcard.read(&mut read_block, block_id).await.unwrap();
     info!("{}",&read_block[0].contents);
-}
-    */
+}*/
