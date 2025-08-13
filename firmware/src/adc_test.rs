@@ -214,27 +214,31 @@ async fn single_write_sd(
     let size: u64 = sdcard.num_bytes().await.unwrap(); 
     let block_count = (size / 512) as u32;
     info!("Card size is {} bytes, {} blocks", size, block_count);
-    let mut block = [Block::new()];
-    let mut block_index = 0;
-    while block_index <510{
-        match _sub.next_message().await {
-            WaitResult::Message(samples)=>{
-                for (i,sample) in samples.iter().enumerate(){
-                    let offset = 2*i;
-                    [block[0].contents[block_index+offset],block[0].contents[block_index+offset+1]]=sample.to_le_bytes();
+    let mut card_index = 0;
+    while card_index<3{
+        let mut block = [Block::new()];
+        let mut block_index = 0;
+        while block_index <510{
+            match _sub.next_message().await {
+                WaitResult::Message(samples)=>{
+                    for (i,sample) in samples.iter().enumerate(){
+                        let offset = 2*i;
+                        [block[0].contents[block_index+offset],block[0].contents[block_index+offset+1]]=sample.to_le_bytes();
+                    }
+                    //info!("{}",&block[0].contents);
                 }
-                info!("{}",&block[0].contents);
+                WaitResult::Lagged(missed)=>{
+                    info!("missed: {}",missed);
+                }
             }
-            WaitResult::Lagged(missed)=>{
-                info!("missed: {}",missed);
-            }
+            block_index+=10;
         }
-        block_index+=10;
-    }
-    let mut read_block = [Block::default()];
-    let block_id = BlockIdx(0);
-    sdcard.write( &block, block_id).await.unwrap();
-    sdcard.read(&mut read_block, block_id).await.unwrap();
-    info!("SDCARD");
-    info!("{}",&read_block[0].contents);
+        let mut read_block = [Block::default()];
+        let block_id = BlockIdx(card_index);
+        sdcard.write( &block, block_id).await.unwrap();
+        sdcard.read(&mut read_block, block_id).await.unwrap();
+        info!("SDCARD");
+        info!("{}",&read_block[0].contents);
+        card_index+=1;
+    }    
 }
