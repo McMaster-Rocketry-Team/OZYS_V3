@@ -10,7 +10,7 @@ use {defmt_rtt_pipe as _, panic_probe as _};
 use cortex_m::{register::apsr::read, singleton};
 use defmt::info;
 use embassy_executor::Spawner;
-use embassy_stm32::{adc::{self, Adc, AdcChannel, SampleTime}, interrupt::typelevel::TIM1_TRG_COM_TIM17, pac::Interrupt::{DMA1_CHANNEL1, TIM1_CC}, peripherals::{self, ADC1, DMA1, DMA1_CH1, PA0}, Peri};
+use embassy_stm32::{adc::{self, Adc, AdcChannel, SampleTime}, pac::Interrupt::{DMA1_CHANNEL1, TIM1_CC}, peripherals::{self, ADC1, DMA1, DMA1_CH1, PA0, PA2,PB11,PB12}, Peri};
 use embassy_stm32::{
     gpio::{Level, Output, Speed},
     time::mhz,
@@ -96,30 +96,34 @@ async fn main(_spawner: Spawner) {
     info!("Hello OZYS V3!");
     _spawner.must_spawn(watchdog_task(p.IWDG));
     let mut adc= Adc::new(p.ADC1);
-    let read_buffer = singleton!(:[u16;2] = [0;2]).unwrap();
+    let read_buffer = singleton!(:[u16;5] = [0;5]).unwrap();
     let dma = p.DMA1_CH1;
-    let adc_pin = p.PA0;
-    let  channel = singleton!(: PubSubChannel::<NoopRawMutex,[u16;2],4,1,1> = PubSubChannel::new()).unwrap();
+    let adc_pin_1 = p.PA0;
+    let adc_pin_2 = p.PA2;
+    let adc_pin_3 = p.PB11;
+    let adc_pin_4 = p.PB12;
+    let  channel = singleton!(: PubSubChannel::<NoopRawMutex,[u16;5],4,1,1> = PubSubChannel::new()).unwrap();
     let  _pub = channel.publisher().unwrap();
     let mut _sub = channel.subscriber().unwrap();
-    _spawner.must_spawn(adc_test_fn(adc, dma, adc_pin, read_buffer,_led2,_pub));
-
+    _spawner.must_spawn(adc_test_fn(adc, dma, adc_pin_1,adc_pin_2,adc_pin_3,adc_pin_4, read_buffer,_led2,_pub));
     let mut block = [Block::new()];
     let mut block_index = 0;
-    while block_index<20{
+    while block_index <510{
         match _sub.next_message().await {
-            WaitResult::Message(msg)=>{
-                [block[0].contents[block_index],block[0].contents[block_index+1]]= msg[0].to_le_bytes();
-                [block[0].contents[block_index+2],block[0].contents[block_index+3]]= msg[1].to_le_bytes();
+            WaitResult::Message(samples)=>{
+                for (i,sample) in samples.iter().enumerate(){
+                    let offset = 2*i;
+                    [block[0].contents[block_index+offset],block[0].contents[block_index+offset+1]]=sample.to_le_bytes();
+                }
+                info!("{}",&block[0].contents);
             }
             WaitResult::Lagged(missed)=>{
                 info!("missed: {}",missed);
             }
-        }       
-        block_index+=4;
+        }
+        block_index+=10;
     }
-    info!("{}",&block[0].contents);
-    
+        
     // SPI TASK
     /* 
     let mut cs = Output::new(p.PB9, Level::High, Speed::High); // needed to configure as spi mode on peripheral  
@@ -143,16 +147,25 @@ async fn main(_spawner: Spawner) {
 async fn adc_test_fn(
     mut _adc_peripheral: Adc<'static,ADC1>, 
     mut _dma_chanel: Peri<'static,DMA1_CH1>,
-    mut _adc_pin: Peri<'static, PA0>, 
-    read_buffer: &'static mut [u16;2],
+    mut _adc_pin_1: Peri<'static, PA0>, 
+    mut _adc_pin_2: Peri<'static, PA2>,
+    mut _adc_pin_3: Peri<'static, PB11>, 
+    mut _adc_pin_4: Peri<'static, PB12>,
+    read_buffer: &'static mut [u16;5],
     mut _led: Output<'static>,
-    mut _pub: Publisher<'static, NoopRawMutex, [u16;2], 4, 1, 1>,
+    mut _pub: Publisher<'static, NoopRawMutex, [u16;5], 4, 1, 1>,
     ) 
     {
     let mut vrefint_channel: adc::AnyAdcChannel<ADC1> = _adc_peripheral.enable_vrefint().degrade_adc();
     _adc_peripheral.set_sample_time(SampleTime::CYCLES640_5);
-    _adc_peripheral.set_differential(&mut _adc_pin, true); // Assuming takes hold of PA1
-    let mut pa0: adc::AnyAdcChannel<ADC1> = _adc_pin.degrade_adc();
+    _adc_peripheral.set_differential(&mut _adc_pin_1, true); 
+    _adc_peripheral.set_differential(&mut _adc_pin_2, true); 
+    _adc_peripheral.set_differential(&mut _adc_pin_3, true); 
+    _adc_peripheral.set_differential(&mut _adc_pin_4, true); 
+    let mut pa0: adc::AnyAdcChannel<ADC1> = _adc_pin_1.degrade_adc();
+    let mut pa2: adc::AnyAdcChannel<ADC1> = _adc_pin_2.degrade_adc();
+    let mut pb11: adc::AnyAdcChannel<ADC1> = _adc_pin_3.degrade_adc();
+    let mut pb12: adc::AnyAdcChannel<ADC1> = _adc_pin_4.degrade_adc();
     let VREFINT_CAL = 0x1FFF75AA as *mut u16;
     let vref_cal = unsafe { ptr::read_volatile(VREFINT_CAL) as f32 };
     info!("VREFINT_CAL: {}", vref_cal); 
@@ -163,15 +176,20 @@ async fn adc_test_fn(
             [
                 (&mut vrefint_channel, SampleTime::CYCLES640_5),
                 (&mut pa0, SampleTime::CYCLES640_5),
+                (&mut pa2, SampleTime::CYCLES640_5),
+                (&mut pb11, SampleTime::CYCLES640_5),
+                (&mut pb12, SampleTime::CYCLES640_5),
             ]
             .into_iter(),
             read_buffer,
         )
         .await;
-        _pub.publish_immediate([read_buffer[0],read_buffer[1]]);
-        let vrefint = read_buffer[0];
-        let measured = read_buffer[1];
-        info!("Vrefint: {}, Measure: {}", vrefint.to_le_bytes(),measured.to_le_bytes());
+        _pub.publish_immediate(*read_buffer);
+        for read in read_buffer.clone(){
+            info!("Readings:{}",read.to_le_bytes());
+        }
+        //let vrefint = read_buffer[0];
+        //let measured = read_buffer[1];
         //let vref_plus = 3.0 * vref_cal / vrefint as f32;
         //info!("Vref+: {}V", vref_plus);
         //let measured = vref_plus / (1 << 12) as f32 * measured as f32;
@@ -200,4 +218,5 @@ async fn single_write_sd(
     sdcard.write( &blocks, block_id).await.unwrap();
     sdcard.read(&mut read_block, block_id).await.unwrap();
     info!("{}",&read_block[0].contents);
-}*/
+}
+    */
