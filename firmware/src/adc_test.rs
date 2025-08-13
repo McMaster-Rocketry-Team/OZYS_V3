@@ -106,6 +106,9 @@ async fn main(_spawner: Spawner) {
     let  _pub = channel.publisher().unwrap();
     let mut _sub = channel.subscriber().unwrap();
     _spawner.must_spawn(adc_test_fn(adc, dma, adc_pin_1,adc_pin_2,adc_pin_3,adc_pin_4, read_buffer,_led2,_pub));
+    
+    // BLOCK TEST CODE
+    /* 
     let mut block = [Block::new()];
     let mut block_index = 0;
     while block_index <510{
@@ -123,9 +126,7 @@ async fn main(_spawner: Spawner) {
         }
         block_index+=10;
     }
-        
-    // SPI TASK
-    /* 
+    */ 
     let mut cs = Output::new(p.PB9, Level::High, Speed::High); // needed to configure as spi mode on peripheral  
     let mut spi_config = SpiConfig::default();
     spi_config.frequency = Hertz(100_000);
@@ -138,9 +139,8 @@ async fn main(_spawner: Spawner) {
         p.DMA1_CH3,
         spi_config,
     );
-    */
-    //let spi1 = Mutex::<NoopRawMutex, _>::new(spi1); // IS THIS RIGHT MUTEX???
-    //_spawner.must_spawn(single_write_sd(spi1, cs));
+    let spi1 = Mutex::<NoopRawMutex, _>::new(spi1); // IS THIS RIGHT MUTEX???
+    _spawner.must_spawn(single_write_sd(spi1, cs,_sub));
 }
 
 #[embassy_executor::task]
@@ -185,9 +185,11 @@ async fn adc_test_fn(
         )
         .await;
         _pub.publish_immediate(*read_buffer);
+        /* 
         for read in read_buffer.clone(){
             info!("Readings:{}",read.to_le_bytes());
         }
+        */
         //let vrefint = read_buffer[0];
         //let measured = read_buffer[1];
         //let vref_plus = 3.0 * vref_cal / vrefint as f32;
@@ -200,23 +202,39 @@ async fn adc_test_fn(
 }
 
 
-/* 
+
 #[embassy_executor::task]
 async fn single_write_sd(
     _spi: Mutex<NoopRawMutex, Spi<'static, embassy_stm32::mode::Async>>,
     cs: Output<'static>,
-    _sub:  Subscriber<'static, NoopRawMutex, [u16; 2], 4, 1, 1>,
+    mut _sub:  Subscriber<'static, NoopRawMutex, [u16; 5], 4, 1, 1>,
 ){
     let sd = SpiDevice::new(&_spi, cs);
     let sdcard = SdCard::new(sd, Delay);
-    let size: u64 = sdcard.num_bytes().await.unwrap(); // magically abstracted spi communication? 
+    let size: u64 = sdcard.num_bytes().await.unwrap(); 
     let block_count = (size / 512) as u32;
     info!("Card size is {} bytes, {} blocks", size, block_count);
-    let mut blocks = [Block::default()];
+    let mut block = [Block::new()];
+    let mut block_index = 0;
+    while block_index <510{
+        match _sub.next_message().await {
+            WaitResult::Message(samples)=>{
+                for (i,sample) in samples.iter().enumerate(){
+                    let offset = 2*i;
+                    [block[0].contents[block_index+offset],block[0].contents[block_index+offset+1]]=sample.to_le_bytes();
+                }
+                info!("{}",&block[0].contents);
+            }
+            WaitResult::Lagged(missed)=>{
+                info!("missed: {}",missed);
+            }
+        }
+        block_index+=10;
+    }
     let mut read_block = [Block::default()];
     let block_id = BlockIdx(0);
-    sdcard.write( &blocks, block_id).await.unwrap();
+    sdcard.write( &block, block_id).await.unwrap();
     sdcard.read(&mut read_block, block_id).await.unwrap();
+    info!("SDCARD");
     info!("{}",&read_block[0].contents);
 }
-    */
