@@ -166,7 +166,7 @@ async fn node_status_task(can_sender: &'static CanSender<NoopRawMutex, 4>) {
                 Instant::now().as_secs() as u32,
                 NodeHealth::Healthy,
                 NodeMode::Operational,
-                OzysCustomStatus::new(false, false, false, false, true, 0.0),
+                OzysCustomStatus::new(true, true, true, true, true, 0.0),
             )
             .into(),
         );
@@ -197,7 +197,7 @@ async fn can_reset_task(can_receiver: &'static CanReceiver<NoopRawMutex, 4, 1>) 
 }
 
 ////////////////// Djordje's Implemented Tasks ///////////////////////
-/* TO DO 
+
 #[embassy_executor::task]                                                  // CHANGE SUBSCRIBER LIMIT??
 async fn can_vl_status_check(can_receiver: &'static CanReceiver<NoopRawMutex, 4, 1>) {
     let mut subscriber = can_receiver.subscriber().unwrap();
@@ -211,9 +211,9 @@ async fn can_vl_status_check(can_receiver: &'static CanReceiver<NoopRawMutex, 4,
         }
     }
 }
-*/
 
-/* TO DO 
+
+
 #[embassy_executor::task]               
 async fn can_get_unix_time(can_receiver: &'static CanReceiver<NoopRawMutex, 4, 1>) {
     let mut subscriber = can_receiver.subscriber().unwrap();
@@ -226,12 +226,10 @@ async fn can_get_unix_time(can_receiver: &'static CanReceiver<NoopRawMutex, 4, 1
         }
     }
 }
-*/
 
-/* TO DO 
 #[embassy_executor::task]
 async fn ozys_measurement_can_task (can_sender: &'static CanSender<NoopRawMutex, 4>) {
-    let mut ticker = Ticker::every(Duration::from_secs(1));
+    let mut ticker = Ticker::every(Duration::from_hz(10));
     loop {
         /*
         can_sender.send(
@@ -244,5 +242,5 @@ async fn ozys_measurement_can_task (can_sender: &'static CanSender<NoopRawMutex,
         ticker.next().await;
     }
 }
-*/
+
 
