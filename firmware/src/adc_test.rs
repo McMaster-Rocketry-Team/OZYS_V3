@@ -15,6 +15,7 @@ use embassy_stm32::{
     adc::{self, Adc, AdcChannel, SampleTime},
     pac::Interrupt::{DMA1_CHANNEL1, TIM1_CC},
     peripherals::{self, ADC1, DMA1, DMA1_CH1, PA0, PA2, PB11, PB12},
+    crc::{Config as CrcConfig, Crc, InputReverseConfig, PolySize},
 };
 use embassy_stm32::{
     gpio::{Level, Output, Speed},
@@ -100,7 +101,6 @@ async fn main(_spawner: Spawner) {
     let converted_samples = singleton!(:[f32;4] = [0.0;4]).unwrap();
     let adc_samples_channel =
         singleton!(: PubSubChannel::<NoopRawMutex,[f32;4],4,1,1> = PubSubChannel::new()).unwrap();
-
     _spawner.must_spawn(adc_test_task(
         adc,
         p.DMA1_CH1,
@@ -146,11 +146,15 @@ async fn main(_spawner: Spawner) {
         p.DMA1_CH3,
         spi_config,
     );
-    let spi1 = Mutex::<NoopRawMutex, _>::new(spi1); // IS THIS RIGHT MUTEX???
+    let spi1 = Mutex::<NoopRawMutex, _>::new(spi1); 
+    let crc_config =
+        CrcConfig::new(InputReverseConfig::None, false, PolySize::Width8, 69, 69).unwrap();
+    let mut crc = Crc::new(p.CRC, crc_config);
     _spawner.must_spawn(single_write_sd(
         spi1,
         cs,
         adc_samples_channel.subscriber().unwrap(),
+        crc,
     ));
 }
 
@@ -204,7 +208,7 @@ async fn adc_test_task(
         info!("Vref+: {}V cba:{}", vref_plus, cba123);
         for i in 0..4{
             converted_samples[i] =  ((vref_plus / (1 << 12) as f32 * read_buffer[i+1] as f32)- vref_plus/2.0)*2.0;
-             info!("Measured: {}V", converted_samples[i].to_le_bytes());
+             info!("Measured: {}V", converted_samples[i]);
         }
         //info!("Measured: {}V", converted_samples);
         publisher.publish_immediate(*converted_samples);
@@ -236,6 +240,7 @@ async fn single_write_sd(
     spi: Mutex<NoopRawMutex, Spi<'static, embassy_stm32::mode::Async>>,
     cs: Output<'static>,
     mut subscriber: Subscriber<'static, NoopRawMutex, [f32; 4], 4, 1, 1>,
+    mut crc: Crc<'static>,
 ) {
     let sd = SpiDevice::new(&spi, cs);
     let sdcard = SdCard::new(sd, Delay);
@@ -266,6 +271,9 @@ async fn single_write_sd(
             block_index += 16;
         }
         // TODO CRC
+        let check_sum = crc.feed_bytes(&block[0][..508]);        
+        block[0][508..512].copy_from_slice(&check_sum.to_le_bytes());
+
         let mut read_block = [Block::default()];
         let block_id = BlockIdx(card_index);
         sdcard.write(&block, block_id).await.unwrap();
@@ -273,5 +281,14 @@ async fn single_write_sd(
         info!("SDCARD");
         info!("{}", &read_block[0].contents);
         card_index += 1;
+        crc.reset();
+        let check_sum = crc.feed_bytes(&block[0][..508]);
+        let check_sum2 = u32::from_le_bytes(read_block[0][508..512].try_into().unwrap());
+        if check_sum != check_sum2 {
+            info!("Failed, checksum mismatch: {} != {}", check_sum, check_sum2);
+            break;
+        } else {
+            info!("Start dancing");
+        }
     }
 }
