@@ -97,8 +97,9 @@ async fn main(_spawner: Spawner) {
     _spawner.must_spawn(watchdog_task(p.IWDG));
     let adc = Adc::new(p.ADC1);
     let read_buffer = singleton!(:[u16;5] = [0;5]).unwrap();
+    let converted_samples = singleton!(:[f32;4] = [0.0;4]).unwrap();
     let adc_samples_channel =
-        singleton!(: PubSubChannel::<NoopRawMutex,[u16;5],4,1,1> = PubSubChannel::new()).unwrap();
+        singleton!(: PubSubChannel::<NoopRawMutex,[f32;4],4,1,1> = PubSubChannel::new()).unwrap();
 
     _spawner.must_spawn(adc_test_task(
         adc,
@@ -110,6 +111,7 @@ async fn main(_spawner: Spawner) {
         read_buffer,
         _led2,
         adc_samples_channel.publisher().unwrap(),
+        converted_samples,
     ));
 
     // BLOCK TEST CODE
@@ -162,7 +164,8 @@ async fn adc_test_task(
     mut adc_pin_4: Peri<'static, PB12>,
     read_buffer: &'static mut [u16; 5],
     mut led: Output<'static>,
-    mut publisher: Publisher<'static, NoopRawMutex, [u16; 5], 4, 1, 1>,
+    mut publisher: Publisher<'static, NoopRawMutex, [f32; 4], 4, 1, 1>,
+    converted_samples: &'static mut [f32;4],
 ) {
     let mut vrefint_channel = adc_peripheral.enable_vrefint().degrade_adc();
     adc_peripheral.set_sample_time(SampleTime::CYCLES247_5);
@@ -177,7 +180,8 @@ async fn adc_test_task(
     let VREFINT_CAL = 0x1FFF75AA as *mut u16;
     let vref_cal = unsafe { ptr::read_volatile(VREFINT_CAL) as f32 };
     info!("VREFINT_CAL: {}", vref_cal);
-    let mut ticker = Ticker::every(Duration::from_hz(22_000));
+    let mut ticker = Ticker::every(Duration::from_hz(10));
+    let mut cba123 = 0;
     loop {
         adc_peripheral
             .read(
@@ -194,7 +198,16 @@ async fn adc_test_task(
                 read_buffer,
             )
             .await;
-        publisher.publish_immediate(*read_buffer);
+        let vrefint = read_buffer[0];      
+        let vref_plus = 3.0 * vref_cal / vrefint as f32;
+        cba123+=1;
+        info!("Vref+: {}V cba:{}", vref_plus, cba123);
+        for i in 0..4{
+            converted_samples[i] =  ((vref_plus / (1 << 12) as f32 * read_buffer[i+1] as f32)- vref_plus/2.0)*2.0;
+             info!("Measured: {}V", converted_samples[i].to_le_bytes());
+        }
+        //info!("Measured: {}V", converted_samples);
+        publisher.publish_immediate(*converted_samples);
 
         // TODO apply adc calibrations
 
@@ -203,13 +216,15 @@ async fn adc_test_task(
             info!("Readings:{}",read.to_le_bytes());
         }
         */
-        //let vrefint = read_buffer[0];
-        //let measured = read_buffer[1];
-        //let vref_plus = 3.0 * vref_cal / vrefint as f32;
-        //info!("Vref+: {}V", vref_plus);
-        //let measured = vref_plus / (1 << 12) as f32 * measured as f32;
+        /* 
+        let vrefint = read_buffer[0];
+        let measured = read_buffer[1];
+        let vref_plus = 3.0 * vref_cal / vrefint as f32;
+        info!("Vref+: {}V", vref_plus);
+        let measured = vref_plus / (1 << 12) as f32 * measured as f32;
         //_led.toggle();
-        //info!("Measured: {}V", (measured - vref_plus / 2.0) * 2.0);
+        info!("Measured: {}V", (measured - vref_plus / 2.0) * 2.0);
+        */
         ticker.next().await;
     }
 }
@@ -220,7 +235,7 @@ async fn adc_test_task(
 async fn single_write_sd(
     spi: Mutex<NoopRawMutex, Spi<'static, embassy_stm32::mode::Async>>,
     cs: Output<'static>,
-    mut subscriber: Subscriber<'static, NoopRawMutex, [u16; 5], 4, 1, 1>,
+    mut subscriber: Subscriber<'static, NoopRawMutex, [f32; 4], 4, 1, 1>,
 ) {
     let sd = SpiDevice::new(&spi, cs);
     let sdcard = SdCard::new(sd, Delay);
@@ -231,14 +246,16 @@ async fn single_write_sd(
     while card_index < 3 {
         let mut block = [Block::new()];
         let mut block_index = 0;
-        while block_index < 510 {
+        while block_index < 496 {
             match subscriber.next_message().await {
                 WaitResult::Message(samples) => {
                     for (i, sample) in samples.iter().enumerate() {
-                        let offset = 2 * i;
+                        let offset = 4 * i;
                         let bytes = sample.to_le_bytes();
                         block[0].contents[block_index + offset] = bytes[0];
                         block[0].contents[block_index + offset + 1] = bytes[1];
+                        block[0].contents[block_index + offset + 2] = bytes[2];
+                        block[0].contents[block_index + offset + 3] = bytes[3];
                     }
                     //info!("{}",&block[0].contents);
                 }
@@ -246,7 +263,7 @@ async fn single_write_sd(
                     info!("missed: {}", missed);
                 }
             }
-            block_index += 10;
+            block_index += 16;
         }
         // TODO CRC
         let mut read_block = [Block::default()];
