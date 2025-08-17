@@ -29,7 +29,7 @@ pub async fn start_can_bus_tasks(
     pa15: Peri<'static, PA15>,
 ) -> (
     &'static CanSender<NoopRawMutex, 4>,
-    &'static CanReceiver<NoopRawMutex, 4, 1>,
+    &'static CanReceiver<NoopRawMutex, 4, 4>,
 ) {
     let can_node_id = can_node_id_from_serial_number(device_id());
     info!("CAN Device ID: {}", can_node_id);
@@ -38,7 +38,7 @@ pub async fn start_can_bus_tasks(
         singleton!(: CanSender<NoopRawMutex, 4> = CanSender::new(OZYS_NODE_TYPE, can_node_id,  Some(&defmt_rtt_pipe::PIPE)))
             .unwrap();
     let can_receiver =
-        singleton!(: CanReceiver<NoopRawMutex, 4, 1> = CanReceiver::new(can_node_id)).unwrap();
+        singleton!(: CanReceiver<NoopRawMutex, 4, 4> = CanReceiver::new(can_node_id)).unwrap();
 
     bind_interrupts!(struct Irqs {
         FDCAN3_IT0 => can::IT0InterruptHandler<FDCAN3>;
@@ -75,7 +75,7 @@ async fn can_bus_tx_task(can_sender: &'static CanSender<NoopRawMutex, 4>, tx: Ca
 
 #[embassy_executor::task]
 async fn can_bus_rx_task(
-    can_receiver: &'static CanReceiver<NoopRawMutex, 4, 1>,
+    can_receiver: &'static CanReceiver<NoopRawMutex, 4, 4>,
     rx: CanRx<'static>,
 ) {
     struct RxWrapper(CanRx<'static>);

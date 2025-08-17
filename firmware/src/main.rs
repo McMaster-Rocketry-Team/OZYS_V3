@@ -128,6 +128,10 @@ async fn main(spawner: Spawner) {
     let (can_sender, can_receiver) = start_can_bus_tasks(&spawner, p.FDCAN3, p.PA8, p.PA15).await; // good 
     spawner.must_spawn(node_status_task(can_sender));
     spawner.must_spawn(can_reset_task(can_receiver));
+    spawner.must_spawn(can_vl_status_check(can_receiver));
+    spawner.must_spawn(can_get_unix_time(can_receiver));
+    
+
 
     // END OF CONFIG
 
@@ -175,7 +179,7 @@ async fn node_status_task(can_sender: &'static CanSender<NoopRawMutex, 4>) {
 }
 
 #[embassy_executor::task]                                                   // CHANGE SUBSCRIBER LIMIT??
-async fn can_reset_task(can_receiver: &'static CanReceiver<NoopRawMutex, 4, 1>) {
+async fn can_reset_task(can_receiver: &'static CanReceiver<NoopRawMutex, 4, 4>) {
     let mut subscriber = can_receiver.subscriber().unwrap();
     loop {
         let can_message = subscriber.next_message_pure().await.data.message;
@@ -199,7 +203,7 @@ async fn can_reset_task(can_receiver: &'static CanReceiver<NoopRawMutex, 4, 1>) 
 ////////////////// Djordje's Implemented Tasks ///////////////////////
 
 #[embassy_executor::task]                                                  // CHANGE SUBSCRIBER LIMIT??
-async fn can_vl_status_check(can_receiver: &'static CanReceiver<NoopRawMutex, 4, 1>) {
+async fn can_vl_status_check(can_receiver: &'static CanReceiver<NoopRawMutex, 4, 4>) {
     let mut subscriber = can_receiver.subscriber().unwrap();
     loop {
         let can_message = subscriber.next_message_pure().await.data.message;
@@ -207,6 +211,7 @@ async fn can_vl_status_check(can_receiver: &'static CanReceiver<NoopRawMutex, 4,
             flight_stage,
             battery_mv,            
         }) = can_message {
+            info!("flight stage: {}",flight_stage);
             //GET A WATCH?? 
         }
     }
@@ -215,13 +220,14 @@ async fn can_vl_status_check(can_receiver: &'static CanReceiver<NoopRawMutex, 4,
 
 
 #[embassy_executor::task]               
-async fn can_get_unix_time(can_receiver: &'static CanReceiver<NoopRawMutex, 4, 1>) {
+async fn can_get_unix_time(can_receiver: &'static CanReceiver<NoopRawMutex, 4, 4>) {
     let mut subscriber = can_receiver.subscriber().unwrap();
     loop {
         let can_message = subscriber.next_message_pure().await.data.message;
         if let CanBusMessageEnum::UnixTime(UnixTimeMessage{
             timestamp_us
         }) = can_message {
+            info!("time_stamp: {}",timestamp_us);
             //GET A WATCH ???? 
         }
     }
