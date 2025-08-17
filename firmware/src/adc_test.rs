@@ -148,8 +148,8 @@ async fn main(_spawner: Spawner) {
     );
     let spi1 = Mutex::<NoopRawMutex, _>::new(spi1); 
     let crc_config =
-        CrcConfig::new(InputReverseConfig::None, false, PolySize::Width8, 69, 69).unwrap();
-    let mut crc = Crc::new(p.CRC, crc_config);
+        CrcConfig::new(InputReverseConfig::None, false, PolySize::Width32, 69, 69).unwrap();
+    let crc = Crc::new(p.CRC, crc_config);
     _spawner.must_spawn(single_write_sd(
         spi1,
         cs,
@@ -242,6 +242,11 @@ async fn single_write_sd(
     mut subscriber: Subscriber<'static, NoopRawMutex, [f32; 4], 4, 1, 1>,
     mut crc: Crc<'static>,
 ) {
+    // BLOCK 512 BYTES
+    // First 496 for samples
+    // 496-507 for 
+    // 508-512 for CHECK SUM 
+
     let sd = SpiDevice::new(&spi, cs);
     let sdcard = SdCard::new(sd, Delay);
     let size: u64 = sdcard.num_bytes().await.unwrap();
@@ -271,15 +276,14 @@ async fn single_write_sd(
             block_index += 16;
         }
         // TODO CRC
-        let check_sum = crc.feed_bytes(&block[0][..508]);        
+        let check_sum: u32 = crc.feed_bytes(&block[0][..508]);        
         block[0][508..512].copy_from_slice(&check_sum.to_le_bytes());
 
         let mut read_block = [Block::default()];
         let block_id = BlockIdx(card_index);
         sdcard.write(&block, block_id).await.unwrap();
         sdcard.read(&mut read_block, block_id).await.unwrap();
-        info!("SDCARD");
-        info!("{}", &read_block[0].contents);
+        info!("{} + check: {}", &read_block[0].contents,check_sum);
         card_index += 1;
         crc.reset();
         let check_sum = crc.feed_bytes(&block[0][..508]);
