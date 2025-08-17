@@ -281,7 +281,6 @@ async fn single_write_sd(
             }
             block_index += 16;
         }
-        // TODO CRC
         let check_sum: u32 = crc.feed_bytes(&block[0][..508]);        
         block[0][508..512].copy_from_slice(&check_sum.to_le_bytes());
         let block_id = BlockIdx(card_index);
