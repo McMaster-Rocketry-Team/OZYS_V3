@@ -208,7 +208,7 @@ async fn adc_test_task(
         info!("Vref+: {}V cba:{}", vref_plus, cba123);
         for i in 0..4{
             converted_samples[i] =  ((vref_plus / (1 << 12) as f32 * read_buffer[i+1] as f32)- vref_plus/2.0)*2.0;
-             info!("Measured: {}V", converted_samples[i]);
+            //info!("Measured: {}V", converted_samples[i]);
         }
         //info!("Measured: {}V", converted_samples);
         publisher.publish_immediate(*converted_samples);
@@ -253,13 +253,66 @@ async fn single_write_sd(
     info!("Card size is {} bytes, {} blocks", size, block_count);
     let mut card_index = 0;
     let mut read_block = [Block::default()];
-    let block_index_primary = 0;
-    let block_index_secondary = 1;
+    let mut block_index_primary = 0;
+    let mut block_index_secondary = 1;
+    let mut crc_primary_flag = false;
+    let mut crc_secondary_flag = false;
 
+    //TEST PRIMARY CRC 
+    sdcard.read(&mut read_block, BlockIdx(block_index_primary)).await.unwrap();
+    info!("Read Prim: {}", read_block[0].contents);
+    crc.reset();
+    let check_sum = crc.feed_bytes(&read_block[0][0..508]);
+    let check_sum2 = u32::from_le_bytes(read_block[0][508..512].try_into().unwrap());
+    if check_sum != check_sum2 {
+        info!("Primary Failed, checksum mismatch: {} != {}", check_sum.to_le_bytes(), check_sum2.to_le_bytes());
+    } else {
+        info!("Primary Succeeded");
+        block_index_primary = u32::from_le_bytes(read_block[0][0..4].try_into().unwrap());
+        crc_primary_flag = true;
+    }
 
-
-    
-    while card_index < block_count {
+    //TEST SECONDARY CRC 
+    sdcard.read(&mut read_block, BlockIdx(block_index_secondary)).await.unwrap();
+    info!("Read Sec: {}", read_block[0].contents);
+    crc.reset();
+    let check_sum = crc.feed_bytes(&read_block[0][0..508]);
+    let check_sum2 = u32::from_le_bytes(read_block[0][508..512].try_into().unwrap());
+    if check_sum != check_sum2 {
+        info!("Secondary Failed, checksum mismatch: {} != {}", check_sum.to_be_bytes(), check_sum2.to_le_bytes());
+    } else {
+        info!("Secondary Succeeded");
+        block_index_secondary = u32::from_le_bytes(read_block[0][0..4].try_into().unwrap());
+        crc_secondary_flag = true;
+    }
+    if crc_secondary_flag&&crc_primary_flag {
+        if block_index_primary>block_index_secondary{
+            card_index = block_index_primary;
+        } else {
+            card_index = block_index_secondary;
+        }
+    } else if crc_primary_flag {
+        card_index = block_index_primary;
+    } else if crc_secondary_flag{
+        card_index = block_index_secondary;
+    } else {
+        crc.reset();
+        card_index = 2;
+        let mut empty = [Block::new()];
+        empty[0].contents.fill(0);
+        empty[0][0..4].copy_from_slice(&card_index.to_le_bytes());
+        let check_sum: u32 = crc.feed_bytes(&empty[0][0..508]);        
+        empty[0][508..512].copy_from_slice(&check_sum.to_le_bytes());
+        sdcard.write(&empty, BlockIdx(0)).await.unwrap();
+        sdcard.write(&empty, BlockIdx(1)).await.unwrap();
+        info!("Restarting index of all Blocks/ Check:{}",check_sum);
+    }
+    // WHICH IS HIGHER 
+    while card_index < 100 {
+        if card_index%100==0{
+            // UPDATE ONE OF THE INDEXES
+        }
+        info!("card index = {}",card_index);
         let mut block = [Block::new()];
         let mut block_index = 0;
         while block_index < 496 {
@@ -276,12 +329,13 @@ async fn single_write_sd(
                     //info!("{}",&block[0].contents);
                 }
                 WaitResult::Lagged(missed) => {
-                    info!("missed: {}", missed);
+                   //info!("missed: {}", missed);
                 }
             }
             block_index += 16;
         }
         // TODO CRC
+        crc.reset();
         let check_sum: u32 = crc.feed_bytes(&block[0][..508]);        
         block[0][508..512].copy_from_slice(&check_sum.to_le_bytes());
         let block_id = BlockIdx(card_index);

@@ -69,6 +69,16 @@ path = "src/adc_test.rs"
 test = false
 bench = false
 
+
+[[bin]]
+name = "sd_index_test"
+path = "src/sd_index_test.rs"
+test = false
+bench = false
+
+
+
+
 [profile.dev]
 debug = true
 lto = true
