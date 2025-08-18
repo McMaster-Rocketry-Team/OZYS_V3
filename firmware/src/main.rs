@@ -225,7 +225,7 @@ async fn adc_test_task(
     let VREFINT_CAL = 0x1FFF75AA as *mut u16;
     let vref_cal = unsafe { ptr::read_volatile(VREFINT_CAL) as f32 };
     info!("VREFINT_CAL: {}", vref_cal);
-    let mut ticker = Ticker::every(Duration::from_hz(50));
+    let mut ticker = Ticker::every(Duration::from_hz(22_000));
     let mut cba123 = 0;
     let mut _led2 = Output::new(led_2_pin, Level::Low, Speed::Low); // good 
     let mut _led3 = Output::new(led_3_pin, Level::Low, Speed::Low); // good
@@ -251,11 +251,11 @@ async fn adc_test_task(
                             // starts code returns future and turned into statemachine cuz .await()
                             dma_chanel.reborrow(),
                             [
-                                (&mut vrefint_channel, SampleTime::CYCLES247_5),
-                                (&mut pa0, SampleTime::CYCLES247_5),
-                                (&mut pa2, SampleTime::CYCLES247_5),
-                                (&mut pb11, SampleTime::CYCLES247_5),
-                                (&mut pb12, SampleTime::CYCLES247_5),
+                                (&mut vrefint_channel, SampleTime::CYCLES12_5),
+                                (&mut pa0, SampleTime::CYCLES12_5),
+                                (&mut pa2, SampleTime::CYCLES12_5),
+                                (&mut pb11, SampleTime::CYCLES12_5),
+                                (&mut pb12, SampleTime::CYCLES12_5),
                             ]
                             .into_iter(),
                             read_buffer,
