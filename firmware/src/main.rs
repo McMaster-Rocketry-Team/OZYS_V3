@@ -172,7 +172,7 @@ async fn main(spawner: Spawner) {
     let cs = Output::new(p.PB9, Level::High, Speed::High); // needed to configure as spi mode on peripheral  
     let mut spi_config = SpiConfig::default();
     spi_config.frequency = Hertz(5_000_000);
-    let spi1 = Spi::new(
+    let spi1: Spi<'static, embassy_stm32::mode::Async> = Spi::new(
         p.SPI1,
         unsafe { PB3::steal() },
         p.PB5,
@@ -181,18 +181,21 @@ async fn main(spawner: Spawner) {
         p.DMA1_CH3,
         spi_config,
     );
-    let spi1 = Mutex::<NoopRawMutex, _>::new(spi1);
-
+    let spi1 = singleton!(:Mutex<NoopRawMutex, Spi<'static, embassy_stm32::mode::Async>> = Mutex::new(spi1)).unwrap();
     let crc_config =
         CrcConfig::new(InputReverseConfig::None, false, PolySize::Width32, 69, 69).unwrap();
     let crc = Crc::new(p.CRC, crc_config);
+    
+
+    let sd = SpiDevice::new(spi1, cs);
+    let sdcard = singleton!(: SdCard<SpiDevice<'static, NoopRawMutex, Spi<'static, embassy_stm32::mode::Async>, Output<'static>>, Delay> = SdCard::new(sd, Delay)).unwrap();
     spawner.must_spawn(single_write_sd(
-        spi1,
-        cs,
+        sdcard,
         adc_samples_channel.subscriber().unwrap(),
         crc,
         unix_time_watch.receiver().unwrap(),
     ));
+    spawner.must_spawn(can_reset_task(can_receiver, sdcard));
 }
 
 #[embassy_executor::task]
@@ -263,7 +266,7 @@ async fn adc_test_task(
                         .await;
                     let vrefint = read_buffer[0];
                     let vref_plus = 3.0 * vref_cal / vrefint as f32;
-                    cba123 += 1;
+                    //cba123 += 1;
                     //info!("Vref+: {}V cba:{}", vref_plus, cba123);
                     for i in 0..4 {
                         converted_samples[i] = ((vref_plus / (1 << 12) as f32
@@ -296,11 +299,9 @@ async fn adc_test_task(
 }
 
 // 31 samples of four f32 channels in each block
-// increase CAP of channel to 1000
 #[embassy_executor::task]
 async fn single_write_sd(
-    spi: Mutex<NoopRawMutex, Spi<'static, embassy_stm32::mode::Async>>,
-    cs: Output<'static>,
+    sdcard: &'static SdCard<SpiDevice<'static, NoopRawMutex, Spi<'static, embassy_stm32::mode::Async>, Output<'static>>, Delay>,
     mut subscriber: Subscriber<'static, NoopRawMutex, [f32; 4], 620, 2, 1>, // TODO change to 620
     mut crc: Crc<'static>,
     mut watch_rx: embassy_sync::watch::Receiver<'static, NoopRawMutex, u64, 1>,
@@ -308,9 +309,6 @@ async fn single_write_sd(
     // BLOCK 512 BYTES
     // First 8-504 sample (31 of [f32; 4])
     // CRC 508-512 crc 
-
-    let sd = SpiDevice::new(&spi, cs);
-    let sdcard = SdCard::new(sd, Delay);
     let size: u64 = sdcard.num_bytes().await.unwrap();
     let block_count = (size / 512) as u32;
     info!("Card size is {} bytes, {} blocks", size, block_count);
@@ -487,7 +485,10 @@ async fn node_status_task(can_sender: &'static CanSender<NoopRawMutex, 4>) {
 }
 
 #[embassy_executor::task] // CHANGE SUBSCRIBER LIMIT??
-async fn can_reset_task(can_receiver: &'static CanReceiver<NoopRawMutex, 4, 4>) {
+async fn can_reset_task(
+    can_receiver: &'static CanReceiver<NoopRawMutex, 4, 4>,
+    sdcard: &'static SdCard<SpiDevice<'static, NoopRawMutex, Spi<'static, embassy_stm32::mode::Async>, Output<'static>>, Delay>,
+) {
     let mut subscriber = can_receiver.subscriber().unwrap();
     loop {
         let can_message = subscriber.next_message_pure().await.data.message;
@@ -498,6 +499,12 @@ async fn can_reset_task(can_receiver: &'static CanReceiver<NoopRawMutex, 4, 4>) 
         }) = can_message
             && (node_id == can_receiver.self_node_id() || reset_all)
         {
+            let card_index: i32 = 2;
+            let mut empty = [Block::new()];
+            empty[0].contents.fill(1);
+            empty[0][0..4].copy_from_slice(&card_index.to_le_bytes());
+            sdcard.write(&empty, BlockIdx(0)).await.unwrap();
+            sdcard.write(&empty, BlockIdx(1)).await.unwrap();
             configure_next_boot(if into_bootloader {
                 BootOption::Bootloader
             } else {
