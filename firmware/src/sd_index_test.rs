@@ -3,7 +3,7 @@
 #![feature(impl_trait_in_assoc_type)]
 
 mod bootloader;
-use core::{cell::RefCell, fmt::write, ptr};
+use core::{cell::RefCell, fmt::write, ptr, time};
 use embassy_futures::select::Either;
 use {defmt_rtt_pipe as _, panic_probe as _};
 
@@ -112,7 +112,7 @@ async fn main(_spawner: Spawner) {
 
     // Peripherals
 
-    let unix_time_watch = singleton!(: Watch::<NoopRawMutex,f32,1> = Watch::new()).unwrap();
+    let unix_time_watch = singleton!(: Watch::<NoopRawMutex,u64,1> = Watch::new()).unwrap();
     let flight_stage_watch =
         singleton!(: Watch::<NoopRawMutex,FlightStage,2> = Watch::new()).unwrap();
 
@@ -173,6 +173,7 @@ async fn main(_spawner: Spawner) {
         cs,
         adc_samples_channel.subscriber().unwrap(),
         crc,
+        unix_time_watch.receiver().unwrap(),
     ));
     _spawner.must_spawn(ozys_measurement_can_task(
         can_sender,
@@ -266,6 +267,7 @@ async fn single_write_sd(
     cs: Output<'static>,
     mut subscriber: Subscriber<'static, NoopRawMutex, [f32; 4], 4, 2, 1>,
     mut crc: Crc<'static>,
+    mut watch_rx: embassy_sync::watch::Receiver<'static, NoopRawMutex, u64, 1>,
 ) {
     // BLOCK 512 BYTES
     // First 496 for samples
@@ -385,8 +387,9 @@ async fn single_write_sd(
         }
         info!("card index = {}", card_index);
         let mut block = [Block::new()];
-        let mut block_index = 0;
-        while block_index < 496 {
+        block[0][0..8].copy_from_slice(&watch_rx.get().await.to_le_bytes());
+        let mut block_index = 8;
+        while block_index < 504 {
             match subscriber.next_message().await {
                 WaitResult::Message(samples) => {
                     for (i, sample) in samples.iter().enumerate() {
@@ -502,14 +505,13 @@ async fn can_vl_status_check(
 #[embassy_executor::task]
 async fn can_get_unix_time(
     can_receiver: &'static CanReceiver<NoopRawMutex, 4, 4>,
-    watch_tx: embassy_sync::watch::Sender<'static, NoopRawMutex, f32, 1>,
+    watch_tx: embassy_sync::watch::Sender<'static, NoopRawMutex, u64, 1>,
 ) {
     let mut subscriber = can_receiver.subscriber().unwrap();
     loop {
         let can_message = subscriber.next_message_pure().await.data.message;
         if let CanBusMessageEnum::UnixTime(UnixTimeMessage { timestamp_us }) = can_message {
-            info!("time_stamp: {}", timestamp_us);
-            //GET A WATCH ????
+            watch_tx.send(timestamp_us);
         }
     }
 }
