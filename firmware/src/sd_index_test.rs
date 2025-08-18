@@ -387,7 +387,7 @@ async fn single_write_sd(
         }
         info!("card index = {}", card_index);
         let mut block = [Block::new()];
-        block[0][0..8].copy_from_slice(&watch_rx.get().await.to_le_bytes());
+        block[0][0..8].copy_from_slice(&watch_rx.try_get().unwrap_or_default().to_le_bytes());
         let mut block_index = 8;
         while block_index < 504 {
             match subscriber.next_message().await {
