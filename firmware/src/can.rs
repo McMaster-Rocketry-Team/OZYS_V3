@@ -28,14 +28,14 @@ pub async fn start_can_bus_tasks(
     pa8: Peri<'static, PA8>,
     pa15: Peri<'static, PA15>,
 ) -> (
-    &'static CanSender<NoopRawMutex, 4>,
+    &'static CanSender<NoopRawMutex>,
     &'static CanReceiver<NoopRawMutex, 4, 4>,
 ) {
     let can_node_id = can_node_id_from_serial_number(device_id());
     info!("CAN Device ID: {}", can_node_id);
 
     let can_sender =
-        singleton!(: CanSender<NoopRawMutex, 4> = CanSender::new(OZYS_NODE_TYPE, can_node_id,  Some(&defmt_rtt_pipe::PIPE)))
+        singleton!(: CanSender<NoopRawMutex> = CanSender::new(OZYS_NODE_TYPE, can_node_id,  Some(&defmt_rtt_pipe::PIPE)))
             .unwrap();
     let can_receiver =
         singleton!(: CanReceiver<NoopRawMutex, 4, 4> = CanReceiver::new(can_node_id)).unwrap();
@@ -57,7 +57,7 @@ pub async fn start_can_bus_tasks(
 }
 
 #[embassy_executor::task]
-async fn can_bus_tx_task(can_sender: &'static CanSender<NoopRawMutex, 4>, tx: CanTx<'static>) {
+async fn can_bus_tx_task(can_sender: &'static CanSender<NoopRawMutex>, tx: CanTx<'static>) {
     struct TxWrapper(CanTx<'static>);
     impl CanBusTX for TxWrapper {
         type Error = FrameCreateError;

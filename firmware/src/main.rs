@@ -107,7 +107,6 @@ async fn main(spawner: Spawner) {
         singleton!(: Watch::<NoopRawMutex,FlightStage,2> = Watch::new()).unwrap();
 
     // Peripherals
-    // TODO light up all leds if recording
 
     // TOP TO BOTTOM ORDERING OF LEDS
     // led 2: PA10
@@ -160,7 +159,6 @@ async fn main(spawner: Spawner) {
         p.PB6,
         p.PB7,
         p.PC13,
-
     ));
 
     // sd
@@ -465,7 +463,7 @@ async fn status_led_task(yellow_led: Peri<'static, PB14>) {
 }
 
 #[embassy_executor::task]
-async fn node_status_task(can_sender: &'static CanSender<NoopRawMutex, 4>) {
+async fn node_status_task(can_sender: &'static CanSender<NoopRawMutex>) {
     let mut ticker = Ticker::every(Duration::from_millis(500));
     loop {
         can_sender.send(
@@ -539,7 +537,7 @@ async fn can_get_unix_time(
 
 #[embassy_executor::task]
 async fn broadcast_measurement_can_task(
-    can_sender: &'static CanSender<NoopRawMutex, 4>,
+    can_sender: &'static CanSender<NoopRawMutex>,
     mut subscriber: Subscriber<'static, NoopRawMutex, [f32; 4], 620, 2, 1>,
 ) {
     let mut ticker = Ticker::every(Duration::from_hz(10));
