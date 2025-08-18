@@ -12,11 +12,7 @@ use defmt::{info, warn};
 use embassy_executor::Spawner;
 use embassy_futures::select::select;
 use embassy_stm32::{
-    Peri,
-    adc::{self, Adc, AdcChannel, SampleTime},
-    crc::{Config as CrcConfig, Crc, InputReverseConfig, PolySize},
-    pac::Interrupt::{DMA1_CHANNEL1, TIM1_CC},
-    peripherals::{self, ADC1, DMA1, DMA1_CH1, PA0, PA2, PB11, PB12, PB14},
+    adc::{self, Adc, AdcChannel, SampleTime}, crc::{Config as CrcConfig, Crc, InputReverseConfig, PolySize}, pac::Interrupt::{DMA1_CHANNEL1, TIM1_CC}, peripherals::{self, ADC1, DMA1, DMA1_CH1, PA0, PA10, PA2, PB11, PB12, PB14, PB6, PB7, PC13}, Peri
 };
 use embassy_stm32::{
     gpio::{Level, Output, Speed},
@@ -117,8 +113,15 @@ async fn main(spawner: Spawner) {
 
     // Peripherals
     // TODO light up all leds if recording
-    let mut _led2 = Output::new(p.PA10, Level::High, Speed::Low); // good 
-    let ps = Output::new(p.PA7, Level::Low, Speed::Low); // PS pin, low: force pwm // good 
+
+    // TOP TO BOTTOM ORDERING OF LEDS
+    // led 2: PA10
+    // led 3: PB6
+    // led 4: PB7
+    // led 1: PC13
+    // status led: PB14
+
+    let ps = Output::new(p.PA7, Level::Low, Speed::Low); // PS pin, low: force pwm 
     mem::forget(ps);
 
     let (can_sender, can_receiver) = start_can_bus_tasks(&spawner, p.FDCAN3, p.PA8, p.PA15).await;
@@ -136,7 +139,7 @@ async fn main(spawner: Spawner) {
     let read_buffer = singleton!(:[u16;5] = [0;5]).unwrap();
     let converted_samples = singleton!(:[f32;4] = [0.0;4]).unwrap();
     let adc_samples_channel =
-        singleton!(: PubSubChannel::<NoopRawMutex,[f32;4],4,2,1> = PubSubChannel::new()).unwrap();
+        singleton!(: PubSubChannel::<NoopRawMutex,[f32;4],620,2,1> = PubSubChannel::new()).unwrap();
 
     spawner.must_spawn(broadcast_measurement_can_task(
         can_sender,
@@ -155,10 +158,14 @@ async fn main(spawner: Spawner) {
         p.PB11,
         p.PB12,
         read_buffer,
-        _led2,
         adc_samples_channel.publisher().unwrap(),
         converted_samples,
         flight_stage_watch.receiver().unwrap(),
+        p.PA10,
+        p.PB6,
+        p.PB7,
+        p.PC13,
+
     ));
 
     // sd
@@ -197,10 +204,13 @@ async fn adc_test_task(
     mut adc_pin_3: Peri<'static, PB11>,
     mut adc_pin_4: Peri<'static, PB12>,
     read_buffer: &'static mut [u16; 5],
-    mut led: Output<'static>,
-    publisher: Publisher<'static, NoopRawMutex, [f32; 4], 4, 2, 1>,
+    publisher: Publisher<'static, NoopRawMutex, [f32; 4], 620, 2, 1>,
     converted_samples: &'static mut [f32; 4],
     mut state_watch_rx: embassy_sync::watch::Receiver<'static, NoopRawMutex, FlightStage, 2>,
+    mut led_2_pin: Peri<'static, PA10>,
+    mut led_3_pin: Peri<'static, PB6>,
+    mut led_4_pin: Peri<'static, PB7>,
+    mut led_1_pin: Peri<'static, PC13>,
 ) {
     let mut vrefint_channel = adc_peripheral.enable_vrefint().degrade_adc();
     adc_peripheral.set_sample_time(SampleTime::CYCLES247_5);
@@ -217,12 +227,25 @@ async fn adc_test_task(
     info!("VREFINT_CAL: {}", vref_cal);
     let mut ticker = Ticker::every(Duration::from_hz(50));
     let mut cba123 = 0;
+    let mut _led2 = Output::new(led_2_pin, Level::Low, Speed::Low); // good 
+    let mut _led3 = Output::new(led_3_pin, Level::Low, Speed::Low); // good
+    let mut _led4 = Output::new(led_4_pin, Level::Low, Speed::Low); // good 
+    let mut _led1 = Output::new(led_1_pin, Level::Low, Speed::Low); // good
 
     let mut last_state = state_watch_rx.get().await;
     loop {
         let start_fut = async {
             loop {
                 if last_state.clone() == FlightStage::Armed {
+                    // led 2: PA10
+                    // led 3: PB6
+                    // led 4: PB7
+                    // led 1: PC13
+                    // status led: PB14 
+                    _led2.set_high();
+                    _led3.set_high();
+                    _led4.set_high();
+                    _led1.set_high();
                     adc_peripheral
                         .read(
                             // starts code returns future and turned into statemachine cuz .await()
@@ -256,11 +279,17 @@ async fn adc_test_task(
                 }
             }
         };
-        let stop_fut = async { state_watch_rx.changed().await };
+        let stop_fut = async {
+            state_watch_rx.changed().await
+        };
         match select(start_fut, stop_fut).await {
             Either::First(_) => unreachable!(),
             Either::Second(new_state) => {
                 last_state = new_state;
+                _led2.set_low();
+                _led3.set_low();
+                _led4.set_low();
+                _led1.set_low();
             }
         }; // Doesnt a change result in function ending??? 
     }
@@ -272,7 +301,7 @@ async fn adc_test_task(
 async fn single_write_sd(
     spi: Mutex<NoopRawMutex, Spi<'static, embassy_stm32::mode::Async>>,
     cs: Output<'static>,
-    mut subscriber: Subscriber<'static, NoopRawMutex, [f32; 4], 4, 2, 1>, // TODO change to 620
+    mut subscriber: Subscriber<'static, NoopRawMutex, [f32; 4], 620, 2, 1>, // TODO change to 620
     mut crc: Crc<'static>,
     mut watch_rx: embassy_sync::watch::Receiver<'static, NoopRawMutex, u64, 1>,
 ) {
@@ -516,7 +545,7 @@ async fn can_get_unix_time(
 #[embassy_executor::task]
 async fn broadcast_measurement_can_task(
     can_sender: &'static CanSender<NoopRawMutex, 4>,
-    mut subscriber: Subscriber<'static, NoopRawMutex, [f32; 4], 4, 2, 1>,
+    mut subscriber: Subscriber<'static, NoopRawMutex, [f32; 4], 620, 2, 1>,
 ) {
     let mut ticker = Ticker::every(Duration::from_hz(10));
     loop {
