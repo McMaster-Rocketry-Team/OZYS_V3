@@ -3,16 +3,16 @@
 #![feature(impl_trait_in_assoc_type)]
 
 mod bootloader;
-use core::{cell::RefCell, fmt::write, mem, ptr, time};
+use core::{mem, ptr};
 use embassy_futures::select::Either;
 use {defmt_rtt_pipe as _, panic_probe as _};
 
-use cortex_m::{register::apsr::read, singleton};
+use cortex_m::singleton;
 use defmt::{info, warn};
 use embassy_executor::Spawner;
 use embassy_futures::select::select;
 use embassy_stm32::{
-    adc::{self, Adc, AdcChannel, SampleTime}, crc::{Config as CrcConfig, Crc, InputReverseConfig, PolySize}, pac::Interrupt::{DMA1_CHANNEL1, TIM1_CC}, peripherals::{self, ADC1, DMA1, DMA1_CH1, PA0, PA10, PA2, PB11, PB12, PB14, PB6, PB7, PC13}, Peri
+    adc::{Adc, AdcChannel, SampleTime}, crc::{Config as CrcConfig, Crc, InputReverseConfig, PolySize}, peripherals::{ADC1, DMA1_CH1, PA0, PA10, PA2, PB11, PB12, PB14, PB6, PB7, PC13}, Peri
 };
 use embassy_stm32::{
     gpio::{Level, Output, Speed},
@@ -24,23 +24,18 @@ use embassy_sync::{
     blocking_mutex::raw::NoopRawMutex,
     mutex::Mutex,
     pubsub::{PubSubChannel, Publisher, Subscriber, WaitResult},
-    signal::Signal,
     watch::Watch,
 };
 use embassy_time::{Delay, Duration, Instant, Ticker, Timer};
 
 use embassy_embedded_hal::shared_bus::asynch::spi::SpiDevice;
-use embassy_stm32::{
-    bind_interrupts,
-    rng::{self},
-    spi::{Config as SpiConfig, Spi},
-};
+use embassy_stm32::spi::{Config as SpiConfig, Spi};
 use embassy_stm32::{peripherals::PB3, time::Hertz};
 use embedded_sdmmc::asynchronous::{Block, BlockDevice as _, BlockIdx, SdCard};
 use firmware_common_new::can_bus::{
-    custom_status::{ozys_custom_status::OzysCustomStatus, vl_custom_status::VLCustomStatus},
+    custom_status::ozys_custom_status::OzysCustomStatus,
     messages::{
-        CanBusMessageEnum, OZYS_MEASUREMENT_MESSAGE_TYPE, VL_STATUS_MESSAGE_TYPE,
+        CanBusMessageEnum,
         node_status::{NodeHealth, NodeMode},
         unix_time::UnixTimeMessage,
         vl_status::{FlightStage, VLStatusMessage},
@@ -207,10 +202,10 @@ async fn adc_test_task(
     publisher: Publisher<'static, NoopRawMutex, [f32; 4], 620, 2, 1>,
     converted_samples: &'static mut [f32; 4],
     mut state_watch_rx: embassy_sync::watch::Receiver<'static, NoopRawMutex, FlightStage, 2>,
-    mut led_2_pin: Peri<'static, PA10>,
-    mut led_3_pin: Peri<'static, PB6>,
-    mut led_4_pin: Peri<'static, PB7>,
-    mut led_1_pin: Peri<'static, PC13>,
+    led_2_pin: Peri<'static, PA10>,
+    led_3_pin: Peri<'static, PB6>,
+    led_4_pin: Peri<'static, PB7>,
+    led_1_pin: Peri<'static, PC13>,
 ) {
     let mut vrefint_channel = adc_peripheral.enable_vrefint().degrade_adc();
     adc_peripheral.set_sample_time(SampleTime::CYCLES247_5);
