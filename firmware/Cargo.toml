@@ -36,7 +36,7 @@ embassy-time = { git = "https://github.com/embassy-rs/embassy.git", features = [
     "defmt-timestamp-uptime",
 ] }
 embassy-embedded-hal = { git = "https://github.com/embassy-rs/embassy.git" }
-embedded-sdmmc = { git= "https://github.com/Be-ing/embedded-sdmmc-rs.git", rev="5f270ac", default-features = false, features = [
+embedded-sdmmc = { git = "https://github.com/Be-ing/embedded-sdmmc-rs.git", rev = "5f270ac", default-features = false, features = [
     "defmt-log",
 ] }
 panic-probe = { version = "1.0.0", features = ["print-defmt"] }
@@ -56,28 +56,6 @@ name = "main"
 path = "src/main.rs"
 test = false
 bench = false
-
-[[bin]]
-name = "sd_test"
-path = "src/sd_test.rs"
-test = false
-bench = false
-
-[[bin]]
-name = "adc_test"
-path = "src/adc_test.rs"
-test = false
-bench = false
-
-
-[[bin]]
-name = "sd_index_test"
-path = "src/sd_index_test.rs"
-test = false
-bench = false
-
-
-
 
 [profile.dev]
 debug = true
