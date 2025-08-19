@@ -549,8 +549,7 @@ async fn broadcast_measurement_can_task(
 ) {
     let mut ticker = Ticker::every(Duration::from_hz(10));
     loop {
-        let samples: WaitResult<[f32; 4]> = subscriber.next_message().await;
-        info!("Should be sending SG: {}", samples);
+        subscriber.clear();
         match subscriber.next_message().await {
             WaitResult::Message(samples) => {
                 can_sender.send(
