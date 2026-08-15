@@ -488,7 +488,6 @@ async fn can_reset_task(
         if let CanBusMessageEnum::Reset(ResetMessage {
             node_id,
             reset_all,
-            into_bootloader,
         }) = can_message
             && (node_id == can_receiver.self_node_id() || reset_all)
         {
@@ -498,11 +497,9 @@ async fn can_reset_task(
             empty[0][0..4].copy_from_slice(&card_index.to_le_bytes());
             sdcard.write(&empty, BlockIdx(0)).await.unwrap();
             sdcard.write(&empty, BlockIdx(1)).await.unwrap();
-            configure_next_boot(if into_bootloader {
-                BootOption::Bootloader
-            } else {
+            configure_next_boot(
                 BootOption::Application
-            });
+            );
             cortex_m::peripheral::SCB::sys_reset();
         }
     }
