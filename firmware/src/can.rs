@@ -5,7 +5,9 @@ use embassy_stm32::{
     Peri, bind_interrupts,
     can::{
         self, CanConfigurator, CanRx, CanTx, Frame,
+        config::GlobalFilter,
         enums::{BusError, FrameCreateError},
+        filter::{Action, ExtendedFilter, ExtendedFilterSlot, FilterType},
         frame::Envelope,
     },
     peripherals::{FDCAN3, PA8, PA15},
@@ -13,8 +15,8 @@ use embassy_stm32::{
 use embassy_sync::blocking_mutex::raw::NoopRawMutex;
 use firmware_common_new::can_bus::{
     CanBusFrame, CanBusRX, CanBusTX,
-    id::{CanBusExtendedId, can_node_id_from_serial_number},
-    messages::DATA_TRANSFER_MESSAGE_TYPE,
+    id::{CanBusExtendedId, can_node_id_from_serial_number, create_can_bus_message_type_filter_mask},
+    messages::{DATA_TRANSFER_MESSAGE_TYPE, VL_STATUS_MESSAGE_TYPE},
     node_types::OZYS_NODE_TYPE,
     receiver::CanReceiver,
     sender::CanSender,
@@ -47,6 +49,34 @@ pub async fn start_can_bus_tasks(
 
     let mut can = CanConfigurator::new(fdcan3, pa8, pa15, Irqs);
     can.set_bitrate(1_000_000);
+
+    // Hardware-filter the bus down to the message types this node consumes
+    // (plus Reset and UnixTime, which the mask helper always accepts). The
+    // flight computer floods the bus with ~1k measurement frames/s; every one
+    // of them otherwise raises an rx interrupt and gets decoded, only to be
+    // dropped, while the strain gauge ADCs are sampling on a hard deadline.
+    //
+    // FDCAN needs both halves of this: the filter below matches the frames we
+    // want, and the global filter decides what happens to everything else.
+    // Its default is `IntoRxFifo0` (accept), so setting the filter alone would
+    // change nothing at all. FDCAN's classic filter accepts a frame iff
+    // `incoming & mask == filter & mask`, which with `filter = 0` is exactly
+    // the helper's `incoming & mask == 0` contract. Standard frames are
+    // rejected wholesale — this protocol only uses extended IDs.
+    let filter_mask = create_can_bus_message_type_filter_mask(&[VL_STATUS_MESSAGE_TYPE]);
+    can.properties().set_extended_filter(
+        ExtendedFilterSlot::_0,
+        ExtendedFilter {
+            filter: FilterType::BitMask {
+                filter: 0,
+                mask: filter_mask,
+            },
+            action: Action::StoreInFifo0,
+        },
+    );
+    let config = can.config().set_global_filter(GlobalFilter::reject_all());
+    can.set_config(config);
+
     let can = can.into_normal_mode();
     let (tx, rx, _) = can.split();
 
@@ -107,7 +137,11 @@ async fn can_bus_rx_task(
                 let frame = self.0.read().await.map(EnvelopeWrapper)?;
                 let id = CanBusExtendedId::from_raw(frame.id());
 
-                // filter out data transfer messages so we don't waste time decoding them
+                // Redundant with the hardware filter installed above, which
+                // already rejects data transfer frames before they reach a
+                // FIFO. Kept as a backstop so that widening the accept list
+                // (for OTA, say) cannot silently start feeding OTA payloads
+                // into the message decoder.
                 if id.message_type != DATA_TRANSFER_MESSAGE_TYPE {
                     return Ok(frame);
                 }
