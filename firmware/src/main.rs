@@ -2,7 +2,7 @@
 #![no_main]
 #![feature(impl_trait_in_assoc_type)]
 
-mod bootloader;
+mod watchdog;
 use core::{mem, ptr};
 use embassy_futures::select::Either;
 use {defmt_rtt_pipe as _, panic_probe as _};
@@ -22,7 +22,7 @@ use embassy_stm32::{
     time::mhz,
 };
 
-use crate::bootloader::{BootOption, configure_next_boot, watchdog_task};
+use crate::watchdog::watchdog_task;
 use embassy_sync::{
     blocking_mutex::raw::NoopRawMutex,
     mutex::Mutex,
@@ -498,7 +498,6 @@ async fn can_reset_task(
             empty[0][0..4].copy_from_slice(&card_index.to_le_bytes());
             sdcard.write(&empty, BlockIdx(0)).await.unwrap();
             sdcard.write(&empty, BlockIdx(1)).await.unwrap();
-            configure_next_boot(BootOption::Application);
             cortex_m::peripheral::SCB::sys_reset();
         }
     }

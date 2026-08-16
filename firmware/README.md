@@ -1,17 +1,14 @@
-# OZYS V3 Firmware (Application)
+# OZYS V3 Firmware
 
-The bootloader (`../bootloader`) is required to be flashed to OZYS first before the application can be run.
+There is no bootloader. The firmware links at the reset vector and is flashed
+directly, so nothing needs to be on the board beforehand.
 
 ## Memory Layout
 
 The memory layout is defined in `memory.x`.
 
-- Flash: total 512KiB
-  - 32KiB for bootloader
-  - 480KiB for application
-- RAM: total 128KiB
-  - (128KiB - 8 bytes) for bootloader or application
-  - 8 bytes for bootloader state across reset
+- Flash: 480KiB used of 512KiB, from `0x08000000`
+- RAM: 128KiB
 
 ## Notes
 
@@ -32,4 +29,4 @@ If you think your code should run but the stm does not start or stops in the mid
 
 1. Switch back from `rocket-cli` to `probe-rs` in `.cargo/config.toml`
 2. Do not connect to ST-Link, instead use an external power
-3. Power cycle stm to reset bootloader state
+3. Power cycle the stm

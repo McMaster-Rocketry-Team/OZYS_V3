@@ -1,16 +1,8 @@
 MEMORY
 {
   /* NOTE 1 K = 1 KiBi = 1024 bytes */
+  /* There is no bootloader on this board, so the firmware owns all of flash
+     and links at the reset vector. */
   FLASH                             : ORIGIN = 0x08000000, LENGTH = 480K
-  /* FLASH                             : ORIGIN = 0x08010000, LENGTH = 448K */
-  RAM                         (rwx) : ORIGIN = 0x20000000, LENGTH = 131064 /* 128K - 8 */
-  BACKUP_RAM                  (rw)  : ORIGIN = 0x2001fff8, LENGTH = 8
-}
-
-SECTIONS
-{
-    .backup_ram (NOLOAD):
-    {
-        *(.backup_ram)
-    } > BACKUP_RAM
+  RAM                         (rwx) : ORIGIN = 0x20000000, LENGTH = 128K
 }

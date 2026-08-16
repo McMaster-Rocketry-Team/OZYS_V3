@@ -2,7 +2,7 @@
 #![no_main]
 #![feature(impl_trait_in_assoc_type)]
 
-mod bootloader;
+mod watchdog;
 use core::{cell::RefCell, ptr};
 
 use {defmt_rtt_pipe as _, panic_probe as _};
@@ -22,7 +22,7 @@ use embassy_stm32::{
     time::mhz,
 };
 
-use crate::bootloader::watchdog_task;
+use crate::watchdog::watchdog_task;
 use embassy_sync::{
     blocking_mutex::raw::NoopRawMutex,
     mutex::Mutex,
