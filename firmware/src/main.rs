@@ -222,7 +222,6 @@ async fn adc_test_task(
     let vref_cal = unsafe { ptr::read_volatile(VREFINT_CAL) as f32 };
     info!("VREFINT_CAL: {}", vref_cal);
     let mut ticker = Ticker::every(Duration::from_hz(22_000));
-    let mut cba123 = 0;
     let mut _led2 = Output::new(led_2_pin, Level::Low, Speed::Low); // good 
     let mut _led3 = Output::new(led_3_pin, Level::Low, Speed::Low); // good
     let mut _led4 = Output::new(led_4_pin, Level::Low, Speed::Low); // good 
@@ -232,7 +231,7 @@ async fn adc_test_task(
     loop {
         let start_fut = async {
             loop {
-                if last_state.clone() == FlightStage::Armed {
+                if last_state.clone() == FlightStage::Armed{
                     // led 2: PA10
                     // led 3: PB6
                     // led 4: PB7
