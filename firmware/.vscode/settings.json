@@ -1,0 +1,33 @@
+{
+    "git.autofetch": true,
+    "editor.tabSize": 4,
+    "rust-analyzer.linkedProjects": [
+        "./Cargo.toml"
+    ],
+    "statusbar_command.commands": [
+        {
+            "text": "$(debug) Debug OZYS",
+            "alignment": "left",
+            "command": "launches.debugOzys"
+        },
+        {
+            "text": "$(play) Release OZYS",
+            "alignment": "left",
+            "command": "launches.releaseOzys"
+        }
+    ],
+    "launches": {
+        "debugOzys": "Debug OZYS",
+        "releaseOzys": "Release OZYS"
+    },
+    "todohighlight.keywords": [
+        "TODO",
+        "todo!"
+    ],
+    "errorLens.enabledDiagnosticLevels": [
+        "error"
+    ],
+    "errorLens.messageEnabled": true,
+    "errorLens.enabled": true,
+    "window.title": "OZYS V3 ${separator} ${activeEditorShort}"
+}
