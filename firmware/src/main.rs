@@ -12,7 +12,10 @@ use defmt::{info, warn};
 use embassy_executor::Spawner;
 use embassy_futures::select::select;
 use embassy_stm32::{
-    adc::{Adc, AdcChannel, SampleTime}, crc::{Config as CrcConfig, Crc, InputReverseConfig, PolySize}, peripherals::{ADC1, DMA1_CH1, PA0, PA10, PA2, PB11, PB12, PB14, PB6, PB7, PC13}, Peri
+    Peri,
+    adc::{Adc, AdcChannel, SampleTime},
+    crc::{Config as CrcConfig, Crc, InputReverseConfig, PolySize},
+    peripherals::{ADC1, DMA1_CH1, PA0, PA2, PA10, PB6, PB7, PB11, PB12, PB14, PC13},
 };
 use embassy_stm32::{
     gpio::{Level, Output, Speed},
@@ -166,19 +169,12 @@ async fn main(spawner: Spawner) {
     let mut spi_config = SpiConfig::default();
     spi_config.frequency = Hertz(5_000_000);
     let spi1: Spi<'static, embassy_stm32::mode::Async> = Spi::new(
-        p.SPI1,
-        unsafe { PB3::steal() },
-        p.PB5,
-        p.PB4,
-        p.DMA1_CH2,
-        p.DMA1_CH3,
-        spi_config,
+        p.SPI1, p.PB3, p.PB5, p.PB4, p.DMA1_CH2, p.DMA1_CH3, spi_config,
     );
     let spi1 = singleton!(:Mutex<NoopRawMutex, Spi<'static, embassy_stm32::mode::Async>> = Mutex::new(spi1)).unwrap();
     let crc_config =
         CrcConfig::new(InputReverseConfig::None, false, PolySize::Width32, 69, 69).unwrap();
     let crc = Crc::new(p.CRC, crc_config);
-    
 
     let sd = SpiDevice::new(spi1, cs);
     let sdcard = singleton!(: SdCard<SpiDevice<'static, NoopRawMutex, Spi<'static, embassy_stm32::mode::Async>, Output<'static>>, Delay> = SdCard::new(sd, Delay)).unwrap();
@@ -231,12 +227,18 @@ async fn adc_test_task(
     loop {
         let start_fut = async {
             loop {
-                if last_state.clone() == FlightStage::Armed{
+                if matches!(
+                    last_state,
+                    FlightStage::Armed
+                        | FlightStage::Ascent
+                        | FlightStage::DrogueChute
+                        | FlightStage::MainChute
+                ) {
                     // led 2: PA10
                     // led 3: PB6
                     // led 4: PB7
                     // led 1: PC13
-                    // status led: PB14 
+                    // status led: PB14
                     _led2.set_high();
                     _led3.set_high();
                     _led4.set_high();
@@ -258,8 +260,7 @@ async fn adc_test_task(
                         .await;
                     let vrefint = read_buffer[0];
                     let vref_plus = 3.0 * vref_cal / vrefint as f32;
-                    //cba123 += 1;
-                    //info!("Vref+: {}V cba:{}", vref_plus, cba123);
+
                     for i in 0..4 {
                         converted_samples[i] = ((vref_plus / (1 << 12) as f32
                             * read_buffer[i + 1] as f32)
@@ -274,9 +275,7 @@ async fn adc_test_task(
                 }
             }
         };
-        let stop_fut = async {
-            state_watch_rx.changed().await
-        };
+        let stop_fut = async { state_watch_rx.changed().await };
         match select(start_fut, stop_fut).await {
             Either::First(_) => unreachable!(),
             Either::Second(new_state) => {
@@ -293,14 +292,17 @@ async fn adc_test_task(
 // 31 samples of four f32 channels in each block
 #[embassy_executor::task]
 async fn single_write_sd(
-    sdcard: &'static SdCard<SpiDevice<'static, NoopRawMutex, Spi<'static, embassy_stm32::mode::Async>, Output<'static>>, Delay>,
+    sdcard: &'static SdCard<
+        SpiDevice<'static, NoopRawMutex, Spi<'static, embassy_stm32::mode::Async>, Output<'static>>,
+        Delay,
+    >,
     mut subscriber: Subscriber<'static, NoopRawMutex, [f32; 4], 620, 2, 1>, // TODO change to 620
     mut crc: Crc<'static>,
     mut watch_rx: embassy_sync::watch::Receiver<'static, NoopRawMutex, u64, 1>,
 ) {
     // BLOCK 512 BYTES
     // First 8-504 sample (31 of [f32; 4])
-    // CRC 508-512 crc 
+    // CRC 508-512 crc
     let size: u64 = sdcard.num_bytes().await.unwrap();
     let block_count = (size / 512) as u32;
     info!("Card size is {} bytes, {} blocks", size, block_count);
@@ -479,15 +481,15 @@ async fn node_status_task(can_sender: &'static CanSender<NoopRawMutex>) {
 #[embassy_executor::task] // CHANGE SUBSCRIBER LIMIT??
 async fn can_reset_task(
     can_receiver: &'static CanReceiver<NoopRawMutex, 4, 4>,
-    sdcard: &'static SdCard<SpiDevice<'static, NoopRawMutex, Spi<'static, embassy_stm32::mode::Async>, Output<'static>>, Delay>,
+    sdcard: &'static SdCard<
+        SpiDevice<'static, NoopRawMutex, Spi<'static, embassy_stm32::mode::Async>, Output<'static>>,
+        Delay,
+    >,
 ) {
     let mut subscriber = can_receiver.subscriber().unwrap();
     loop {
         let can_message = subscriber.next_message_pure().await.data.message;
-        if let CanBusMessageEnum::Reset(ResetMessage {
-            node_id,
-            reset_all,
-        }) = can_message
+        if let CanBusMessageEnum::Reset(ResetMessage { node_id, reset_all }) = can_message
             && (node_id == can_receiver.self_node_id() || reset_all)
         {
             let card_index: i32 = 2;
@@ -496,9 +498,7 @@ async fn can_reset_task(
             empty[0][0..4].copy_from_slice(&card_index.to_le_bytes());
             sdcard.write(&empty, BlockIdx(0)).await.unwrap();
             sdcard.write(&empty, BlockIdx(1)).await.unwrap();
-            configure_next_boot(
-                BootOption::Application
-            );
+            configure_next_boot(BootOption::Application);
             cortex_m::peripheral::SCB::sys_reset();
         }
     }
